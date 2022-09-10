@@ -4,12 +4,6 @@
 ## Description
 This project in currently in conceptual design.
 
-#### Table of Contents
-{:.no_toc}
-
-- TOC
-{:toc}
-
 
 ### Installation
 -
@@ -20,7 +14,7 @@ This project in currently in conceptual design.
 
 
 ### Contributing
-This project is not currently accepting any external contributors.
+This project is not accepting any external contributors.
 
 
 #### Credits
