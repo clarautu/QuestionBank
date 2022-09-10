@@ -5,14 +5,10 @@
 This project in currently in conceptual design.
 
 #### Table of Contents
-- QuestionBank
-  - Description
-    - Table of Contents
-  - Installation
-  - Usage
-  - Contributing
-    - Credits
-    - Licensing
+{:.no_toc}
+
+- TOC
+{:toc}
 
 
 ### Installation
