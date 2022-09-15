@@ -5,7 +5,7 @@ import java.util.LinkedList;
 public class QuestionBank {
     //Fields
     private LinkedList<Questions> Questions;
-    private LinkedList<Tags> TagsLists;
+    private LinkedList<Tag> TagsLists;
 
     //Methods
     public LinkedList GetQuestions(){
@@ -24,7 +24,7 @@ public class QuestionBank {
         return null;
     }
 
-    public Question GetQuestion(int ID){
+    public Questions GetQuestion(int ID){
         return null;
     }
 
