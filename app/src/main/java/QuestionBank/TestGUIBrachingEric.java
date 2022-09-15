@@ -1,2 +1,4 @@
-package QuestionBank;public class TestGUIBrachingEric {
+package QuestionBank;
+
+public class TestGUIBrachingEric {
 }
