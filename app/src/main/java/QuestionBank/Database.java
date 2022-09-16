@@ -1,5 +1,8 @@
 package QuestionBank;
 
+import java.util.LinkedList;
+
+
 public class Database {
 
     public LinkedList<Question> GetQuestions() {
@@ -14,15 +17,15 @@ public class Database {
 
     }
 
-    public boolean RemoveQuestion(id:int) {
+    public boolean RemoveQuestion(int id) {
 
     }
 
-    public String GetQuestion(id:int) {
+    public String GetQuestion(int id) {
 
     }
 
-    public LinkedList<Question> GetTaggedQuestions(tagName:String) {
+    public LinkedList<Question> GetTaggedQuestions(String tagName) {
 
     }
 
