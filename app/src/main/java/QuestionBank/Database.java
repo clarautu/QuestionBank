@@ -2,7 +2,6 @@ package QuestionBank;
 
 import java.util.LinkedList;
 
-
 public class Database {
 
     public LinkedList<Questions> GetQuestions() {
