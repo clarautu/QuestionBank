@@ -11,6 +11,7 @@ public class Tag {
 
 
     //Methods
+    public String GetTagName() { return this.TagName;}
     public LinkedList<Integer> GetQuestionsOfTagType(){
         return null;
     }
