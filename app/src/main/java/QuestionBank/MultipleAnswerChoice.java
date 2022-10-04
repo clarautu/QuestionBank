@@ -5,7 +5,7 @@ import java.util.List;
 
 public class MultipleAnswerChoice extends Questions {
     //Fields
-    private List<String> OtherAnswer;
+    private LinkedList<String> OtherAnswer;
 
     //Inherited fields
     private int IdNumber;
@@ -17,13 +17,15 @@ public class MultipleAnswerChoice extends Questions {
     //Constructor
     protected MultipleAnswerChoice(int idNumber, String question, LinkedList<String> correctAnswers, LinkedList<String> possibleAnswers) {
         super(idNumber, question, correctAnswers, possibleAnswers);
+        //need some more work there
     }
 
     //Methods
     public LinkedList GetOtherAnswers() {
-        return null;
+        return GetOtherAnswers();
     }
 
+    /* I left this here instead of deleting it in case it was needed still for some reason
     //Inherited Methods
     protected int GetIdNumber(){return this.IdNumber;}
     protected String GetQuestion(){return this.Question;}
@@ -32,26 +34,26 @@ public class MultipleAnswerChoice extends Questions {
     protected LinkedList<String> GetPossibleAnswers(){return this.PossibleAnswers;}
     //End
     protected LinkedList<String> GetTags(){return this.Tags;}
-    protected boolean AddTag(String tagName){return true;}
+    protected boolean AddTag(String tagName){
+        return Tags.add(tagName);
+    }
+
+     */
     protected boolean SetQuestion(String question){
         Question = question;
         return true;
     }
     protected boolean AddPossibleAnswer(String answer){
-        PossibleAnswers.add(answer);
-        return true;
+        return PossibleAnswers.add(answer);
     }
     protected boolean RemoveAnswer(String answer){
-        PossibleAnswers.remove(answer); //gonna be honest, don't know if this works, or if i need to do a search
-        return true;
+        return PossibleAnswers.remove(answer);
     }
     protected boolean SetCorrectAnswers(LinkedList<String> CorrectAnswers){
-        this.CorrectAnswers = CorrectAnswers;
+        this.CorrectAnswers = new LinkedList<>(CorrectAnswers);
         return true;
     }
     protected boolean RemoveTag(String tagName){
-        Tags.remove(tagName); //Not sure if this will work
-        return true;
+        return Tags.remove(tagName);
     }
-
 }
