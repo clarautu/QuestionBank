@@ -13,13 +13,11 @@ public class Tag {
         QuestionsOfTagType = questionsOfTagType;
     }
 
-
-
     //Methods
     public String GetTagName() { return this.TagName;}
 
     public LinkedList<Integer> GetQuestionsOfTagType(){
-        return null;
+        return this.QuestionsOfTagType;
     }
 
     public void setTagName(String tagName) {
