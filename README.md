@@ -23,7 +23,6 @@ This project is not accepting any external contributors.
   - Hunter Chase
     - *Contact info*
     - Email - hchase333@gmail.com / chashunt@isu.edu
-    - Phone - 208-206-1454
   - Autumn Clark
     - *Contact info*
     - Email - clarautu@isu.edu
