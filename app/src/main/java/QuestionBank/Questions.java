@@ -18,25 +18,30 @@ public abstract class Questions {
 
     protected int GetIdNumber(){return this.IdNumber;}
     protected String GetQuestion(){return this.Question;}
-    //Start of 'Might be unnecessary'
     protected LinkedList<String> GetCorrectAnswer(){return this.CorrectAnswers;}
     protected LinkedList<String> GetPossibleAnswers(){return this.PossibleAnswers;}
-    //End
     protected LinkedList<String> GetTags(){return this.Tags;}
     protected boolean SetQuestion(String question){
         Question = question;
         return true;
     }
     protected boolean AddPossibleAnswer(String answer){
+        for(String ans : PossibleAnswers){
+            if (ans == answer){return false;} //If already identical answer, then return false without adding
+        }
         return PossibleAnswers.add(answer);
     }
     protected boolean RemoveAnswer(String answer){
         CorrectAnswers.remove(answer);
         return PossibleAnswers.remove(answer);
     }
-    protected boolean SetCorrectAnswers(LinkedList<String> CorrectAnswers){
-        this.CorrectAnswers = new LinkedList<>(CorrectAnswers);
-        return true;
+    protected boolean AddCorrectAnswer(String CorrectAnswer){
+        AddPossibleAnswer(CorrectAnswer); //I decided to have it automatically add the answer to PossibleAnswers
+        //the AddPossibleAnswer method will catch if there is already an identical answer and ignore it
+        return CorrectAnswers.add(CorrectAnswer);
+    }
+    protected boolean RemoveCorrectAnswer(String answer){
+        return CorrectAnswers.remove(answer);
     }
     protected boolean AddTag(String tagName){
         return Tags.add(tagName);
