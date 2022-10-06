@@ -45,3 +45,14 @@ tasks.named('test') {
 test {
     useJUnitPlatform()
 }
+
+/* //Testing ways of fixing our ability to run singular tests
+test {
+    useJUnitPlatform()
+}
+
+tasks.test {
+    useJUnitPlatform()
+}
+
+ */
