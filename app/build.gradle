@@ -40,3 +40,8 @@ tasks.named('test') {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()
 }
+
+// Used to run tests until we figure out why they don't run the normal way
+test {
+    useJUnitPlatform()
+}

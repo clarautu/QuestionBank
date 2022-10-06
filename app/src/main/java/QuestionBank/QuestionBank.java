@@ -1,16 +1,17 @@
 package QuestionBank;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 
 public class QuestionBank {
     private LinkedList<Questions> Questions;
     private LinkedList<Tag> TagsLists;
-
+    private LinkedList<String> test = new LinkedList<String>(Arrays.asList("hello", "hi"));
     /**
      * Method that returns the list of all questions
      * @return A list containing all questions
      */
-    public LinkedList GetQuestions(){
+    public LinkedList<Questions> GetQuestions(){
         return this.Questions;
     }
 
@@ -79,7 +80,7 @@ public class QuestionBank {
      * @param tagname The name of the tag to search for questions of
      * @return A list of all questions with the specified tag; Null if tag not found
      */
-    public LinkedList GetTaggedQuestions(String tagname) {
+    public LinkedList<Questions> GetTaggedQuestions(String tagname) {
         LinkedList<Questions> taggedQuestions = new LinkedList<Questions>();
 
         // Search through this.TagsList to find the specified tag
@@ -92,7 +93,7 @@ public class QuestionBank {
                     for (Questions q : this.Questions) {
                         if (q.GetIdNumber() == id) {
                             taggedQuestions.add(q);
-                            // Break out of first for loop, as the question with the id number has been found
+                            // Break out of internal for loop, as the question with the id number has been found
                             break;
                         }
                     }
@@ -102,5 +103,34 @@ public class QuestionBank {
         }
         // Tag not found, return null
         return null;
+    }
+
+    /**
+     * Method that removes a specified tag from all questions that have it and from the list of tags
+     * @param tagName The name of the tag to be removed
+     * @return True if found and removed correctly; False otherwise
+     */
+    public boolean RemoveTag(String tagName) {
+        // Search through this.TagsList to find specified tag
+        for (Tag t : this.TagsLists) {
+            if(t.GetTagName() == tagName) { // Found tag
+                // Get a list of id numbers of questions that have this tag
+                LinkedList<Integer> ids = t.GetQuestionsOfTagType();
+                // Loop through ids
+                for (int i : ids) {
+                    // Find the question that has the specified tag number
+                    for (Questions q : this.Questions) {
+                        if (q.GetIdNumber() == i) { // Found question
+                            q.RemoveTag(tagName); // Remove tag from question
+                            break; // Break out of internal for loop
+                        }
+                    }
+                }
+                // Remove tag from this.TagsList
+                return this.TagsLists.remove(t);
+            }
+        }
+        // Specified tag not found
+        return false;
     }
 }
