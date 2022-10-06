@@ -1,7 +1,6 @@
 package QuestionBank;
 
 import java.util.LinkedList;
-import java.util.List;
 
 public abstract class Questions {
     private int IdNumber;
@@ -24,10 +23,25 @@ public abstract class Questions {
     protected LinkedList<String> GetPossibleAnswers(){return this.PossibleAnswers;}
     //End
     protected LinkedList<String> GetTags(){return this.Tags;}
-    protected boolean AddTag(String tagName){return true;}
-    protected boolean RemoveTag(String tagName){return true;}
-    protected boolean SetQuestion(String question){return true;}
-    protected boolean AddPossibleAnswer(String answer){return true;}
-    protected boolean RemoveAnswer(String answer){return true;}
-    protected boolean SetCorrectAnswers(LinkedList<String> CorrectAnswers){return true;}
+    protected boolean SetQuestion(String question){
+        Question = question;
+        return true;
+    }
+    protected boolean AddPossibleAnswer(String answer){
+        return PossibleAnswers.add(answer);
+    }
+    protected boolean RemoveAnswer(String answer){
+        CorrectAnswers.remove(answer);
+        return PossibleAnswers.remove(answer);
+    }
+    protected boolean SetCorrectAnswers(LinkedList<String> CorrectAnswers){
+        this.CorrectAnswers = new LinkedList<>(CorrectAnswers);
+        return true;
+    }
+    protected boolean AddTag(String tagName){
+        return Tags.add(tagName);
+    }
+    protected boolean RemoveTag(String tagName){
+        return Tags.remove(tagName);
+    }
 }
