@@ -1,16 +1,17 @@
 package QuestionBank;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 
 public class QuestionBank {
     private LinkedList<Questions> Questions;
     private LinkedList<Tag> TagsLists;
-
+    private LinkedList<String> test = new LinkedList<String>(Arrays.asList("hello", "hi"));
     /**
      * Method that returns the list of all questions
      * @return A list containing all questions
      */
-    public LinkedList GetQuestions(){
+    public LinkedList<Questions> GetQuestions(){
         return this.Questions;
     }
 
@@ -79,7 +80,7 @@ public class QuestionBank {
      * @param tagname The name of the tag to search for questions of
      * @return A list of all questions with the specified tag; Null if tag not found
      */
-    public LinkedList GetTaggedQuestions(String tagname) {
+    public LinkedList<Questions> GetTaggedQuestions(String tagname) {
         LinkedList<Questions> taggedQuestions = new LinkedList<Questions>();
 
         // Search through this.TagsList to find the specified tag
