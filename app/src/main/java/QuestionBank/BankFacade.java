@@ -2,14 +2,14 @@ package QuestionBank;
 
 import java.util.LinkedList;
 
-public class Database {
+public class BankFacade {
 
     //Variables
     private QuestionBank QuestionBank;
 
 
     //Constructors
-    public Database(){
+    public BankFacade(){
         QuestionBank = new QuestionBank();
     }
 
@@ -22,7 +22,7 @@ public class Database {
         return QuestionBank.GetTagsList();
     }
 
-    public Boolean CreateQuestion() {   //I believe that this should take as arguments: question-String, correctAnswer-String, possibleAnswer-String
+    public Boolean CreateQuestion() {   //I believe that this should take as arguments: question-String, correctAnswer-String, possibleAnswer-String. If we are passing down.
         return QuestionBank.CreateQuestion();
     }
 
