@@ -49,4 +49,15 @@ public abstract class Questions {
     protected boolean RemoveTag(String tagName){
         return Tags.remove(tagName);
     }
+
+    @Override
+    public String toString() {
+        return "Question{" +
+                "IdNumber=" + IdNumber +
+                ", Question='" + Question + '\'' +
+                ", CorrectAnswers=" + CorrectAnswers +
+                ", PossibleAnswers=" + PossibleAnswers +
+                ", Tags=" + Tags +
+                '}';
+    }
 }
