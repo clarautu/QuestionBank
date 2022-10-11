@@ -3,22 +3,29 @@ package QuestionBank;
 import java.util.LinkedList;
 import java.util.Scanner;
 
+/**
+ * Facade for meshing front-end to back-end with QuestionBank class.
+ * This class will also provide a state manager.
+ * @Author Hunter
+ * @Version 1.0
+ */
 public class BankFacade {
-
     //Variables
+    private static BankFacade FacadeInstance;
     private QuestionBank QuestionBank;
-    private static BankFacade instance = null;
     private final Scanner scanner = new Scanner(System.in);
 
-    //Constructor - enforce singleton pattern
-    private BankFacade(){
+    //Constructors
+    private BankFacade() {
         QuestionBank = QuestionBank.GetInstance();
     }
-    public static BankFacade GetInstance() {
-        if (instance == null) {
-            instance = new BankFacade();
+
+    //Singleton instance
+    public static BankFacade GetInstance(){
+        if (FacadeInstance == null){ //if there is no instance available... create new one
+            FacadeInstance = new BankFacade();
         }
-        return instance;
+        return FacadeInstance;
     }
 
     //Methods
