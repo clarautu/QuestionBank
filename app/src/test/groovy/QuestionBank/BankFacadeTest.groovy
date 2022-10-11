@@ -2,7 +2,7 @@ package QuestionBank
 
 import spock.lang.Specification
 
-public class BankFacadeTest extends Specification{
+class BankFacadeTest extends Specification{
 
     // Variables
     def facade;
@@ -13,16 +13,19 @@ public class BankFacadeTest extends Specification{
     }
 
     // Tests
-    // Im holding off on doing these for the moment
-    def "poop"() {
+
+    // Checks that there cannot be more than one instance of BankFacade
+    def "test_singleton"() {
         setup:
-        def myValue = 1
+        def facadeOne = facade.GetInstance()
+        def before = facadeOne.hashCode()
 
         when:
-        myValue += 1
+        def facadeTwo = facade.GetInstance()
+        def after = facadeTwo.hashCode()
 
         then:
-        myValue == 2
+        before == after
     }
 
 }

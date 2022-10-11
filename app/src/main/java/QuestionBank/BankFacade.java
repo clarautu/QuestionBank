@@ -2,16 +2,37 @@ package QuestionBank;
 
 import java.util.LinkedList;
 
+
+/**
+ * Facade for meshing front-end to back-end with QuestionBank class.
+ * This class will also provide a state manager.
+ * @Author Hunter
+ * @Version 1.0
+ */
 public class BankFacade {
 
+
+
     //Variables
+    private static BankFacade FacadeInstance;
     private QuestionBank QuestionBank;
 
 
+
     //Constructors
-    public BankFacade(){
-        QuestionBank = new QuestionBank();
+    private BankFacade() {
+        QuestionBank =new QuestionBank();
     }
+
+    //Singleton instance
+    public static BankFacade GetInstance(){
+        if (FacadeInstance == null){ //if there is no instance available... create new one
+            FacadeInstance = new BankFacade();
+        }
+        return FacadeInstance;
+    }
+
+
 
     //Methods
     public LinkedList<Questions> GetQuestions() {
