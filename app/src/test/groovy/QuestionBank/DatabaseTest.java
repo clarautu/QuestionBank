@@ -1,11 +1,9 @@
 package QuestionBank;
 
-import org.junit.Test;
-
 public class DatabaseTest {
 
     // Variables
-    Database Database;
+    BankFacade Database;
 
     // Tests
     // Im holding off on doing these for the moment
