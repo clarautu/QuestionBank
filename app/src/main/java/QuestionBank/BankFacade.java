@@ -6,7 +6,6 @@ import java.util.Scanner;
 /**
  * Facade for meshing front-end to back-end with QuestionBank class.
  * This class will also provide a state manager.
- * @Author Hunter
  * @Version 1.0
  */
 public class BankFacade {
