@@ -1,5 +1,6 @@
 # QuestionBank
 *version 0.0.0*
+[![Java CI with Gradle](https://github.com/CS3321TeamC/QuestionBank/actions/workflows/gradle.yml/badge.svg)](https://github.com/CS3321TeamC/QuestionBank/actions/workflows/gradle.yml)
 
 ## Description
 This project is currently in conceptual design.
@@ -22,7 +23,6 @@ This project is not accepting any external contributors.
   - Hunter Chase
     - *Contact info*
     - Email - hchase333@gmail.com / chashunt@isu.edu
-    - Phone - 208-206-1454
   - Autumn Clark
     - *Contact info*
     - Email - clarautu@isu.edu
