@@ -4,7 +4,7 @@ import spock.lang.Specification
 
 class QuestionBankTest extends Specification{
     //Defining a variable to be used in all tests, that the setup method will assign to
-    def bank
+    def bank = QuestionBank
 
     //This is a setup method - it is run before every individual test method
     def setup() {
@@ -33,6 +33,26 @@ class QuestionBankTest extends Specification{
         then:
         myValue == 2
     }
+    //CreateQuestion(int typeChoice, String questionDescription, LinkedList<String> correctAnswers, LinkedList<String> possibleAnswers)
+    def "create a multianswer question"() {
+        setup:
+        def bank = QuestionBank.GetInstance()
+        when:
+        def result = bank.CreateQuestion(1,"Test question",new LinkedList<String>(List.of("answer1","answer2")),
+                new LinkedList<String>(List.of("possible1","possible2")))
+        then:
+        result ==  true
+    }
+    def "create a singleanswer question"() {
+        setup:
+        def bank = QuestionBank.GetInstance()
+        when:
+        def result = bank.CreateQuestion(2,"Test question",new LinkedList<String>(List.of("answer")),
+                new LinkedList<String>(List.of("possible1","possible2")))
+        then:
+        result ==  true
+    }
+
     //RemoveQuestion(id)
     def "remove a question"() {
         setup:
