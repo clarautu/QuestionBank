@@ -1,8 +1,15 @@
 package QuestionBank;
 
-public class ShortAnswer {
+import java.util.LinkedList;
+
+public class ShortAnswer extends Questions{
     //Fields
     private String Prompt;
+
+    //Constructor
+    protected ShortAnswer(int idNumber, String question) {
+        super(idNumber, question, null, null);
+    }
 
     //Methods
     /**
@@ -10,7 +17,7 @@ public class ShortAnswer {
      * @return the current short answer prompt.
      */
     public String getPrompt() {
-        return Prompt;
+        return this.GetQuestion();
     }
 
     /**
@@ -18,6 +25,6 @@ public class ShortAnswer {
      * @param prompt The current short answer question.
      */
     public void setPrompt(String prompt) {
-        Prompt = prompt;
+        this.SetQuestion(prompt);
     }
 }

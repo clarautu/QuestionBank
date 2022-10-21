@@ -202,6 +202,7 @@ public class QuestionBank {
                 break;
             case 3 :
                 // make ShortAnswer
+                question = new ShortAnswer(id, questionDescription);
                 break;
             default :
                 return null;
