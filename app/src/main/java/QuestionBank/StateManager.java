@@ -77,14 +77,15 @@ public class StateManager {
      */
     public QuestionBank loadData(File file) throws FileNotFoundException {
         Scanner scanner = new Scanner(file);
-        QuestionBank newState = new QuestionBank();
+        QuestionBank newState;
         if (scanner.hasNext()) {
             String json = scanner.nextLine();
             newState = gson.fromJson(json, QuestionBank.class);
             scanner.close();
             System.out.println("File read.");
+            return newState;
         }
-        return newState;
+        else return QuestionBank.GetInstance();
     }
 
     // For exporting to database
