@@ -1,5 +1,7 @@
 package QuestionBank;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.Scanner;
 
@@ -10,6 +12,7 @@ import java.util.Scanner;
  */
 public class BankFacade {
     //Variables
+    private final StateManager stateManager = new StateManager();
     private static BankFacade FacadeInstance;
     private QuestionBank QuestionBank;
     private final Scanner scanner = new Scanner(System.in);
@@ -156,6 +159,33 @@ public class BankFacade {
             possibleAnswers.add(input);
         }
         return possibleAnswers;
+    }
+
+    // Methods for save/load state
+
+    /**
+     * Saves the game with the current state
+     * @param filePath full path of directory to save at
+     * @param fileName specific file name to save in the directory
+     * @return a boolean to confirm save
+     */
+    public boolean save(File filePath, String fileName) {
+        return stateManager.saveData(filePath, fileName, QuestionBank);
+    }
+
+    /**
+     * Used to load a game from a file
+     * @param file to load from
+     * @throws FileNotFoundException
+     * @return boolean to confirm load
+     */
+    public boolean load(File file) throws FileNotFoundException {
+        boolean loaded = false;
+        QuestionBank = stateManager.loadData(file);
+        if (QuestionBank != null) {
+            loaded = true;
+        }
+        return loaded;
     }
 
 }
