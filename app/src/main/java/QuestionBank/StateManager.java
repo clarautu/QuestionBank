@@ -16,13 +16,13 @@ public class StateManager {
     //For Saving
 
     /**
-     * Saves the game with the current state
+     * Saves with the current state
      * @param file full path name of the directory to save to
      * @param fileName specific file name to make/save
      * @param state current state to save
      * @return a boolean to confirm save
      */
-    public boolean saveData(File file, String fileName, StateObject state){
+    public boolean saveData(File file, String fileName, QuestionBank state){
         boolean saved = false;
         try {
             if (file.isDirectory()) {
@@ -75,12 +75,12 @@ public class StateManager {
      * @return the stateObject to load from
      * @throws FileNotFoundException
      */
-    public StateObject loadData(File file) throws FileNotFoundException {
+    public QuestionBank loadData(File file) throws FileNotFoundException {
         Scanner scanner = new Scanner(file);
-        StateObject newState = new StateObject();
+        QuestionBank newState = new QuestionBank();
         if (scanner.hasNext()) {
             String json = scanner.nextLine();
-            newState = gson.fromJson(json, StateObject.class);
+            newState = gson.fromJson(json, QuestionBank.class);
             scanner.close();
             System.out.println("File read.");
         }
