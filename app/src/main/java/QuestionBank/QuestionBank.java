@@ -37,6 +37,31 @@ public class QuestionBank {
     }
 
     /**
+     * Method that adds a specified tag to a specified question
+     * @param id The id number of the question
+     * @param tagName The name of the tag to be added
+     */
+    protected void AddTagToQuestion(int id, String tagName) {
+        Questions q = this.GetQuestion(id); // Find the question specified
+        q.AddTag(tagName); //Add tag to question
+
+        boolean tagNotFound = true;
+        for (Tag tag : this.TagsLists) { //Search through tags in this.tagsList
+            if (tag.GetTagName().equals(tagName)) {
+                //If found, tag doesn't need to be created
+                tagNotFound = false;
+            }
+        }
+        if (tagNotFound) {
+            //If not found, make tag with tagName and add to this.tagsList
+            Tag t = new Tag(new LinkedList<Integer>());
+            t.setTagName(tagName);
+            t.AddQuestion(id);
+            this.TagsLists.add(t);
+        }
+    }
+
+    /**
      * Method that creates a question, based on user input
      * @return True if the question was created successfully; False otherwise
      */

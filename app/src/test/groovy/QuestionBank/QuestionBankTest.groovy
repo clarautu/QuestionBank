@@ -3,35 +3,44 @@ package QuestionBank
 import spock.lang.Specification
 
 class QuestionBankTest extends Specification{
-    //Defining a variable to be used in all tests, that the setup method will assign to
-    def bank = QuestionBank
 
-    //This is a setup method - it is run before every individual test method
+    //Setup method - run before every test
     def setup() {
-        bank = Mock(QuestionBank)
+        QuestionBank.GetInstance().ResetBank()
     }
 
     //GetQuestions
     def "get all questions"() {
         setup:
-        def myValue = 1
+        def bank = QuestionBank.GetInstance()
+        bank.CreateQuestion(1,"Test question",new LinkedList<String>(List.of("answer1","answer2")),
+                new LinkedList<String>(List.of("possible1","possible2")))
+        bank.CreateQuestion(2,"Test question 2",new LinkedList<String>(List.of("answer1","answer2")),
+                new LinkedList<String>(List.of("possible1","possible2")))
+        bank.CreateQuestion(3,"Test question 3",new LinkedList<String>(List.of("answer1","answer2")),
+                new LinkedList<String>(List.of("possible1","possible2")))
 
         when:
-        myValue += 1
+        def result = bank.GetQuestions()
 
         then:
-        myValue == 2
+        result.size() == 3
     }
     //GetTagsList
     def "get all tags"() {
         setup:
-        def myValue = 1
+        def bank = QuestionBank.GetInstance()
+        bank.CreateQuestion(1,"Test question",new LinkedList<String>(List.of("answer1","answer2")),
+                new LinkedList<String>(List.of("possible1","possible2")))
+
+        def q = bank.GetQuestions().peekFirst()
+        bank.AddTagToQuestion(q.GetIdNumber(), "TagName")
 
         when:
-        myValue += 1
+        def result = bank.GetTagsList().size()
 
         then:
-        myValue == 2
+        result == 1
     }
     //CreateQuestion(int typeChoice, String questionDescription, LinkedList<String> correctAnswers, LinkedList<String> possibleAnswers)
     def "create a multianswer question"() {
@@ -96,5 +105,18 @@ class QuestionBankTest extends Specification{
 
         then:
         myValue == 2
+    }
+    //ResetBank()
+    def "reset the bank"() {
+        setup:
+        def bank = QuestionBank.GetInstance()
+        bank.CreateQuestion(1,"Test question",new LinkedList<String>(List.of("answer1","answer2")),
+                new LinkedList<String>(List.of("possible1","possible2")))
+
+        when:
+        bank.ResetBank()
+
+        then:
+        bank.GetQuestions().size() == 0
     }
 }

@@ -45,5 +45,14 @@ public class Tag {
     public void setQuestionsOfTagType(LinkedList<Integer> questionsOfTagType) {
         QuestionsOfTagType = questionsOfTagType;
     }
+
+    /**
+     * Method that adds a question id to the list of Questions with this tag
+     * @param id The id number of the question being added
+     * @return True if the question id was added correctly; False otherwise
+     */
+    public boolean AddQuestion(int id) {
+        return this.QuestionsOfTagType.add(id);
+    }
 }
 
