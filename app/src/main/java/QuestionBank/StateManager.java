@@ -7,6 +7,10 @@ import java.io.IOException;
 import java.util.Scanner;
 import com.google.gson.Gson;
 
+/**
+ * Class to push data in and out of the project
+ * @version 1.0
+ */
 public class StateManager {
 
     //Variables
@@ -72,7 +76,7 @@ public class StateManager {
     /**
      * Gets the game state from a given file.
      * @param file to get from
-     * @return the stateObject to load from
+     * @return the QuestionBank with state
      * @throws FileNotFoundException
      */
     public QuestionBank loadData(File file) throws FileNotFoundException {
