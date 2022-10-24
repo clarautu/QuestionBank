@@ -8,7 +8,7 @@ import java.util.Scanner;
 /**
  * Facade for meshing front-end to back-end with QuestionBank class.
  * This class will also provide a state manager.
- * @Version 1.0
+ * @version 1.0
  */
 public class BankFacade {
     //Variables
