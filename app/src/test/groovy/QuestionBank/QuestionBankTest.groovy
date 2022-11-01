@@ -26,6 +26,7 @@ class QuestionBankTest extends Specification{
         then:
         result.size() == 3
     }
+
     //GetTagsList
     def "get all tags"() {
         setup:
@@ -42,6 +43,7 @@ class QuestionBankTest extends Specification{
         then:
         result == 1
     }
+
     //CreateQuestion(int typeChoice, String questionDescription, LinkedList<String> correctAnswers, LinkedList<String> possibleAnswers)
     def "create a multianswer question"() {
         setup:
@@ -65,47 +67,83 @@ class QuestionBankTest extends Specification{
     //RemoveQuestion(id)
     def "remove a question"() {
         setup:
-        def myValue = 1
-
+        def bank = QuestionBank.GetInstance()
+        bank.CreateQuestion(2,"Test question",new LinkedList<String>(List.of("answer")),
+                new LinkedList<String>(List.of("possible1","possible2")))
         when:
-        myValue += 1
+        bank.RemoveQuestion(0)
+        def result = bank.GetQuestions()
 
         then:
-        myValue == 2
+        result.size() == 0
     }
+
     //GetQuestion(id)
     def "get a specified question"() {
         setup:
-        def myValue = 1
+        def bank = QuestionBank.GetInstance()
+        bank.CreateQuestion(2,"Test question 1",new LinkedList<String>(List.of("answer")),
+                new LinkedList<String>(List.of("possible1","possible2")))
+        bank.CreateQuestion(2,"Test question 2",new LinkedList<String>(List.of("answer")),
+                new LinkedList<String>(List.of("possible1","possible2")))
 
         when:
-        myValue += 1
+        def result = bank.GetQuestion(1)
 
         then:
-        myValue == 2
+        result.GetIdNumber() == 1
     }
+
+    //AddTagToQuestion(id, tagName)
+    def "add a tag to a question"() {
+        setup:
+        def bank = QuestionBank.GetInstance()
+        bank.CreateQuestion(2,"Test question 1",new LinkedList<String>(List.of("answer")),
+                new LinkedList<String>(List.of("possible1","possible2")))
+        bank.AddTagToQuestion(0, "TestQuestion")
+
+        when:
+        def result = bank.GetQuestion(0).GetTags()
+
+        then:
+        result.getFirst().equals("TestQuestion")
+    }
+
     //GetTaggedQuestions(tagName)
     def "get all questions with a particular tag"() {
         setup:
-        def myValue = 1
+        def bank = QuestionBank.GetInstance()
+        bank.CreateQuestion(2,"Test question 1",new LinkedList<String>(List.of("answer")),
+                new LinkedList<String>(List.of("possible1","possible2")))
+        bank.CreateQuestion(2,"Test question 2",new LinkedList<String>(List.of("answer")),
+                new LinkedList<String>(List.of("possible1","possible2")))
+        bank.AddTagToQuestion(0, "TestQuestion")
+        bank.AddTagToQuestion(1, "TestQuestion")
 
         when:
-        myValue += 1
+        def result = bank.GetTaggedQuestions("TestQuestion")
 
         then:
-        myValue == 2
+        result.size() == 2
     }
+
     //RemoveTag(tagName)
     def "remove a specified tag"() {
         setup:
-        def myValue = 1
+        def bank = QuestionBank.GetInstance()
+        bank.CreateQuestion(2,"Test question 1",new LinkedList<String>(List.of("answer")),
+                new LinkedList<String>(List.of("possible1","possible2")))
+        bank.AddTagToQuestion(0, "TestQuestion")
 
         when:
-        myValue += 1
+        def result1 = bank.GetTagsList().size()
+        bank.RemoveTag("TestQuestion")
+        def result2 = bank.GetTagsList().size()
 
         then:
-        myValue == 2
+        result1 != result2
     }
+
     //ResetBank()
     def "reset the bank"() {
         setup:

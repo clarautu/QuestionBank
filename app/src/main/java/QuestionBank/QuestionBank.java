@@ -48,6 +48,7 @@ public class QuestionBank {
         boolean tagNotFound = true;
         for (Tag tag : this.TagsLists) { //Search through tags in this.tagsList
             if (tag.GetTagName().equals(tagName)) {
+                tag.AddQuestion(id); //Add question id to tag
                 //If found, tag doesn't need to be created
                 tagNotFound = false;
             }
