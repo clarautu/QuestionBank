@@ -17,7 +17,7 @@ class ShortAnswerTest extends Specification {
         result == statement
     }
 
-    //setPrompt()
+    //setPrompt(String Prompt)
     def "set short answer prompt"() {
         given:
         String statement = "some prompt"
