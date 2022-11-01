@@ -1,15 +1,18 @@
 package QuestionBank;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.Scanner;
 
 /**
  * Facade for meshing front-end to back-end with QuestionBank class.
  * This class will also provide a state manager.
- * @Version 1.0
+ * @version 1.0
  */
 public class BankFacade {
     //Variables
+    private final StateManager stateManager = new StateManager();
     private static BankFacade FacadeInstance;
     private QuestionBank QuestionBank;
     private final Scanner scanner = new Scanner(System.in);
@@ -50,6 +53,8 @@ public class BankFacade {
     public boolean RemoveQuestion(int id) {
         return QuestionBank.RemoveQuestion(id);
     }
+
+    private QuestionBank GetQuestionBank() {return this.QuestionBank;}
 
     public Questions GetQuestion(int id) {
         return QuestionBank.GetQuestion(id);
@@ -156,6 +161,33 @@ public class BankFacade {
             possibleAnswers.add(input);
         }
         return possibleAnswers;
+    }
+
+    // Methods for save/load state
+
+    /**
+     * Saves the game with the current state
+     * @param filePath full path of directory to save at
+     * @param fileName specific file name to save in the directory
+     * @return a boolean to confirm save
+     */
+    public boolean save(File filePath, String fileName) {
+        return stateManager.saveData(filePath, fileName, GetQuestionBank());
+    }
+
+    /**
+     * Used to load a game from a file
+     * @param file to load from
+     * @throws FileNotFoundException
+     * @return boolean to confirm load
+     */
+    public boolean load(File file) throws FileNotFoundException {
+        boolean loaded = false;
+        QuestionBank = stateManager.loadData(file, GetQuestionBank());
+        if (QuestionBank != null) {
+            loaded = true;
+        }
+        return loaded;
     }
 
 }

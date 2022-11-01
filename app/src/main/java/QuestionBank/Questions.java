@@ -14,6 +14,7 @@ public abstract class Questions {
         this.Question = question;
         this.CorrectAnswers = correctAnswer;
         this.PossibleAnswers = possibleAnswers;
+        this.Tags = new LinkedList<>();
     }
 
     protected int GetIdNumber(){return this.IdNumber;}
