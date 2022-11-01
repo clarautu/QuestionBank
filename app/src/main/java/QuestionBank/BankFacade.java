@@ -54,6 +54,8 @@ public class BankFacade {
         return QuestionBank.RemoveQuestion(id);
     }
 
+    private QuestionBank GetQuestionBank() {return this.QuestionBank;}
+
     public Questions GetQuestion(int id) {
         return QuestionBank.GetQuestion(id);
     }
@@ -170,7 +172,7 @@ public class BankFacade {
      * @return a boolean to confirm save
      */
     public boolean save(File filePath, String fileName) {
-        return stateManager.saveData(filePath, fileName, QuestionBank);
+        return stateManager.saveData(filePath, fileName, GetQuestionBank());
     }
 
     /**
@@ -181,7 +183,7 @@ public class BankFacade {
      */
     public boolean load(File file) throws FileNotFoundException {
         boolean loaded = false;
-        QuestionBank = stateManager.loadData(file);
+        QuestionBank = stateManager.loadData(file, GetQuestionBank());
         if (QuestionBank != null) {
             loaded = true;
         }

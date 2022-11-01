@@ -1,11 +1,9 @@
 package QuestionBank;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.Scanner;
 import com.google.gson.Gson;
+import com.google.gson.stream.JsonReader;
 
 /**
  * Class to push data in and out of the project
@@ -79,15 +77,20 @@ public class StateManager {
      * @return the QuestionBank with state
      * @throws FileNotFoundException
      */
-    public QuestionBank loadData(File file) throws FileNotFoundException {
+    public QuestionBank loadData(File file, QuestionBank questionBank) throws FileNotFoundException {
         Scanner scanner = new Scanner(file);
-        QuestionBank newState;
+//        QuestionBank newState;
         if (scanner.hasNext()) {
+
+//            JsonReader reader = new JsonReader(new FileReader(file));
             String json = scanner.nextLine();
-            newState = gson.fromJson(json, QuestionBank.class);
+            System.out.println("hello3");
+
+            questionBank = gson.fromJson(json, QuestionBank.class);
+            System.out.println("hello");
             scanner.close();
             System.out.println("File read.");
-            return newState;
+            return questionBank;
         }
         else return QuestionBank.GetInstance();
     }
