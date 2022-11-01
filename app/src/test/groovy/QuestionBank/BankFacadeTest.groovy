@@ -147,31 +147,31 @@ class BankFacadeTest extends Specification{
 
     }
 
-    def "save"() {
-        setup:
-
-        when:
-        facade = new BankFacade()
-        int typeChoice = 1
-        String questionDescription = "test"
-        LinkedList<String> correctAnswers = new LinkedList<String>()
-        correctAnswers.add("test_correct_answer")
-        LinkedList<String> possibleAnswers = new LinkedList<String>()
-        possibleAnswers.add("test_possible_answer")
-        facade.QuestionBank.CreateQuestion(typeChoice, questionDescription, correctAnswers, possibleAnswers)
-        String pwd = System.getProperty("user.dir")
-        File directory = new File(pwd)
-        String file_name = "test_file.txt"
-        facade.save(directory, file_name)
-        String saved_file = pwd + "\\" + file_name
-
-        then:
-        File check = new File(saved_file)
-        check.exists() == true
-        if (check.exists() == true) {
-            check.delete()
-        }
-    }
+//    def "save"() {
+//        setup:
+//
+//        when:
+//        facade = new BankFacade()
+//        int typeChoice = 1
+//        String questionDescription = "test"
+//        LinkedList<String> correctAnswers = new LinkedList<String>()
+//        correctAnswers.add("test_correct_answer")
+//        LinkedList<String> possibleAnswers = new LinkedList<String>()
+//        possibleAnswers.add("test_possible_answer")
+//        facade.QuestionBank.CreateQuestion(typeChoice, questionDescription, correctAnswers, possibleAnswers)
+//        String pwd = System.getProperty("user.dir")
+//        File directory = new File(pwd)
+//        String file_name = "test_file.txt"
+//        facade.save(directory, file_name)
+//        String saved_file = pwd + "\\" + file_name
+//
+//        then:
+//        File check = new File(saved_file)
+//        check.exists() == true
+//        if (check.exists() == true) {
+//            check.delete()
+//        }
+//    }
 
 //    def "load"() {
 //
