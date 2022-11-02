@@ -4,17 +4,33 @@ import spock.lang.Specification
 
 class BankFacadeTest extends Specification{
 
+
     // Variables
-    def facade;
-    def questionBank;
+    def facade
 
 
-    // Setup
+    // Fixtures
     def setup() {
-        facade = Mock(BankFacade)
-//        questionBank = Mock(QuestionBank)
+        facade = BankFacade.GetInstance()
     }
 
+    def cleanup() {
+        facade = null
+    }
+
+    def addBasicQuestion() {
+        int typeChoice = 1
+        String questionDescription = "test"
+        LinkedList<String> correctAnswers = new LinkedList<String>()
+        correctAnswers.add("test_correct_answer")
+        LinkedList<String> possibleAnswers = new LinkedList<String>()
+        possibleAnswers.add("test_possible_answer")
+        facade.QuestionBank.CreateQuestion(typeChoice, questionDescription, correctAnswers, possibleAnswers)
+    }
+
+    def addBasicTag(int tagID, String tagName) {
+        facade.QuestionBank.AddTagToQuestion(tagID, tagName)
+    }
 
     // Tests
 
@@ -22,27 +38,37 @@ class BankFacadeTest extends Specification{
     def "test_singleton"() {
         setup:
         def facadeOne = facade.GetInstance()
-        def before = facadeOne.hashCode()
+
+        and:
+        def facadeCopy = facade.GetInstance()
 
         when:
-        def facadeTwo = facade.GetInstance()
-        def after = facadeTwo.hashCode()
+        def before = facade.hashCode()
+        def after = facadeCopy.hashCode()
 
         then:
         before == after
     }
 
-    def "GetQuestions"() {
-        setup:
 
+    def "GetQuestions check"() {
         when:
-        facade = new BankFacade()
+        addBasicQuestion()
+
+        then:
+        facade.GetQuestion(0) != null
+    }
+
+    def "Check GetQuestions input question has good values"() {
+        setup:
         int typeChoice = 1
         String questionDescription = "test"
         LinkedList<String> correctAnswers = new LinkedList<String>()
         correctAnswers.add("test_correct_answer")
         LinkedList<String> possibleAnswers = new LinkedList<String>()
         possibleAnswers.add("test_possible_answer")
+
+        when:
         facade.QuestionBank.CreateQuestion(typeChoice, questionDescription, correctAnswers, possibleAnswers)
 
         then:
@@ -52,88 +78,71 @@ class BankFacadeTest extends Specification{
         facade.GetQuestion(0).GetPossibleAnswers() == possibleAnswers
     }
 
-    def "GetTagsList"() {
+    def "GetTagsList_Test"() {
         setup:
+        addBasicQuestion()
 
         when:
-        facade = new BankFacade()
+        addBasicTag(0, "test")
+        LinkedList<Tag> taglist = facade.GetTagsList()
+        LinkedList<Tag> listOtags = facade.QuestionBank.TagsLists
 
         then:
-        facade.GetTagsList() == []
+        taglist == listOtags
     }
 
-    def "CreateQuestion"() { // Cannot directly add a question, so this is sorta pointless
+    def "CreateQuestion_Test"() { // Cannot directly add a question, so this is sorta pointless
         setup:
+        def facade = Stub(BankFacade)
+
+        and:
+        facade.GetUserQuestionType() >> 1
+        facade.GetUserQuestionDescription() >> "test"
+        facade.GetUserCorrectAnswers() >> "test"
+        facade.GetUserCorrectAnswers() >> "test"
 
         when:
-        facade = new BankFacade()
-        int typeChoice = 1
-        String questionDescription = "test"
-        LinkedList<String> correctAnswers = new LinkedList<String>()
-        correctAnswers.add("test_correct_answer")
-        LinkedList<String> possibleAnswers = new LinkedList<String>()
-        possibleAnswers.add("test_possible_answer")
-        facade.QuestionBank.CreateQuestion(typeChoice, questionDescription, correctAnswers, possibleAnswers)
+        facade.CreateQuestion()
 
         then:
-        facade.GetQuestion(0).GetIdNumber() == 0
-        facade.GetQuestion(0).GetQuestion() == questionDescription
-        facade.GetQuestion(0).GetCorrectAnswer() == correctAnswers
-        facade.GetQuestion(0).GetPossibleAnswers() == possibleAnswers
+        facade.GetQuestion(0) != null
+
     }
 
-    def "RemoveQuestion"() {
+    def "RemoveQuestion_Test"() {
         setup:
+        addBasicQuestion()
 
         when:
-        facade = new BankFacade()
-        int typeChoice = 1
-        String questionDescription = "test"
-        LinkedList<String> correctAnswers = new LinkedList<String>()
-        correctAnswers.add("test_correct_answer")
-        LinkedList<String> possibleAnswers = new LinkedList<String>()
-        possibleAnswers.add("test_possible_answer")
-        facade.QuestionBank.CreateQuestion(typeChoice, questionDescription, correctAnswers, possibleAnswers)
         facade.RemoveQuestion(0)
 
         then:
         facade.GetQuestion(0) == null
     }
 
-    def "GetTaggedQuestions"() { // q is null?
-//        setup:
-//
-//        when:
-//        facade = new BankFacade()
-//        int typeChoice = 1
-//        String questionDescription = "test"
-//        LinkedList<String> correctAnswers = new LinkedList<String>()
-//        correctAnswers.add("test_correct_answer")
-//        LinkedList<String> possibleAnswers = new LinkedList<String>()
-//        possibleAnswers.add("test_possible_answer")
-//        facade.QuestionBank.CreateQuestion(typeChoice, questionDescription, correctAnswers, possibleAnswers)
-//        facade.QuestionBank.AddTagToQuestion(0, "test")
-//
-//        then:
-//        facade.GetTaggedQuestions("test") == 0
+    def "GetTaggedQuestions_Test"() {
+        when:
+        addBasicQuestion()
+        String tagName = "test"
+        LinkedList<Questions> questions = facade.GetTaggedQuestions(tagName)
+
+        then:
+        questions != null
     }
 
-    def "GetUserQuestionType"() {
+//    def "GetUserQuestionType"() {
 //        setup:
+////        def facade = Stub(BankFacade.class)
+//        String userInput = String.format("1")
+//        ByteArrayInputStream bais = new ByteArrayInputStream(getBytes("hello"))
+//        System.setIn(bais)
 //
 //        when:
-//        facade = new BankFacade()
-//        int typeChoice = 1
-//        String questionDescription = "test"
-//        LinkedList<String> correctAnswers = new LinkedList<String>()
-//        correctAnswers.add("test_correct_answer")
-//        LinkedList<String> possibleAnswers = new LinkedList<String>()
-//        possibleAnswers.add("test_possible_answer")
-//        facade.QuestionBank.CreateQuestion(typeChoice, questionDescription, correctAnswers, possibleAnswers)
+//        int result = facade.GetUserQuestionType()
 //
 //        then:
-//        facade.GetUserQuestionType() == 1
-    }
+//        result == 1
+//    }
 
     def "GetUserQuestionDescription"() {
 

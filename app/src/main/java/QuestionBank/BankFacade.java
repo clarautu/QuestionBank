@@ -13,7 +13,7 @@ import java.util.Scanner;
 public class BankFacade {
     //Variables
     private final StateManager stateManager = new StateManager();
-    private static BankFacade FacadeInstance;
+    private static BankFacade FacadeInstance = null;
     private QuestionBank QuestionBank;
     private final Scanner scanner = new Scanner(System.in);
 
@@ -54,7 +54,7 @@ public class BankFacade {
         return QuestionBank.RemoveQuestion(id);
     }
 
-    private QuestionBank GetQuestionBank() {return this.QuestionBank;}
+    private QuestionBank GetQuestionBank() {return QuestionBank;}
 
     public Questions GetQuestion(int id) {
         return QuestionBank.GetQuestion(id);
