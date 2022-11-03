@@ -58,11 +58,12 @@ public class StateManager {
         try {
             if (write_file.createNewFile()) {
                 System.out.println("File create: " + write_file.getName());
-            } else {
-                System.out.println("File may already exist.");
+            }
+            else {
+                System.out.println("File may already exist and was not created.");
             }
         } catch (IOException e) {
-            System.out.println("An error occurred creating a file.");
+            System.out.println("An error occurred creating file.");
             e.printStackTrace();
         }
         return write_file;
@@ -77,17 +78,12 @@ public class StateManager {
      * @return the QuestionBank with state
      * @throws FileNotFoundException
      */
-    public QuestionBank loadData(File file, QuestionBank questionBank) throws FileNotFoundException {
+    public QuestionBank loadData(File file) throws FileNotFoundException {
         Scanner scanner = new Scanner(file);
-//        QuestionBank newState;
+        QuestionBank questionBank;
         if (scanner.hasNext()) {
-
-//            JsonReader reader = new JsonReader(new FileReader(file));
             String json = scanner.nextLine();
-            System.out.println("hello3");
-
             questionBank = gson.fromJson(json, QuestionBank.class);
-            System.out.println("hello");
             scanner.close();
             System.out.println("File read.");
             return questionBank;

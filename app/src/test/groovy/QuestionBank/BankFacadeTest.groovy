@@ -2,6 +2,8 @@ package QuestionBank
 
 import spock.lang.Specification
 
+
+
 class BankFacadeTest extends Specification{
 
 
@@ -132,16 +134,36 @@ class BankFacadeTest extends Specification{
 
 //    def "GetUserQuestionType"() {
 //        setup:
-////        def facade = Stub(BankFacade.class)
-//        String userInput = String.format("1")
-//        ByteArrayInputStream bais = new ByteArrayInputStream(getBytes("hello"))
-//        System.setIn(bais)
+//        QuestionBank questionBank = Stub()
+//        questionBank.
+//        BankFacade facade = BankFacade.GetInstance()
+//        facade.QuestionBank = questionBank
+//
 //
 //        when:
 //        int result = facade.GetUserQuestionType()
 //
 //        then:
-//        result == 1
+//    }
+
+//    def "GetUserQuestionType"() {
+//        setup:
+//        def facade = BankFacade.GetInstance()
+////        facade.scanner = GroovyMock(Scanner.class) {
+////            nextLine() >> "1"
+////        }
+////        Scanner scanner = new Scanner()
+//        Object[] strings = new String[1]
+//        strings[0] = new String("1")
+//        facade.scanner.use(strings)
+////        facade.scanner.
+////        String[] string = {"1"}
+////        facade.scanner.use(string)
+//
+//        expect:
+////        facade.CreateQuestion() == 1
+//        1 == 1
+//
 //    }
 
     def "GetUserQuestionDescription"() {
@@ -155,63 +177,43 @@ class BankFacadeTest extends Specification{
     def "GetUserPossibleAnswers"() {
 
     }
-
+//
 //    def "save"() {
 //        setup:
-//
-//        when:
-//        facade = new BankFacade()
-//        int typeChoice = 1
-//        String questionDescription = "test"
-//        LinkedList<String> correctAnswers = new LinkedList<String>()
-//        correctAnswers.add("test_correct_answer")
-//        LinkedList<String> possibleAnswers = new LinkedList<String>()
-//        possibleAnswers.add("test_possible_answer")
-//        facade.QuestionBank.CreateQuestion(typeChoice, questionDescription, correctAnswers, possibleAnswers)
 //        String pwd = System.getProperty("user.dir")
 //        File directory = new File(pwd)
 //        String file_name = "test_file.txt"
-//        facade.save(directory, file_name)
 //        String saved_file = pwd + "\\" + file_name
+//        File made_file = new File(saved_file)
+//        when:
+//        Boolean saved = facade.save(directory, file_name)
 //
 //        then:
-//        File check = new File(saved_file)
-//        check.exists() == true
-//        if (check.exists() == true) {
-//            check.delete()
+//        if (made_file.exists()){
+//            made_file.delete()
 //        }
+//        saved == true
+//
 //    }
 
 //    def "load"() {
-//
 //        setup:
+//        String pwd = System.getProperty("user.dir")
+//        String file_name = "test_file.txt"
+//        String saved_file = pwd + "\\" + file_name
+//        File made_file = new File(saved_file)
+//        QuestionBank savedBank = facade.GetQuestionBank()
+//        QuestionBank loadedBank;
 //
 //        when:
-//        facade = new BankFacade()
-//        int typeChoice = 1
-//        String questionDescription = "test"
-//        LinkedList<String> correctAnswers = new LinkedList<String>()
-//        correctAnswers.add("test_correct_answer")
-//        LinkedList<String> possibleAnswers = new LinkedList<String>()
-//        possibleAnswers.add("test_possible_answer")
-//        facade.QuestionBank.CreateQuestion(typeChoice, questionDescription, correctAnswers, possibleAnswers)
-//        String pwd = System.getProperty("user.dir")
-//        File directory = new File(pwd)
-//        String file_name = "test_file.txt"
-//        facade.save(directory, file_name)
-//        String saved_file = pwd + "\\" + file_name
-//        File file_to_load = new File(saved_file)
-//
-//        BankFacade facade2 = new BankFacade()
-//        facade2.load(file_to_load)
-//        System.out.println("hello2")
+//        loadedBank = facade.load(made_file)
 //
 //        then:
-//        facade2.GetQuestion(0).GetIdNumber() == 0
-//        File check = new File(saved_file)
-//        if (check.exists()) {
-//            check.delete()
+//        if (made_file.exists()){
+//            made_file.delete()
 //        }
+//        savedBank == loadedBank
 //    }
+
 }
 

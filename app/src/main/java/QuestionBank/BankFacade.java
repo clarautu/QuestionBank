@@ -175,6 +175,7 @@ public class BankFacade {
         return stateManager.saveData(filePath, fileName, GetQuestionBank());
     }
 
+
     /**
      * Used to load a game from a file
      * @param file to load from
@@ -183,7 +184,7 @@ public class BankFacade {
      */
     public boolean load(File file) throws FileNotFoundException {
         boolean loaded = false;
-        QuestionBank = stateManager.loadData(file, GetQuestionBank());
+        QuestionBank = stateManager.loadData(file);
         if (QuestionBank != null) {
             loaded = true;
         }
