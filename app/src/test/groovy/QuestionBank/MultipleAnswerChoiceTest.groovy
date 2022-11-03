@@ -2,7 +2,7 @@ package QuestionBank;
 
 import spock.lang.Specification;
 
-public class MultipleAnswerChoiceTest extends Specification {
+class MultipleAnswerChoiceTest extends Specification {
     MultipleAnswerChoice question;
     int ID;
     String questionPrompt;
@@ -25,18 +25,22 @@ public class MultipleAnswerChoiceTest extends Specification {
     }
 
     def "check ID"(){
-        assert question.GetIdNumber() == ID;
+        when: true
+        then:  question.GetIdNumber() == ID;
     }
 
     def "check question"(){
-        assert question.GetQuestion() == questionPrompt;
+        when: true
+        then:  question.GetQuestion() == questionPrompt;
     }
 
     def "check right answer"(){
-        assert question.GetCorrectAnswer() == correctoptions;
+        when: true
+        then:  question.GetCorrectAnswer() == correctoptions;
     }
 
     def "check possible answers"() {
-        assert question.GetPossibleAnswers() == choices;
+        when: true
+        then:  question.GetPossibleAnswers() == choices;
     }
 }

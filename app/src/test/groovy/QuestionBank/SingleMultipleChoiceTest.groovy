@@ -2,8 +2,6 @@ package QuestionBank
 
 import spock.lang.Specification;
 
-import java.util.LinkedList
-
 class SingleMultipleChoiceTest extends Specification {
     SingleMultipleChoice question;
     int ID;
@@ -24,19 +22,23 @@ class SingleMultipleChoiceTest extends Specification {
     }
 
     def "check ID"(){
-        assert question.GetIdNumber() == ID;
+        when: true
+        then:  question.GetIdNumber() == ID;
     }
 
     def "check question"(){
-        assert question.GetQuestion() == questionPrompt;
+        when: true
+        then: question.GetQuestion() == questionPrompt
     }
 
     def "check right answer"(){
-        assert question.GetCorrectAnswer()[0] == "Right!";
+        when: true
+        then:  question.GetCorrectAnswer()[0] == "Right!";
     }
 
     def "check possible answers"(){
-        assert question.GetPossibleAnswers() == choices;
+        when: true
+        then:  question.GetPossibleAnswers() == choices;
     }
 
 
