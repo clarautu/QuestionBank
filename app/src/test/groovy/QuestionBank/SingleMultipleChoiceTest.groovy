@@ -4,7 +4,7 @@ import spock.lang.Specification;
 
 import java.util.LinkedList
 
-class SingleMulitpleChoiceTest extends Specification {
+class SingleMultipleChoiceTest extends Specification {
     SingleMultipleChoice question;
     int ID;
     String questionPrompt;
