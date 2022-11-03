@@ -2,19 +2,37 @@ package QuestionBank
 
 import spock.lang.Specification
 
+
+
 class BankFacadeTest extends Specification{
 
+
     // Variables
-    def facade;
-    def questionBank;
+    def facade
 
 
-    // Setup
+    // Fixtures
     def setup() {
-        facade = Mock(BankFacade)
-//        questionBank = Mock(QuestionBank)
+        facade = BankFacade.GetInstance()
     }
 
+    def cleanup() {
+        facade = null
+    }
+
+    def addBasicQuestion() {
+        int typeChoice = 1
+        String questionDescription = "test"
+        LinkedList<String> correctAnswers = new LinkedList<String>()
+        correctAnswers.add("test_correct_answer")
+        LinkedList<String> possibleAnswers = new LinkedList<String>()
+        possibleAnswers.add("test_possible_answer")
+        facade.QuestionBank.CreateQuestion(typeChoice, questionDescription, correctAnswers, possibleAnswers)
+    }
+
+    def addBasicTag(int tagID, String tagName) {
+        facade.QuestionBank.AddTagToQuestion(tagID, tagName)
+    }
 
     // Tests
 
@@ -22,27 +40,37 @@ class BankFacadeTest extends Specification{
     def "test_singleton"() {
         setup:
         def facadeOne = facade.GetInstance()
-        def before = facadeOne.hashCode()
+
+        and:
+        def facadeCopy = facade.GetInstance()
 
         when:
-        def facadeTwo = facade.GetInstance()
-        def after = facadeTwo.hashCode()
+        def before = facade.hashCode()
+        def after = facadeCopy.hashCode()
 
         then:
         before == after
     }
 
-    def "GetQuestions"() {
-        setup:
 
+    def "GetQuestions check"() {
         when:
-        facade = new BankFacade()
+        addBasicQuestion()
+
+        then:
+        facade.GetQuestion(0) != null
+    }
+
+    def "Check GetQuestions input question has good values"() {
+        setup:
         int typeChoice = 1
         String questionDescription = "test"
         LinkedList<String> correctAnswers = new LinkedList<String>()
         correctAnswers.add("test_correct_answer")
         LinkedList<String> possibleAnswers = new LinkedList<String>()
         possibleAnswers.add("test_possible_answer")
+
+        when:
         facade.QuestionBank.CreateQuestion(typeChoice, questionDescription, correctAnswers, possibleAnswers)
 
         then:
@@ -52,88 +80,91 @@ class BankFacadeTest extends Specification{
         facade.GetQuestion(0).GetPossibleAnswers() == possibleAnswers
     }
 
-    def "GetTagsList"() {
+    def "GetTagsList_Test"() {
         setup:
+        addBasicQuestion()
 
         when:
-        facade = new BankFacade()
+        addBasicTag(0, "test")
+        LinkedList<Tag> taglist = facade.GetTagsList()
+        LinkedList<Tag> listOtags = facade.QuestionBank.TagsLists
 
         then:
-        facade.GetTagsList() == []
+        taglist == listOtags
     }
 
-    def "CreateQuestion"() { // Cannot directly add a question, so this is sorta pointless
+    def "CreateQuestion_Test"() { // Cannot directly add a question, so this is sorta pointless
         setup:
+        def facade = Stub(BankFacade)
+
+        and:
+        facade.GetUserQuestionType() >> 1
+        facade.GetUserQuestionDescription() >> "test"
+        facade.GetUserCorrectAnswers() >> "test"
+        facade.GetUserCorrectAnswers() >> "test"
 
         when:
-        facade = new BankFacade()
-        int typeChoice = 1
-        String questionDescription = "test"
-        LinkedList<String> correctAnswers = new LinkedList<String>()
-        correctAnswers.add("test_correct_answer")
-        LinkedList<String> possibleAnswers = new LinkedList<String>()
-        possibleAnswers.add("test_possible_answer")
-        facade.QuestionBank.CreateQuestion(typeChoice, questionDescription, correctAnswers, possibleAnswers)
+        facade.CreateQuestion()
 
         then:
-        facade.GetQuestion(0).GetIdNumber() == 0
-        facade.GetQuestion(0).GetQuestion() == questionDescription
-        facade.GetQuestion(0).GetCorrectAnswer() == correctAnswers
-        facade.GetQuestion(0).GetPossibleAnswers() == possibleAnswers
+        facade.GetQuestion(0) != null
+
     }
 
-    def "RemoveQuestion"() {
+    def "RemoveQuestion_Test"() {
         setup:
+        addBasicQuestion()
 
         when:
-        facade = new BankFacade()
-        int typeChoice = 1
-        String questionDescription = "test"
-        LinkedList<String> correctAnswers = new LinkedList<String>()
-        correctAnswers.add("test_correct_answer")
-        LinkedList<String> possibleAnswers = new LinkedList<String>()
-        possibleAnswers.add("test_possible_answer")
-        facade.QuestionBank.CreateQuestion(typeChoice, questionDescription, correctAnswers, possibleAnswers)
         facade.RemoveQuestion(0)
 
         then:
         facade.GetQuestion(0) == null
     }
 
-    def "GetTaggedQuestions"() { // q is null?
-//        setup:
-//
-//        when:
-//        facade = new BankFacade()
-//        int typeChoice = 1
-//        String questionDescription = "test"
-//        LinkedList<String> correctAnswers = new LinkedList<String>()
-//        correctAnswers.add("test_correct_answer")
-//        LinkedList<String> possibleAnswers = new LinkedList<String>()
-//        possibleAnswers.add("test_possible_answer")
-//        facade.QuestionBank.CreateQuestion(typeChoice, questionDescription, correctAnswers, possibleAnswers)
-//        facade.QuestionBank.AddTagToQuestion(0, "test")
-//
-//        then:
-//        facade.GetTaggedQuestions("test") == 0
+    def "GetTaggedQuestions_Test"() {
+        when:
+        addBasicQuestion()
+        String tagName = "test"
+        LinkedList<Questions> questions = facade.GetTaggedQuestions(tagName)
+
+        then:
+        questions != null
     }
 
-    def "GetUserQuestionType"() {
+//    def "GetUserQuestionType"() {
 //        setup:
+//        QuestionBank questionBank = Stub()
+//        questionBank.
+//        BankFacade facade = BankFacade.GetInstance()
+//        facade.QuestionBank = questionBank
+//
 //
 //        when:
-//        facade = new BankFacade()
-//        int typeChoice = 1
-//        String questionDescription = "test"
-//        LinkedList<String> correctAnswers = new LinkedList<String>()
-//        correctAnswers.add("test_correct_answer")
-//        LinkedList<String> possibleAnswers = new LinkedList<String>()
-//        possibleAnswers.add("test_possible_answer")
-//        facade.QuestionBank.CreateQuestion(typeChoice, questionDescription, correctAnswers, possibleAnswers)
+//        int result = facade.GetUserQuestionType()
 //
 //        then:
-//        facade.GetUserQuestionType() == 1
-    }
+//    }
+
+//    def "GetUserQuestionType"() {
+//        setup:
+//        def facade = BankFacade.GetInstance()
+////        facade.scanner = GroovyMock(Scanner.class) {
+////            nextLine() >> "1"
+////        }
+////        Scanner scanner = new Scanner()
+//        Object[] strings = new String[1]
+//        strings[0] = new String("1")
+//        facade.scanner.use(strings)
+////        facade.scanner.
+////        String[] string = {"1"}
+////        facade.scanner.use(string)
+//
+//        expect:
+////        facade.CreateQuestion() == 1
+//        1 == 1
+//
+//    }
 
     def "GetUserQuestionDescription"() {
 
@@ -146,63 +177,43 @@ class BankFacadeTest extends Specification{
     def "GetUserPossibleAnswers"() {
 
     }
-
+//
 //    def "save"() {
 //        setup:
-//
-//        when:
-//        facade = new BankFacade()
-//        int typeChoice = 1
-//        String questionDescription = "test"
-//        LinkedList<String> correctAnswers = new LinkedList<String>()
-//        correctAnswers.add("test_correct_answer")
-//        LinkedList<String> possibleAnswers = new LinkedList<String>()
-//        possibleAnswers.add("test_possible_answer")
-//        facade.QuestionBank.CreateQuestion(typeChoice, questionDescription, correctAnswers, possibleAnswers)
 //        String pwd = System.getProperty("user.dir")
 //        File directory = new File(pwd)
 //        String file_name = "test_file.txt"
-//        facade.save(directory, file_name)
 //        String saved_file = pwd + "\\" + file_name
+//        File made_file = new File(saved_file)
+//        when:
+//        Boolean saved = facade.save(directory, file_name)
 //
 //        then:
-//        File check = new File(saved_file)
-//        check.exists() == true
-//        if (check.exists() == true) {
-//            check.delete()
+//        if (made_file.exists()){
+//            made_file.delete()
 //        }
+//        saved == true
+//
 //    }
 
 //    def "load"() {
-//
 //        setup:
+//        String pwd = System.getProperty("user.dir")
+//        String file_name = "test_file.txt"
+//        String saved_file = pwd + "\\" + file_name
+//        File made_file = new File(saved_file)
+//        QuestionBank savedBank = facade.GetQuestionBank()
+//        QuestionBank loadedBank;
 //
 //        when:
-//        facade = new BankFacade()
-//        int typeChoice = 1
-//        String questionDescription = "test"
-//        LinkedList<String> correctAnswers = new LinkedList<String>()
-//        correctAnswers.add("test_correct_answer")
-//        LinkedList<String> possibleAnswers = new LinkedList<String>()
-//        possibleAnswers.add("test_possible_answer")
-//        facade.QuestionBank.CreateQuestion(typeChoice, questionDescription, correctAnswers, possibleAnswers)
-//        String pwd = System.getProperty("user.dir")
-//        File directory = new File(pwd)
-//        String file_name = "test_file.txt"
-//        facade.save(directory, file_name)
-//        String saved_file = pwd + "\\" + file_name
-//        File file_to_load = new File(saved_file)
-//
-//        BankFacade facade2 = new BankFacade()
-//        facade2.load(file_to_load)
-//        System.out.println("hello2")
+//        loadedBank = facade.load(made_file)
 //
 //        then:
-//        facade2.GetQuestion(0).GetIdNumber() == 0
-//        File check = new File(saved_file)
-//        if (check.exists()) {
-//            check.delete()
+//        if (made_file.exists()){
+//            made_file.delete()
 //        }
+//        savedBank == loadedBank
 //    }
+
 }
 

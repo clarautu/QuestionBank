@@ -1,10 +1,6 @@
 package QuestionBank;
 
-import java.util.LinkedList;
-
 public class ShortAnswer extends Questions{
-    //Fields
-    private String Prompt;
 
     //Constructor
     protected ShortAnswer(int idNumber, String question) {
@@ -22,9 +18,9 @@ public class ShortAnswer extends Questions{
 
     /**
      * Method that updates the value of the current short answer question.
-     * @param prompt The current short answer question.
+     * @param Prompt The current short answer question.
      */
-    public void setPrompt(String prompt) {
-        this.SetQuestion(prompt);
+    public void setPrompt(String Prompt) {
+        this.SetQuestion(Prompt);
     }
 }

@@ -13,7 +13,7 @@ import java.util.Scanner;
 public class BankFacade {
     //Variables
     private final StateManager stateManager = new StateManager();
-    private static BankFacade FacadeInstance;
+    private static BankFacade FacadeInstance = null;
     private QuestionBank QuestionBank;
     private final Scanner scanner = new Scanner(System.in);
 
@@ -54,7 +54,7 @@ public class BankFacade {
         return QuestionBank.RemoveQuestion(id);
     }
 
-    private QuestionBank GetQuestionBank() {return this.QuestionBank;}
+    private QuestionBank GetQuestionBank() {return QuestionBank;}
 
     public Questions GetQuestion(int id) {
         return QuestionBank.GetQuestion(id);
@@ -175,6 +175,7 @@ public class BankFacade {
         return stateManager.saveData(filePath, fileName, GetQuestionBank());
     }
 
+
     /**
      * Used to load a game from a file
      * @param file to load from
@@ -183,7 +184,7 @@ public class BankFacade {
      */
     public boolean load(File file) throws FileNotFoundException {
         boolean loaded = false;
-        QuestionBank = stateManager.loadData(file, GetQuestionBank());
+        QuestionBank = stateManager.loadData(file);
         if (QuestionBank != null) {
             loaded = true;
         }

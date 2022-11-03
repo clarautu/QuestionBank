@@ -14,8 +14,11 @@ public class Tag {
         QuestionsOfTagType = questionsOfTagType;
     }
 
-    //Methods
+    public Tag(String tagName) {
+        TagName = tagName;
+    }
 
+    //Methods
     /**
      * Method that returns the current tag name.
      * @return Current tag name.
