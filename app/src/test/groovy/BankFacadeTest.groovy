@@ -1,7 +1,10 @@
-package QuestionBank
-
+import QuestionBank.BankFacade
+import QuestionBank.Questions
+import QuestionBank.Tag
+import org.codehaus.groovy.control.io.InputStreamReaderSource
 import spock.lang.Specification
 
+import java.nio.charset.StandardCharsets
 
 
 class BankFacadeTest extends Specification{
@@ -126,6 +129,7 @@ class BankFacadeTest extends Specification{
         when:
         addBasicQuestion()
         String tagName = "test"
+        addBasicTag(0, "test")
         LinkedList<Questions> questions = facade.GetTaggedQuestions(tagName)
 
         then:
@@ -134,27 +138,10 @@ class BankFacadeTest extends Specification{
 
 //    def "GetUserQuestionType"() {
 //        setup:
-//        QuestionBank questionBank = Stub()
-//        questionBank.
-//        BankFacade facade = BankFacade.GetInstance()
-//        facade.QuestionBank = questionBank
-//
-//
-//        when:
-//        int result = facade.GetUserQuestionType()
-//
-//        then:
-//    }
-
-//    def "GetUserQuestionType"() {
-//        setup:
-//        def mockScanner = GroovyMock(Scanner.class) {
-//            nextLine() >> "1"
+//        def mockScanner = GroovyStub(Scanner.class) {
+//            nextLine() >> "1\n"
 //        }
-////        Object[] strings = new String[1]
-////        strings[0] = new String("1")
 //        facade.scanner = mockScanner
-////        scanner.use(strings)
 //
 //        when:
 //        int gotType = facade.GetUserQuestionType()
