@@ -7,14 +7,15 @@ class SingleMultipleChoiceTest extends Specification {
     int ID;
     String questionPrompt;
     LinkedList choices;
+    LinkedList rightanswer;
 
     def setup() {
-        choices = new LinkedList();
-        choices.add("wrong1");
-        choices.add("wrong2");
-        choices.add("wrong3");
-        choices.add("Right!");
-        LinkedList rightanswer = new LinkedList();
+        choices = new LinkedList(List.of("wrong1","wrong2","wrong3","Right!"));
+        //choices.add("wrong1");
+        //choices.add("wrong2");
+        //choices.add("wrong3");
+        //choices.add("Right!");
+        rightanswer = new LinkedList();
         rightanswer.add("Right!");
         ID = 562;
         questionPrompt = "select the right answer:"
