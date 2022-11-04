@@ -15,7 +15,9 @@ public class BankFacade {
     private final StateManager stateManager = new StateManager();
     private static BankFacade FacadeInstance = null;
     private QuestionBank QuestionBank;
-    private final Scanner scanner = new Scanner(System.in);
+    private Scanner scanner = new Scanner(System.in);
+
+    private StateObject stateObject = new StateObject();
 
     //Constructors
     private BankFacade() {
@@ -165,6 +167,12 @@ public class BankFacade {
 
     // Methods for save/load state
 
+    public void setState() {
+        stateObject.setQuestions(QuestionBank.GetQuestions());
+        stateObject.setTagsLists(QuestionBank.GetTagsList());
+        stateObject.setValid(true);
+    }
+
     /**
      * Saves the game with the current state
      * @param filePath full path of directory to save at
@@ -172,7 +180,12 @@ public class BankFacade {
      * @return a boolean to confirm save
      */
     public boolean save(File filePath, String fileName) {
-        return stateManager.saveData(filePath, fileName, GetQuestionBank());
+        boolean saved = false;
+        setState();
+        if (stateObject.isValid()) {
+            saved = stateManager.saveData(filePath, fileName, stateObject);
+        }
+        return saved;
     }
 
 
@@ -184,9 +197,9 @@ public class BankFacade {
      */
     public boolean load(File file) throws FileNotFoundException {
         boolean loaded = false;
-        QuestionBank = stateManager.loadData(file);
-        if (QuestionBank != null) {
-            loaded = true;
+        stateManager.loadData(file, stateObject);
+        if (stateObject.isValid()) {
+            QuestionBank.setState(stateObject);
         }
         return loaded;
     }

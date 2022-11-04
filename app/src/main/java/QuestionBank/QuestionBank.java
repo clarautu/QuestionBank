@@ -219,4 +219,14 @@ public class QuestionBank {
         this.Questions = new LinkedList<Questions>();
         this.TagsLists = new LinkedList<Tag>();
     }
+
+    /**
+     * setState is used to grab state of Questions and Tags from QuestionBank and store them in a StateObject.
+     * I was going to do this differently and just save the whole QuestionBank but switched while debugging.
+     * @param state is the StateObject passed up with current state of Questions and TagsLists
+     */
+    public void setState(StateObject state) {
+        Questions = state.getQuestions();
+        TagsLists = state.getTagsLists();
+    }
 }

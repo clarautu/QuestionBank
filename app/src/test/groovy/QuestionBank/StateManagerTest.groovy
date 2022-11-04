@@ -18,17 +18,21 @@ class StateManagerTest extends Specification {
     }
 
     // Tests
+    ///////////////////////////////////////////////////////////////////////////////////
+    //  Save and Load Tests cause problems with Github actions due to file creation  //
+    ///////////////////////////////////////////////////////////////////////////////////
+    //  Uncomment to use
 
 //    def "saveDataTest"() {
 //        setup:
-//        QuestionBank questionBank = QuestionBank.GetInstance()
+//        StateObject stateObject = new StateObject()
 //        String pwd = System.getProperty("user.dir")
 //        File directory = new File(pwd)
-//        String file_name = "test_file.txt"
+//        String file_name = "test_file_for_saveDataTest.txt"
 //        String saved_file = pwd + "\\" + file_name
 //
 //        when:
-//        stateManager.saveData(directory, file_name, questionBank)
+//        stateManager.saveData(directory, file_name, stateObject)
 //
 //        then:
 //        File check = new File(saved_file)
@@ -42,7 +46,7 @@ class StateManagerTest extends Specification {
 //        setup:
 //        String pwd = System.getProperty("user.dir")
 //        File directory = new File(pwd)
-//        String file_name = "test_file.txt"
+//        String file_name = "test_file_for_createFileTest.txt"
 //        String saved_file = pwd + "\\" + file_name
 //
 //        when:
@@ -58,23 +62,24 @@ class StateManagerTest extends Specification {
 //
 //    def "loadDataTest"() {
 //        setup:
-//        QuestionBank questionBank = QuestionBank.GetInstance()
+//        StateObject stateObject = new StateObject()
 //        String pwd = System.getProperty("user.dir")
 //        File directory = new File(pwd)
-//        String file_name = "test_file.txt"
+//        String file_name = "test_file_for_loadDataTest.txt"
 //        String saved_file = pwd + "\\" + file_name
 //        File load_from_this = new File(saved_file)
-//        stateManager.saveData(directory, file_name, questionBank)
+//        stateManager.saveData(directory, file_name, stateObject)
+//        StateObject savedStateObject = stateObject
 //
 //        when:
-//        QuestionBank questionBankLoad
-//        questionBankLoad = stateManager.loadData(load_from_this)
+//        stateManager.loadData(load_from_this, stateObject)
+//        StateObject loadedStateObject = stateObject
 //
 //        then:
 //        if (load_from_this.exists()) {
 //            load_from_this.delete()
 //        }
-//        questionBank.Questions == questionBankLoad.Questions
-//        questionBank.TagsLists == questionBankLoad.TagsLists
+//        savedStateObject.getQuestions() == loadedStateObject.getQuestions()
+//        savedStateObject.getTagsLists() == loadedStateObject.getTagsLists()
 //    }
 }

@@ -3,6 +3,7 @@ package QuestionBank;
 import java.io.*;
 import java.util.Scanner;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 
 /**
@@ -12,10 +13,10 @@ import com.google.gson.stream.JsonReader;
 public class StateManager {
 
     //Variables
-    Gson gson = new Gson();
+    Gson gson = new GsonBuilder().registerTypeAdapter(Questions.class, new GsonInstanceCreator()).create();
 
-    //Methods
-    //For Saving
+//    Methods
+//    For Saving
 
     /**
      * Saves with the current state
@@ -24,7 +25,7 @@ public class StateManager {
      * @param state current state to save
      * @return a boolean to confirm save
      */
-    public boolean saveData(File file, String fileName, QuestionBank state){
+    public boolean saveData(File file, String fileName, StateObject state){
         boolean saved = false;
         try {
             if (file.isDirectory()) {
@@ -78,17 +79,17 @@ public class StateManager {
      * @return the QuestionBank with state
      * @throws FileNotFoundException
      */
-    public QuestionBank loadData(File file) throws FileNotFoundException {
+    public boolean loadData(File file, StateObject stateObject) throws FileNotFoundException {
         Scanner scanner = new Scanner(file);
-        QuestionBank questionBank;
         if (scanner.hasNext()) {
             String json = scanner.nextLine();
-            questionBank = gson.fromJson(json, QuestionBank.class);
+            stateObject = gson.fromJson(json, StateObject.class);
             scanner.close();
             System.out.println("File read.");
-            return questionBank;
+            stateObject.setValid(true);
+            return true;
         }
-        else return QuestionBank.GetInstance();
+        else {return false;}
     }
 
     // For exporting to database

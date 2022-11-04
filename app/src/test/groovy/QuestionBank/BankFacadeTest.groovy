@@ -148,22 +148,19 @@ class BankFacadeTest extends Specification{
 
 //    def "GetUserQuestionType"() {
 //        setup:
-//        def facade = BankFacade.GetInstance()
-////        facade.scanner = GroovyMock(Scanner.class) {
-////            nextLine() >> "1"
-////        }
-////        Scanner scanner = new Scanner()
-//        Object[] strings = new String[1]
-//        strings[0] = new String("1")
-//        facade.scanner.use(strings)
-////        facade.scanner.
-////        String[] string = {"1"}
-////        facade.scanner.use(string)
+//        def mockScanner = GroovyMock(Scanner.class) {
+//            nextLine() >> "1"
+//        }
+////        Object[] strings = new String[1]
+////        strings[0] = new String("1")
+//        facade.scanner = mockScanner
+////        scanner.use(strings)
 //
-//        expect:
-////        facade.CreateQuestion() == 1
-//        1 == 1
+//        when:
+//        int gotType = facade.GetUserQuestionType()
 //
+//        then:
+//        gotType == 1
 //    }
 
     def "GetUserQuestionDescription"() {
@@ -177,7 +174,13 @@ class BankFacadeTest extends Specification{
     def "GetUserPossibleAnswers"() {
 
     }
-//
+
+
+    ///////////////////////////////////////////////////////////////////////////////////
+    //  Save and Load Tests cause problems with Github actions due to file creation  //
+    ///////////////////////////////////////////////////////////////////////////////////
+    //  Uncomment to use
+
 //    def "save"() {
 //        setup:
 //        String pwd = System.getProperty("user.dir")
@@ -195,24 +198,26 @@ class BankFacadeTest extends Specification{
 //        saved == true
 //
 //    }
-
+//
 //    def "load"() {
 //        setup:
 //        String pwd = System.getProperty("user.dir")
+//        File directory = new File(pwd)
 //        String file_name = "test_file.txt"
 //        String saved_file = pwd + "\\" + file_name
 //        File made_file = new File(saved_file)
-//        QuestionBank savedBank = facade.GetQuestionBank()
-//        QuestionBank loadedBank;
 //
 //        when:
-//        loadedBank = facade.load(made_file)
+//        StateObject saved_state = facade.stateObject
+//        facade.save(directory, file_name)
+//        facade.load(made_file)
+//        StateObject loaded_state = facade.stateObject
 //
 //        then:
 //        if (made_file.exists()){
 //            made_file.delete()
 //        }
-//        savedBank == loadedBank
+//        saved_state == loaded_state
 //    }
 
 }
