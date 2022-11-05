@@ -1,4 +1,6 @@
 import QuestionBank.BankFacade
+import QuestionBank.MultipleAnswerChoice
+import QuestionBank.QuestionBank
 import QuestionBank.Questions
 import QuestionBank.Tag
 import org.codehaus.groovy.control.io.InputStreamReaderSource
@@ -126,14 +128,20 @@ class BankFacadeTest extends Specification{
     }
 
     def "GetTaggedQuestions_Test"() {
-        when:
-        addBasicQuestion()
+        setup:
         String tagName = "test"
-        addBasicTag(0, "test")
+        int tagID = 1
+        addBasicQuestion()
+        addBasicTag(tagID, tagName)
+
+        when:
         LinkedList<Questions> questions = facade.GetTaggedQuestions(tagName)
+        Questions question1 = questions.get(0)
+        LinkedList<Tag> tags = question1.GetTags()
+        String tag = tags.get(0)
 
         then:
-        questions != null
+        tag == tagName
     }
 
 //    def "GetUserQuestionType"() {
