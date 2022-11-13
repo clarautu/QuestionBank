@@ -150,6 +150,7 @@ public class UI {
         }
         private void AddNew() {
             statusLabel.setText("Add new button clicked.");
+            new AddQuestionSubScreen();
         }
         private void SeeTags() {
             statusLabel.setText("See all tags button clicked");
