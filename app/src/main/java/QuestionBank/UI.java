@@ -111,6 +111,22 @@ public class UI {
     }
 
     /**
+     * Method that hides the main screen
+     */
+    protected void Hide() {
+        mainFrame.setVisible(false);
+        mainFrame.setEnabled(false);
+    }
+
+    /**
+     * Method that un-hides the main screen
+     */
+    protected void UnHide() {
+        mainFrame.setVisible(true);
+        mainFrame.setEnabled(true);
+    }
+
+    /**
      * Private, internal class for defining Listeners for each button
      */
     private class ButtonClickListener implements ActionListener {

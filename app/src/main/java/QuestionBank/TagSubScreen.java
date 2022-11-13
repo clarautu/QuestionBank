@@ -4,12 +4,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class TagSubScreen {
     private JFrame frame;
     private JLabel headerLabel;
     private JLabel statusLabel;
     private JPanel panel;
+    private JPanel bottomPanel;
     private String command;
 
     protected TagSubScreen(String command) {
@@ -22,9 +25,19 @@ public class TagSubScreen {
      * Method that prepares the screen
      */
     private void Prepare() {
+        //Hide the main screen
+        UI.GetInstance().Hide();
+
         frame = new JFrame("Tag Window for " + command);
         frame.setSize(500, 500);
         frame.setLayout(new GridLayout(3, 1));
+
+        //Unhide the main screen on closing
+        frame.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent windowEvent) {
+                UI.GetInstance().UnHide();
+            }
+        });
 
         //Create labels for the window
         headerLabel = new JLabel("", JLabel.CENTER);
@@ -35,13 +48,25 @@ public class TagSubScreen {
         panel = new JPanel();
         panel.setLayout(new FlowLayout());
 
+        //Create a panel for housing the cancel button
+        bottomPanel = new JPanel();
+        bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.LINE_AXIS));
+
+        //Make and add cancel button
+        JButton cancelButton = new JButton("Cancel");
+        cancelButton.setActionCommand("Cancel");
+        cancelButton.addActionListener(new ButtonClickListener());
+        bottomPanel.add(cancelButton);
+        bottomPanel.add(Box.createHorizontalGlue());
+        //Add status label to bottom panel - for testing
+        bottomPanel.add(statusLabel);
+
         //Add the labels and panel to the frame
         frame.add(headerLabel);
         frame.add(panel);
-        frame.add(statusLabel);
+        frame.add(bottomPanel);
 
         frame.setLocationRelativeTo(null);
-        frame.setAlwaysOnTop(true);
         frame.setVisible(true);
     }
 
@@ -86,6 +111,7 @@ public class TagSubScreen {
             switch (command){
                 case "GetQuestions" -> GetQuestions();
                 case "RemoveTag" -> RemoveTag();
+                case "Cancel" -> Cancel();
                 default -> throw new IllegalArgumentException("Command '" + command + "' not found");
             }
         }
@@ -95,6 +121,10 @@ public class TagSubScreen {
         }
         private void RemoveTag() {
             statusLabel.setText("Remove tag button clicked");
+        }
+        private void Cancel() {
+            frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+            new AllTagsSubScreen();
         }
     }
 }

@@ -4,12 +4,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class QuestionSubScreen {
     private JFrame frame;
     private JLabel headerLabel;
     private JLabel statusLabel;
     private JPanel panel;
+    private JPanel bottomPanel;
     private String command;
 
     protected QuestionSubScreen(String command) {
@@ -22,6 +25,9 @@ public class QuestionSubScreen {
      * Method that prepares the screen
      */
     private void Prepare() {
+        //Hide the main screen
+        UI.GetInstance().Hide();
+
         frame = new JFrame("Question Window for " + command);
         frame.setSize(500, 500);
         frame.setLayout(new GridLayout(3, 1));
@@ -31,17 +37,36 @@ public class QuestionSubScreen {
         statusLabel = new JLabel("", JLabel.CENTER);
         statusLabel.setSize(350, 100);
 
+        //Unhide the main screen on closing
+        frame.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent windowEvent) {
+                UI.GetInstance().UnHide();
+            }
+        });
+
         //Create a panel for housing the buttons
         panel = new JPanel();
         panel.setLayout(new FlowLayout());
 
+        //Create a panel for housing the cancel button
+        bottomPanel = new JPanel();
+        bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.LINE_AXIS));
+
+        //Make and add cancel button
+        JButton cancelButton = new JButton("Cancel");
+        cancelButton.setActionCommand("Cancel");
+        cancelButton.addActionListener(new ButtonClickListener());
+        bottomPanel.add(cancelButton);
+        bottomPanel.add(Box.createHorizontalGlue());
+        //Add status label to bottom panel - for testing
+        bottomPanel.add(statusLabel);
+
         //Add the labels and panel to the frame
         frame.add(headerLabel);
         frame.add(panel);
-        frame.add(statusLabel);
+        frame.add(bottomPanel);
 
         frame.setLocationRelativeTo(null);
-        frame.setAlwaysOnTop(true);
         frame.setVisible(true);
     }
 
@@ -98,6 +123,7 @@ public class QuestionSubScreen {
                 case "DeleteQuestion" -> DeleteQuestion();
                 case "AddTag" -> AddTag();
                 case "RemoveTag" -> RemoveTag();
+                case "Cancel" -> Cancel();
                 default -> throw new IllegalArgumentException("Command '" + command + "' not found");
             }
         }
@@ -113,6 +139,10 @@ public class QuestionSubScreen {
         }
         private void RemoveTag() {
             statusLabel.setText("Remove tag button clicked");
+        }
+        private void Cancel() {
+            frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+            new AllQuestionsSubScreen();
         }
     }
 }

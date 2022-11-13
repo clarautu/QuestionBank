@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -12,6 +14,7 @@ public class AllTagsSubScreen {
     private JLabel headerLabel;
     private JLabel statusLabel;
     private JPanel scrollPanel;
+    private JPanel bottomPanel;
 
     protected AllTagsSubScreen() {
         Prepare();
@@ -22,9 +25,19 @@ public class AllTagsSubScreen {
      * Method that prepares the screen
      */
     private void Prepare() {
+        //Hide the main screen
+        UI.GetInstance().Hide();
+
         frame = new JFrame("All Tags Window");
         frame.setSize(500, 500);
         frame.setLayout(new GridLayout(3, 1));
+
+        //Unhide the main screen on closing
+        frame.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent windowEvent) {
+                UI.GetInstance().UnHide();
+            }
+        });
 
         //Create labels for the window
         headerLabel = new JLabel("", JLabel.CENTER);
@@ -35,13 +48,25 @@ public class AllTagsSubScreen {
         scrollPanel = new JPanel();
         scrollPanel.setLayout(new GridLayout());
 
+        //Create a panel for housing the cancel button
+        bottomPanel = new JPanel();
+        bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.LINE_AXIS));
+
+        //Make and add cancel button
+        JButton cancelButton = new JButton("Cancel");
+        cancelButton.setActionCommand("Cancel");
+        cancelButton.addActionListener(new ButtonClickListener());
+        bottomPanel.add(cancelButton);
+        bottomPanel.add(Box.createHorizontalGlue());
+        //Add status label to bottom panel - for testing
+        bottomPanel.add(statusLabel);
+
         //Add the labels and panel to the frame
         frame.add(headerLabel);
         frame.add(scrollPanel);
-        frame.add(statusLabel);
+        frame.add(bottomPanel);
 
         frame.setLocationRelativeTo(null);
-        frame.setAlwaysOnTop(true);
         frame.setVisible(true);
     }
 
@@ -85,17 +110,21 @@ public class AllTagsSubScreen {
         public void actionPerformed(ActionEvent e) {
             String command = e.getActionCommand();
 
-            if (command instanceof String) {
-                Test(command);
+            if (command.equals("Cancel")){
+                Cancel();
+            } else if (command instanceof String) {
+                ListButton(command);
             } else {
                 throw new IllegalArgumentException("Command '" + command + "' not found");
             }
         }
 
-        private void Test(String command) {
-            statusLabel.setText("List button clicked.");
+        private void ListButton(String command) {
             new TagSubScreen(command);
             frame.dispose();
+        }
+        private void Cancel() {
+            frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
         }
     }
 }
