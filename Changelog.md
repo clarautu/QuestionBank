@@ -9,6 +9,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 -
 
+## [0.2.0] - 11-13-2022
+### Added
+- Graphical user interface
+. Some general functionality
+- Ability to save the bank
+- Ability to load the bank
+
+### Changed
+- User interface to be more friendly and generalized
+- Screen-to-screen interaction
+
+### Removed
+- Command line functionality
+
 ## [0.1.0] - 10-11-2022
 ### Added
 - Basic command line functionality
