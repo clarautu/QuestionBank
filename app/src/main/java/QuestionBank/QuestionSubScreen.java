@@ -13,10 +13,10 @@ public class QuestionSubScreen {
     private JLabel statusLabel;
     private JPanel panel;
     private JPanel bottomPanel;
-    private String command;
+    private Questions question;
 
     protected QuestionSubScreen(String command) {
-        this.command = command;
+        this.question = BankFacade.GetInstance().GetQuestion(Integer.parseInt(command));
         Prepare();
         Show();
     }
@@ -28,7 +28,8 @@ public class QuestionSubScreen {
         //Hide the main screen
         UI.GetInstance().Hide();
 
-        frame = new JFrame("Question Window for " + command);
+        frame = new JFrame("Question Window for question #" + question.GetIdNumber() + " " +
+                question.GetQuestion());
         frame.setSize(500, 500);
         frame.setLayout(new GridLayout(3, 1));
 
@@ -130,15 +131,23 @@ public class QuestionSubScreen {
 
         private void EditQuestion() {
             statusLabel.setText("Edit question button clicked");
+            //Call an update method - need another screen?
         }
         private void DeleteQuestion() {
             statusLabel.setText("Delete question button clicked");
+            Boolean didItWork = BankFacade.GetInstance().RemoveQuestion(question.GetIdNumber());
+            //Let user know if it worked, based on returned boolean value
+
+            //Close screen
+            frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
         }
         private void AddTag() {
             statusLabel.setText("Add tag button clicked");
+            //Call AddTag() method - need another screen?
         }
         private void RemoveTag() {
             statusLabel.setText("Remove tag button clicked");
+            //Call RemoveTag() method - need another screen?
         }
         private void Cancel() {
             frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));

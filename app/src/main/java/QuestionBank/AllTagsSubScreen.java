@@ -7,7 +7,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.LinkedList;
-import java.util.List;
 
 public class AllTagsSubScreen {
     private JFrame frame;
@@ -86,11 +85,18 @@ public class AllTagsSubScreen {
      * Method that creates the list of buttons and adds them to the ScrollPanel
      */
     private void DisplayList() {
+        JPanel p = new JPanel();
+        p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
+
+        //Test code
+        JButton b = new JButton("TestTag");
+        b.setActionCommand("TestTag");
+        b.addActionListener(new ButtonClickListener());
+        p.add(b);
+        /*
         LinkedList<String> list = new LinkedList<>(List.of("Button 1", "Button 2", "Button 3",
                 "Button 4", "Button 5", "Button 6", "Button 7", "Button 8", "Button 9"));
 
-        JPanel p = new JPanel();
-        p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
         for (String s : list) {
             JButton button = new JButton(s);
             button.setActionCommand(s);
@@ -98,6 +104,16 @@ public class AllTagsSubScreen {
             //button.setPreferredSize(new Dimension(100, 50));
             p.add(button);
         }
+         */
+
+        LinkedList<Tag> tags = BankFacade.GetInstance().GetTagsList();
+        for (Tag t : tags) {
+            JButton button = new JButton(t.GetTagName());
+            button.setActionCommand(t.GetTagName());
+            button.addActionListener(new ButtonClickListener());
+            p.add(button);
+        }
+
         JScrollPane scrollPane = new JScrollPane(p);
         scrollPanel.add(scrollPane);
         frame.setVisible(true);
@@ -115,7 +131,7 @@ public class AllTagsSubScreen {
             } else if (command instanceof String) {
                 ListButton(command);
             } else {
-                throw new IllegalArgumentException("Command '" + command + "' not found");
+                throw new IllegalArgumentException("Command '" + command.toString() + "' not found");
             }
         }
 

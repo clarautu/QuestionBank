@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.LinkedList;
 
 public class TagSubScreen {
     private JFrame frame;
@@ -13,10 +14,10 @@ public class TagSubScreen {
     private JLabel statusLabel;
     private JPanel panel;
     private JPanel bottomPanel;
-    private String command;
+    private String tagName;
 
     protected TagSubScreen(String command) {
-        this.command = command;
+        this.tagName = command;
         Prepare();
         Show();
     }
@@ -28,7 +29,7 @@ public class TagSubScreen {
         //Hide the main screen
         UI.GetInstance().Hide();
 
-        frame = new JFrame("Tag Window for " + command);
+        frame = new JFrame("Tag Window for tag: " + tagName);
         frame.setSize(500, 500);
         frame.setLayout(new GridLayout(3, 1));
 
@@ -118,9 +119,13 @@ public class TagSubScreen {
 
         private void GetQuestions() {
             statusLabel.setText("Get questions with tag button clicked");
+            LinkedList<Questions> taggedQuestions = BankFacade.GetInstance().GetTaggedQuestions(tagName);
+            //Display these
         }
         private void RemoveTag() {
             statusLabel.setText("Remove tag button clicked");
+            Boolean didItWork = BankFacade.GetInstance().RemoveTag(tagName);
+            //Let user know if it worked, based on returned boolean
         }
         private void Cancel() {
             frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));

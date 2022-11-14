@@ -7,7 +7,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.LinkedList;
-import java.util.List;
 
 public class AllQuestionsSubScreen {
     private JFrame frame;
@@ -86,11 +85,15 @@ public class AllQuestionsSubScreen {
      * Method that creates the list of buttons and adds them to the ScrollPanel
      */
     private void DisplayList() {
+        JPanel p = new JPanel();
+        p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
+
+        //Test code
+        QuestionBank.GetInstance().CreateQuestion(3, "This is a test", null, null);
+        /*
         LinkedList<String> list = new LinkedList<>(List.of("Button 1", "Button 2", "Button 3",
                 "Button 4", "Button 5", "Button 6", "Button 7", "Button 8", "Button 9"));
 
-        JPanel p = new JPanel();
-        p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
         for (String s : list) {
             JButton button = new JButton(s);
             button.setActionCommand(s);
@@ -98,6 +101,21 @@ public class AllQuestionsSubScreen {
             //button.setPreferredSize(new Dimension(100, 50));
             p.add(button);
         }
+         */
+
+        LinkedList<Questions> questions = BankFacade.GetInstance().GetQuestions();
+        for (Questions q : questions) {
+            String title = q.GetQuestion();
+            int maxLength = 20;
+            if (title.length() > maxLength) {
+                title = title.substring(0, 20);
+            }
+            JButton button = new JButton(title);
+            button.setActionCommand(String.valueOf(q.GetIdNumber()));
+            button.addActionListener(new ButtonClickListener());
+            p.add(button);
+        }
+
         JScrollPane scrollPane = new JScrollPane(p);
         scrollPanel.add(scrollPane);
         frame.setVisible(true);
@@ -115,7 +133,7 @@ public class AllQuestionsSubScreen {
             } else if (command instanceof String) {
                 ListButton(command);
             } else {
-                throw new IllegalArgumentException("Command '" + command + "' not found");
+                throw new IllegalArgumentException("Command '" + command.toString() + "' not found");
             }
         }
 

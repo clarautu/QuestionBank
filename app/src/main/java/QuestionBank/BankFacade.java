@@ -56,6 +56,10 @@ public class BankFacade {
         return QuestionBank.RemoveQuestion(id);
     }
 
+    public boolean RemoveTag(String tagName) {
+        return QuestionBank.RemoveTag(tagName);
+    }
+
     private QuestionBank GetQuestionBank() {return QuestionBank;}
 
     public Questions GetQuestion(int id) {
