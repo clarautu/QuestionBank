@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.2.0] - 11-13-2022
 ### Added
 - Graphical user interface
-. Some general functionality
+- Some general functionality
 - Ability to save the bank
 - Ability to load the bank
 
