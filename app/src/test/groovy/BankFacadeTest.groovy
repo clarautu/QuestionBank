@@ -109,7 +109,7 @@ class BankFacadeTest extends Specification{
         facade.GetUserCorrectAnswers() >> "test"
 
         when:
-        facade.CreateQuestion()
+        facade.CreateQuestion(3, "Test question", null, null)
 
         then:
         facade.GetQuestion(0) != null
