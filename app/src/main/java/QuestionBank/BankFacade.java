@@ -53,6 +53,7 @@ public class BankFacade {
         return QuestionBank.RemoveTag(tagName);
     }
 
+    // needed for out-dated save implementation
     private QuestionBank GetQuestionBank() {return QuestionBank;}
 
     public Questions GetQuestion(int id) {
@@ -101,6 +102,10 @@ public class BankFacade {
             QuestionBank.setState(stateObject);
         }
         return loaded;
+    }
+
+    public void resetBank() {
+        QuestionBank.ResetBank();
     }
 
 }

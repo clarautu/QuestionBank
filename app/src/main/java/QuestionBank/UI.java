@@ -167,6 +167,8 @@ public class UI {
             statusLabel.setText("See all tags button clicked");
             new AllTagsSubScreen();
         }
+
+        // State related actions //
         private void SaveBank() {
             statusLabel.setText("Save bank button clicked");
             statusLabel.setText("Load questions button clicked");
@@ -194,6 +196,7 @@ public class UI {
 
         private void DeleteBank() {
             statusLabel.setText("Delete bank button clicked");
+            bankFacade.resetBank();
         }
     }
 }
