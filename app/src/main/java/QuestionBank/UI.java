@@ -1,8 +1,11 @@
 package QuestionBank;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileSystemView;
 import java.awt.event.*;
 import java.awt.*;
+import java.io.File;
+import java.io.FileNotFoundException;
 
 public class UI {
     private static UI instance = null;
@@ -10,6 +13,8 @@ public class UI {
     private JLabel headerlabel;
     private JLabel statusLabel;
     private JPanel controlPanel;
+    private JFileChooser fileChooser;
+    private BankFacade bankFacade = BankFacade.GetInstance();
 
     //Constructor - enforce singleton pattern
     private UI() {
@@ -138,7 +143,13 @@ public class UI {
                 case "AddNew" -> AddNew();
                 case "SeeTags" -> SeeTags();
                 case "SaveBank" -> SaveBank();
-                case "LoadQuestions" -> LoadQuestions();
+                case "LoadQuestions" -> {
+                    try {
+                        LoadQuestions();
+                    } catch (FileNotFoundException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
                 case "DeleteBank" -> DeleteBank();
                 default -> throw new IllegalArgumentException("Command '" + command + "' not found");
             }
@@ -158,10 +169,29 @@ public class UI {
         }
         private void SaveBank() {
             statusLabel.setText("Save bank button clicked");
-        }
-        private void LoadQuestions() {
             statusLabel.setText("Load questions button clicked");
+            fileChooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+            int approveVal = fileChooser.showSaveDialog(null);
+
+            if (approveVal == JFileChooser.APPROVE_OPTION) {
+                File file = fileChooser.getSelectedFile();
+                String file_name = file.getName();
+                String file_path = file.getParent() + "\\";
+                bankFacade.save(file.getParentFile(), file_name);
+            }
         }
+
+        private void LoadQuestions() throws FileNotFoundException {
+            statusLabel.setText("Load questions button clicked");
+            fileChooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+            int approveVal = fileChooser.showOpenDialog(null);
+
+            if (approveVal == JFileChooser.APPROVE_OPTION) {
+                File file = fileChooser.getSelectedFile();
+                bankFacade.load(file);
+            }
+        }
+
         private void DeleteBank() {
             statusLabel.setText("Delete bank button clicked");
         }
