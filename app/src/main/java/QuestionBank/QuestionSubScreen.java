@@ -7,10 +7,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import static javax.swing.JOptionPane.showMessageDialog;
+
 public class QuestionSubScreen {
     private JFrame frame;
     private JLabel headerLabel;
     private JLabel statusLabel;
+    private JPanel infoPanel;
     private JPanel panel;
     private JPanel bottomPanel;
     private Questions question;
@@ -31,7 +34,7 @@ public class QuestionSubScreen {
         frame = new JFrame("Question Window for question #" + question.GetIdNumber() + " " +
                 question.GetQuestion());
         frame.setSize(500, 500);
-        frame.setLayout(new GridLayout(3, 1));
+        frame.setLayout(new GridLayout(4, 1));
 
         //Create labels for the window
         headerLabel = new JLabel("", JLabel.CENTER);
@@ -49,6 +52,10 @@ public class QuestionSubScreen {
         panel = new JPanel();
         panel.setLayout(new FlowLayout());
 
+        //Create a panel for housing the question info
+        infoPanel = new JPanel();
+        infoPanel.setLayout(new GridLayout(2, 3));
+
         //Create a panel for housing the cancel button
         bottomPanel = new JPanel();
         bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.LINE_AXIS));
@@ -64,6 +71,7 @@ public class QuestionSubScreen {
 
         //Add the labels and panel to the frame
         frame.add(headerLabel);
+        frame.add(infoPanel);
         frame.add(panel);
         frame.add(bottomPanel);
 
@@ -75,7 +83,7 @@ public class QuestionSubScreen {
      * Method that does final prep work and shows the window
      */
     private void Show() {
-        headerLabel.setText("What would you like to do?");
+        headerLabel.setText("Prompt: " + question.GetQuestion());
 
         //Sub screen - Click on a question
         /*
@@ -109,6 +117,43 @@ public class QuestionSubScreen {
         panel.add(addTagButton);
         panel.add(removeTagButton);
 
+        //Make and add question info labels
+        infoPanel.add(new JLabel("Answers"));
+        infoPanel.add(new JLabel("Possible Answers"));
+        infoPanel.add(new JLabel("Tags"));
+
+        //Make and add panel for question answers
+        JPanel answers = new JPanel();
+        answers.setLayout(new BoxLayout(answers, BoxLayout.Y_AXIS));
+        if (question.GetCorrectAnswer() != null){
+            if (question.GetCorrectAnswer().size() == 0) { answers.add(new JLabel("<No Answers>"));}
+            for (String s : question.GetCorrectAnswer()) {
+                answers.add(new JLabel(s));
+            }
+        } else { answers.add(new JLabel("<No Answers>")); }
+        infoPanel.add(answers);
+        //Make and add panel for question possible answers
+        JPanel possibles = new JPanel();
+        possibles.setLayout(new BoxLayout(possibles, BoxLayout.Y_AXIS));
+        if (question.GetPossibleAnswers() != null) {
+            if (question.GetPossibleAnswers().size() == 0) { possibles.add(new JLabel("<No Possible Answers>"));}
+            for (String s : question.GetPossibleAnswers()) {
+                possibles.add(new JLabel(s));
+            }
+        } else { possibles.add(new JLabel("<No Possible Answers>")); }
+        infoPanel.add(possibles);
+        //Make and add panel for question tags
+        JPanel tags = new JPanel();
+        tags.setLayout(new BoxLayout(tags, BoxLayout.Y_AXIS));
+        if (question.GetTags() != null) {
+            if (question.GetTags().size() == 0) { tags.add(new JLabel("<No Tags>"));}
+            for (String s : question.GetTags()) {
+                tags.add(new JLabel(s));
+            }
+        } else { tags.add(new JLabel("<No Tags>")); }
+        infoPanel.add(tags);
+
+
         frame.setVisible(true);
     }
 
@@ -137,7 +182,11 @@ public class QuestionSubScreen {
             statusLabel.setText("Delete question button clicked");
             Boolean didItWork = BankFacade.GetInstance().RemoveQuestion(question.GetIdNumber());
             //Let user know if it worked, based on returned boolean value
-
+            if (didItWork) {
+                showMessageDialog(null, "Question deleted.");
+            } else {
+                showMessageDialog(null, "Question failed to be deleted.");
+            }
             //Close screen
             frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
         }
