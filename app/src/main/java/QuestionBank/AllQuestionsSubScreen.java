@@ -88,8 +88,6 @@ public class AllQuestionsSubScreen {
         JPanel p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
 
-        //Test code
-        BankFacade.GetInstance().CreateQuestion(3, "This is a test", null, null);
         /*
         LinkedList<String> list = new LinkedList<>(List.of("Button 1", "Button 2", "Button 3",
                 "Button 4", "Button 5", "Button 6", "Button 7", "Button 8", "Button 9"));
