@@ -10,7 +10,6 @@ import java.awt.event.WindowEvent;
 public class AddQuestionSubScreen {
     private JFrame frame;
     private JLabel headerLabel;
-    private JLabel statusLabel;
     private JPanel panel;
     private JPanel bottomPanel;
 
@@ -37,10 +36,8 @@ public class AddQuestionSubScreen {
             }
         });
 
-        //Create labels for the window
+        //Create a label for the window
         headerLabel = new JLabel("", JLabel.CENTER);
-        statusLabel = new JLabel("", JLabel.CENTER);
-        statusLabel.setSize(350, 100);
 
         //Create a panel for housing the buttons
         panel = new JPanel();
@@ -56,8 +53,6 @@ public class AddQuestionSubScreen {
         cancelButton.addActionListener(new ButtonClickListener());
         bottomPanel.add(cancelButton);
         bottomPanel.add(Box.createHorizontalGlue());
-        //Add status label to bottom panel - for testing
-        bottomPanel.add(statusLabel);
 
         //Add the labels and panel to the frame
         frame.add(headerLabel);
@@ -114,15 +109,15 @@ public class AddQuestionSubScreen {
         }
 
         private void Short() {
-            statusLabel.setText("Short Answer button clicked");
+            frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
             new AddShortAnswerSubScreen();
         }
         private void Single() {
-            statusLabel.setText("Single Answer button clicked");
+            frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
             new AddSingleMultipleChoiceSubScreen();
         }
         private void Multiple() {
-            statusLabel.setText("Multiple Answer button clicked");
+            frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
             new AddMultipleAnswerSubScreen();
         }
         private void Cancel() {
