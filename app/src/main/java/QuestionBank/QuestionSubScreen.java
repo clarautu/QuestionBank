@@ -175,11 +175,12 @@ public class QuestionSubScreen {
         }
 
         private void EditQuestion() {
-            statusLabel.setText("Edit question button clicked");
-            //Call an update method - need another screen?
+            //Close screen
+            frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+            //Open new screen
+            new EditQuestionSubScreen(question);
         }
         private void DeleteQuestion() {
-            statusLabel.setText("Delete question button clicked");
             Boolean didItWork = BankFacade.GetInstance().RemoveQuestion(question.GetIdNumber());
             //Let user know if it worked, based on returned boolean value
             if (didItWork) {
