@@ -11,13 +11,15 @@ import java.util.LinkedList;
 public class AddSingleMultipleChoiceSubScreen {
     private JFrame frame;
     private JLabel headerLabel;
-    private JLabel statusLabel;
     private JPanel panel;
     private JPanel bottomPanel;
     private JTextField getPrompt;
-    private String prompt;
-    private String answer;
-    private LinkedList<String> answers;
+    private JLabel promptHolder;
+    private JTextField getAnswer;
+    private JLabel answerHolder;
+    private JTextField getPossible;
+    private JPanel possibleHolder;
+    private LinkedList<String> possibleAnswers = new LinkedList<>();
 
 
     protected AddSingleMultipleChoiceSubScreen() {
@@ -34,7 +36,7 @@ public class AddSingleMultipleChoiceSubScreen {
 
         frame = new JFrame("Add a single answer question");
         frame.setSize(500, 500);
-        frame.setLayout(new GridLayout(4, 1));
+        frame.setLayout(new GridLayout(3, 1));
 
         //Unhide the main screen on closing
         frame.addWindowListener(new WindowAdapter() {
@@ -45,8 +47,6 @@ public class AddSingleMultipleChoiceSubScreen {
 
         //Create labels for the window
         headerLabel = new JLabel("", JLabel.CENTER);
-        statusLabel = new JLabel("", JLabel.CENTER);
-        statusLabel.setSize(350, 100);
 
         //Create a panel for housing the buttons
         panel = new JPanel();
@@ -73,7 +73,6 @@ public class AddSingleMultipleChoiceSubScreen {
         frame.add(headerLabel);
         frame.add(panel);
         frame.add(bottomPanel);
-        frame.add(statusLabel);
 
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
@@ -85,11 +84,54 @@ public class AddSingleMultipleChoiceSubScreen {
     private void Show() {
         headerLabel.setText("Follow instructions and hit 'Submit'");
 
-        //Create text box
-        getPrompt = new JTextField(20);
+        //Get prompt
+        JPanel promptPanel = new JPanel();
+        JLabel promptLabel = new JLabel("Prompt: ");
+        getPrompt = new JTextField(10);
+        JButton promptButton = new JButton("Update Prompt");
+        promptButton.setActionCommand("UpdatePrompt");
+        promptButton.addActionListener(new ButtonClickListener());
+        promptHolder = new JLabel();
+        promptPanel.add(promptLabel);
+        promptPanel.add(getPrompt);
+        promptPanel.add(promptButton);
+        promptPanel.add(promptHolder);
 
-        //Add button to panel
-        panel.add(getPrompt);
+        //Add answers for question
+        JPanel answerPanel = new JPanel();
+        JLabel answerLabel = new JLabel("Answer: ");
+        getAnswer = new JTextField(10);
+        JButton answerButton = new JButton("Update answer");
+        answerButton.setActionCommand("UpdateAnswer");
+        answerButton.addActionListener(new ButtonClickListener());
+
+        answerHolder = new JLabel();
+
+        answerPanel.add(answerLabel);
+        answerPanel.add(getAnswer);
+        answerPanel.add(answerButton);
+        answerPanel.add(answerHolder);
+
+        //Add possible answers for question
+        JPanel possiblePanel = new JPanel();
+        JLabel possibleLabel = new JLabel("Possible answer: ");
+        getPossible = new JTextField(10);
+        JButton possibleButton = new JButton("Add possible answer");
+        possibleButton.setActionCommand("AddPossible");
+        possibleButton.addActionListener(new ButtonClickListener());
+
+        possibleHolder = new JPanel();
+
+        possiblePanel.add(possibleLabel);
+        possiblePanel.add(getPossible);
+        possiblePanel.add(possibleButton);
+        possiblePanel.add(possibleHolder);
+
+
+        //Add box and label to panel
+        panel.add(promptPanel);
+        panel.add(answerPanel);
+        panel.add(possiblePanel);
 
         frame.setVisible(true);
     }
@@ -104,23 +146,46 @@ public class AddSingleMultipleChoiceSubScreen {
             switch (command){
                 case "Submit" -> Submit();
                 case "Cancel" -> Cancel();
+                case "UpdatePrompt" -> UpdatePrompt();
+                case "UpdateAnswer" -> UpdateAnswer();
+                case "AddPossible" -> AddPossible();
                 default -> throw new IllegalArgumentException("Command '" + command + "' not found");
             }
         }
 
         private void Submit() {
-            String temp = getPrompt.getText();
-            //check if input is good
-
-            //if yes, submit and add
-
-            //Test code
-            prompt = temp;
-            statusLabel.setText("Submit button clicked: " + prompt);
+            //Get the answer
+            LinkedList<String> answer = new LinkedList<>();
+            answer.add(answerHolder.getText());
+            //Make the question
+            BankFacade.GetInstance().CreateQuestion(2, promptHolder.getText(), answer, possibleAnswers);
+            //Close the screen
+            frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
         }
         private void Cancel() {
             frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
             new AddQuestionSubScreen();
+        }
+        private void UpdateAnswer() {
+            answerHolder.setText(getAnswer.getText());
+            getAnswer.setText("");
+        }
+        private void AddPossible() {
+            possibleAnswers.add(getPossible.getText());
+            getPossible.setText("");
+            possibleHolder.removeAll();
+            JPanel panel = new JPanel();
+            panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+            for (String s : possibleAnswers) {
+                panel.add(new JLabel(s));
+            }
+            JScrollPane scroll = new JScrollPane(panel);
+            possibleHolder.add(scroll);
+            frame.setVisible(true);
+        }
+        private void UpdatePrompt() {
+            promptHolder.setText(getPrompt.getText());
+            getPrompt.setText("");
         }
     }
 }
