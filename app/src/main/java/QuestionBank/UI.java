@@ -171,7 +171,6 @@ public class UI {
         // State related actions //
         private void SaveBank() {
             statusLabel.setText("Save bank button clicked");
-            statusLabel.setText("Load questions button clicked");
             fileChooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
             int approveVal = fileChooser.showSaveDialog(null);
 
