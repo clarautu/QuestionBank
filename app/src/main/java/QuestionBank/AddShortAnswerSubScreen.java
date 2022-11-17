@@ -2,18 +2,15 @@ package QuestionBank;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 
-public class AddShortAnswerSubScreen {
+public class AddShortAnswerSubScreen implements FocusListener{
     private JFrame frame;
     private JLabel headerLabel;
     private JLabel statusLabel;
     private JPanel panel;
     private JPanel bottomPanel;
-    private JTextField getPrompt;
+    private JTextArea getPrompt;
     private String prompt;
 
     protected AddShortAnswerSubScreen() {
@@ -43,6 +40,7 @@ public class AddShortAnswerSubScreen {
         headerLabel = new JLabel("", JLabel.CENTER);
         statusLabel = new JLabel("", JLabel.CENTER);
         statusLabel.setSize(350, 100);
+        statusLabel.isFocusOwner();
 
         //Create a panel for housing the buttons
         panel = new JPanel();
@@ -82,7 +80,11 @@ public class AddShortAnswerSubScreen {
         headerLabel.setText("Enter the prompt and hit 'Submit'");
 
         //Create text box
-        getPrompt = new JTextField(20);
+        getPrompt = new JTextArea(10, 30);
+        getPrompt.setLineWrap(true);
+        getPrompt.setWrapStyleWord(true);
+        getPrompt.addFocusListener(this);
+
 
         //Add button to panel
         panel.add(getPrompt);
@@ -97,7 +99,7 @@ public class AddShortAnswerSubScreen {
         public void actionPerformed(ActionEvent e) {
             String command = e.getActionCommand();
 
-            switch (command){
+            switch (command) {
                 case "Submit" -> Submit();
                 case "Cancel" -> Cancel();
                 default -> throw new IllegalArgumentException("Command '" + command + "' not found");
@@ -105,18 +107,33 @@ public class AddShortAnswerSubScreen {
         }
 
         private void Submit() {
-            String temp = getPrompt.getText();
+            String text = getPrompt.getText();
+
             //check if input is good
-
-            //if yes, submit and add
-
-            //Test code
-            prompt = temp;
-            statusLabel.setText("Submit button clicked: " + prompt);
+            if (text.length() >= 5 & text.length() <= 350) {
+                if (BankFacade.GetInstance().CreateQuestion(3, text, null, null)) {
+                    statusLabel.setText("Short answer question added");
+                } else {
+                    statusLabel.setText("Failed to add question");
+                }
+            } else {
+                statusLabel.setText("Question must be 5-350 characters long");
+            }
         }
+
         private void Cancel() {
             frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
             new AddQuestionSubScreen();
         }
     }
+
+        public void focusGained(FocusEvent l) {
+            if (getPrompt.isFocusOwner()) {
+                statusLabel.setText("Add another question?");
+            }
+        }
+
+        public void focusLost(FocusEvent e) {
+
+        }
 }
