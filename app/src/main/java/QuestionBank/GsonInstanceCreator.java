@@ -15,10 +15,9 @@ public class GsonInstanceCreator implements InstanceCreator<Questions> {
     @Override
     public Questions createInstance(Type type) {
         // create new object with our additional property
-        Questions userContext = new Questions() {
-        };
 
         // return it to gson for further usage
-        return userContext;
+        return new Questions() {
+        };
     }
 }

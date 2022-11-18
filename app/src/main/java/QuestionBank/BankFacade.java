@@ -15,6 +15,7 @@ public class BankFacade {
     private final StateManager stateManager = new StateManager();
     private static BankFacade FacadeInstance = null;
     private QuestionBank QuestionBank;
+
     private Scanner scanner = new Scanner(System.in);
 
     private StateObject stateObject = new StateObject();
@@ -97,9 +98,12 @@ public class BankFacade {
      */
     public boolean load(File file) throws FileNotFoundException {
         boolean loaded = false;
-        stateManager.loadData(file, stateObject);
+        stateObject = stateManager.loadData(file);
+
         if (stateObject.isValid()) {
             QuestionBank.setState(stateObject);
+            System.out.println("state valid");
+            loaded = true;
         }
         return loaded;
     }

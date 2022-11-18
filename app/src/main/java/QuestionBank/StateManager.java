@@ -15,6 +15,7 @@ public class StateManager {
     //Variables
     Gson gson = new GsonBuilder().registerTypeAdapter(Questions.class, new GsonInstanceCreator()).create();
 
+
 //    Methods
 //    For Saving
 
@@ -79,17 +80,17 @@ public class StateManager {
      * @return the QuestionBank with state
      * @throws FileNotFoundException
      */
-    public boolean loadData(File file, StateObject stateObject) throws FileNotFoundException {
+    public StateObject loadData(File file) throws FileNotFoundException {
         Scanner scanner = new Scanner(file);
+        StateObject newState = new StateObject();
         if (scanner.hasNext()) {
             String json = scanner.nextLine();
-            stateObject = gson.fromJson(json, StateObject.class);
+            newState = gson.fromJson(json, StateObject.class);
             scanner.close();
             System.out.println("File read.");
-            stateObject.setValid(true);
-            return true;
+            newState.setValid(true);
         }
-        else {return false;}
+        return newState;
     }
 
     // For exporting to database
