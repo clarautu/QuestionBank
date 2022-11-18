@@ -19,7 +19,7 @@ public class EditQuestionSubScreen {
     private JTextField getPossible;
     private JPanel possibleHolder;
     private Questions question;
-
+    private JTextArea getPromptBox;
     protected EditQuestionSubScreen(Questions question) {
         this.question = question;
         Prepare();
@@ -139,6 +139,12 @@ public class EditQuestionSubScreen {
         if (question instanceof ShortAnswer) {
             answerPanel.setVisible(false);
             possiblePanel.setVisible(false);
+            promptHolder.setVisible(false);
+            getPrompt.setVisible(false);
+            getPromptBox = new JTextArea(10, 30);
+            getPromptBox.setText(question.GetQuestion());
+            getPrompt.setText(getPromptBox.getText());
+            promptPanel.add(getPromptBox);
         } else {
             UpdateFrame();
         }
@@ -220,8 +226,13 @@ public class EditQuestionSubScreen {
             frame.setVisible(true);
         }
         private void UpdatePrompt() {
-            promptHolder.setText(getPrompt.getText());
-            question.SetQuestion(getPrompt.getText());
+            if (question instanceof ShortAnswer) {
+                question.SetQuestion(getPromptBox.getText());
+            }
+            else {
+                promptHolder.setText(getPrompt.getText());
+                question.SetQuestion(getPrompt.getText());
+            }
             getPrompt.setText("");
         }
     }
