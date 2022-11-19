@@ -3,7 +3,6 @@ package QuestionBank;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.LinkedList;
-import java.util.Scanner;
 
 /**
  * Facade for meshing front-end to back-end with QuestionBank class.
@@ -15,8 +14,6 @@ public class BankFacade {
     private final StateManager stateManager = new StateManager();
     private static BankFacade FacadeInstance = null;
     private QuestionBank QuestionBank;
-
-//    private Scanner scanner = new Scanner(System.in);
 
     private StateObject stateObject = new StateObject();
 
@@ -34,26 +31,58 @@ public class BankFacade {
     }
 
     //Methods
+
+    /**
+     * Method that gets all question in the bank
+     * @return A list of all questions
+     */
     public LinkedList<Questions> GetQuestions() {
         return QuestionBank.GetQuestions();
     }
 
+    /**
+     * Method that gets all tags in the bank
+     * @return A list of all tags
+     */
     public LinkedList<Tag> GetTagsList() {
         return QuestionBank.GetTagsList();
     }
 
+    /**
+     * Method that creates a question
+     * @param typeChoice 1 for multianswer, 2 for single answer, 3 for short answer
+     * @param questionDescription The prompt for the question
+     * @param correctAnswers A list of correct answers to the question - can be null if short answer
+     * @param possibleAnswers A list of possible answers to the question - can be null if short answer
+     * @return True if the question was created successfully; False otherwise
+     */
     public Boolean CreateQuestion(int typeChoice, String questionDescription, LinkedList<String> correctAnswers, LinkedList<String> possibleAnswers) {
         return QuestionBank.CreateQuestion(typeChoice, questionDescription, correctAnswers, possibleAnswers);
     }
 
+    /**
+     * Method that adds a tag to a specified question
+     * @param idNumber The ID number of the question
+     * @param tagName The name of the tag to add
+     */
     public void AddTagToQuestion(int idNumber, String tagName) {
         QuestionBank.GetInstance().AddTagToQuestion(idNumber, tagName);
     }
 
+    /**
+     * Method to remove a specified question from the bank
+     * @param id The ID number of the question
+     * @return True if the question was removed successfully; False otherwise
+     */
     public boolean RemoveQuestion(int id) {
         return QuestionBank.RemoveQuestion(id);
     }
 
+    /**
+     * Method that removes a specified tag from the bank
+     * @param tagName The name of the tag
+     * @return True if the tag was removed successfully; False otherwise
+     */
     public boolean RemoveTag(String tagName) {
         return QuestionBank.RemoveTag(tagName);
     }
@@ -61,10 +90,20 @@ public class BankFacade {
     // needed for out-dated save implementation
     private QuestionBank GetQuestionBank() {return QuestionBank;}
 
+    /**
+     * Method that gets a specified question
+     * @param id The ID number of the question
+     * @return The question specified
+     */
     public Questions GetQuestion(int id) {
         return QuestionBank.GetQuestion(id);
     }
 
+    /**
+     * Method that gets all questions that have a specified tag
+     * @param tagName The name of the tag
+     * @return A list of questions with the tag
+     */
     public LinkedList<Questions> GetTaggedQuestions(String tagName) {
         return QuestionBank.GetTaggedQuestions(tagName);
     }
@@ -72,6 +111,9 @@ public class BankFacade {
 
     // Methods for save/load state
 
+    /**
+     * Method that sets the state of the stateObject
+     */
     public void setState() {
         stateObject.setQuestions(QuestionBank.GetQuestions());
         stateObject.setTagsLists(QuestionBank.GetTagsList());
@@ -112,6 +154,9 @@ public class BankFacade {
         return loaded;
     }
 
+    /**
+     * Method that resets the bank and removes everything from it
+     */
     public void resetBank() {
         QuestionBank.ResetBank();
     }
