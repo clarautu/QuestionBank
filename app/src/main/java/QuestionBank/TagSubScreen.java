@@ -1,18 +1,26 @@
 package QuestionBank;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import javax.swing.*;
+import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
+import java.io.FileWriter;
 import java.util.LinkedList;
+
+import static javax.swing.JOptionPane.showMessageDialog;
 
 public class TagSubScreen {
     private JFrame frame;
     private JLabel headerLabel;
-    private JLabel statusLabel;
     private JPanel panel;
+    private JPanel questionPanel;
     private JPanel bottomPanel;
     private String tagName;
 
@@ -31,7 +39,7 @@ public class TagSubScreen {
 
         frame = new JFrame("Tag Window for tag: " + tagName);
         frame.setSize(500, 500);
-        frame.setLayout(new GridLayout(3, 1));
+        frame.setLayout(new GridLayout(4, 1));
 
         //Unhide the main screen on closing
         frame.addWindowListener(new WindowAdapter() {
@@ -40,14 +48,17 @@ public class TagSubScreen {
             }
         });
 
-        //Create labels for the window
+        //Create label for the window
         headerLabel = new JLabel("", JLabel.CENTER);
-        statusLabel = new JLabel("", JLabel.CENTER);
-        statusLabel.setSize(350, 100);
 
         //Create a panel for housing the buttons
         panel = new JPanel();
         panel.setLayout(new FlowLayout());
+
+        //Create a panel for holding questions
+        questionPanel = new JPanel();
+        questionPanel.setLayout(new BoxLayout(questionPanel, BoxLayout.Y_AXIS));
+        questionPanel.add(new JLabel("Questions with this tag"));
 
         //Create a panel for housing the cancel button
         bottomPanel = new JPanel();
@@ -59,11 +70,10 @@ public class TagSubScreen {
         cancelButton.addActionListener(new ButtonClickListener());
         bottomPanel.add(cancelButton);
         bottomPanel.add(Box.createHorizontalGlue());
-        //Add status label to bottom panel - for testing
-        bottomPanel.add(statusLabel);
 
         //Add the labels and panel to the frame
         frame.add(headerLabel);
+        frame.add(questionPanel);
         frame.add(panel);
         frame.add(bottomPanel);
 
@@ -77,27 +87,35 @@ public class TagSubScreen {
     private void Show() {
         headerLabel.setText("What would you like to do?");
 
-        //Sub screen - Click on a tag
-        /*
-        Get all questions of a particular tag
-        Remove a tag
-         */
-
         //Create buttons
-        JButton getQuestionsButton = new JButton("Get All Questions With Tag");
+        JButton exportQuestionsButton = new JButton("Export Questions With Tag");
         JButton removeTageButton = new JButton("Remove Tag");
 
         //Set button commands
-        getQuestionsButton.setActionCommand("GetQuestions");
+        exportQuestionsButton.setActionCommand("GetQuestions");
         removeTageButton.setActionCommand("RemoveTag");
 
         //Add listeners to buttons
-        getQuestionsButton.addActionListener(new ButtonClickListener());
+        exportQuestionsButton.addActionListener(new ButtonClickListener());
         removeTageButton.addActionListener(new ButtonClickListener());
 
         //Add buttons to panel
-        panel.add(getQuestionsButton);
+        panel.add(exportQuestionsButton);
         panel.add(removeTageButton);
+
+        //Get and display question with this tag
+        LinkedList<Questions> questions = BankFacade.GetInstance().GetTaggedQuestions(tagName);
+        JPanel p = new JPanel();
+        p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
+        if (questions != null) { // Check if no questions have this tag
+            for (Questions q : questions) {
+                p.add(new JLabel(q.GetQuestion()));
+            }
+        } else { // If so, let user no
+            p.add(new JLabel("<No questions with this tag>"));
+        }
+        JScrollPane questionHolder = new JScrollPane(p);
+        questionPanel.add(questionHolder);
 
         frame.setVisible(true);
     }
@@ -118,14 +136,31 @@ public class TagSubScreen {
         }
 
         private void GetQuestions() {
-            statusLabel.setText("Get questions with tag button clicked");
             LinkedList<Questions> taggedQuestions = BankFacade.GetInstance().GetTaggedQuestions(tagName);
-            //Display these
+            //Export these
+            Gson gson = new GsonBuilder().registerTypeAdapter(Questions.class, new GsonInstanceCreator()).create();
+            String json = gson.toJson(taggedQuestions);
+            try {
+                JFileChooser fileChooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+                fileChooser.showSaveDialog(null);
+                File fileToSave = fileChooser.getSelectedFile();
+                FileWriter file = new FileWriter(fileToSave.getAbsoluteFile());
+                file.write(json);
+                file.close();
+            } catch (Exception e) {
+                System.out.println("Problem exporting");
+            }
         }
         private void RemoveTag() {
-            statusLabel.setText("Remove tag button clicked");
             Boolean didItWork = BankFacade.GetInstance().RemoveTag(tagName);
             //Let user know if it worked, based on returned boolean
+            if (didItWork) {
+                showMessageDialog(null, "Tag: " + tagName + " removeed successfully.");
+            } else {
+                showMessageDialog(null, "Something went wrong! The tag wasn't removed.");
+            }
+            //Close screen
+            frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
         }
         private void Cancel() {
             frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));

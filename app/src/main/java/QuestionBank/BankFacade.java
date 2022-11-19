@@ -16,7 +16,7 @@ public class BankFacade {
     private static BankFacade FacadeInstance = null;
     private QuestionBank QuestionBank;
 
-    private Scanner scanner = new Scanner(System.in);
+//    private Scanner scanner = new Scanner(System.in);
 
     private StateObject stateObject = new StateObject();
 
@@ -44,6 +44,10 @@ public class BankFacade {
 
     public Boolean CreateQuestion(int typeChoice, String questionDescription, LinkedList<String> correctAnswers, LinkedList<String> possibleAnswers) {
         return QuestionBank.CreateQuestion(typeChoice, questionDescription, correctAnswers, possibleAnswers);
+    }
+
+    public void AddTagToQuestion(int idNumber, String tagName) {
+        QuestionBank.GetInstance().AddTagToQuestion(idNumber, tagName);
     }
 
     public boolean RemoveQuestion(int id) {
