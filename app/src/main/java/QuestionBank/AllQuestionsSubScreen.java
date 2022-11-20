@@ -11,7 +11,6 @@ import java.util.LinkedList;
 public class AllQuestionsSubScreen {
     private JFrame frame;
     private JLabel headerLabel;
-    private JLabel statusLabel;
     private JPanel scrollPanel;
     private JPanel bottomPanel;
 
@@ -40,8 +39,6 @@ public class AllQuestionsSubScreen {
 
         //Create a label for the window
         headerLabel = new JLabel("", JLabel.CENTER);
-        statusLabel = new JLabel("", JLabel.CENTER);
-        statusLabel.setSize(350, 100);
 
         //Create a panel for housing the scrollPanel
         scrollPanel = new JPanel();
@@ -57,8 +54,6 @@ public class AllQuestionsSubScreen {
         cancelButton.addActionListener(new ButtonClickListener());
         bottomPanel.add(cancelButton);
         bottomPanel.add(Box.createHorizontalGlue());
-        //Add status label to bottom panel - for testing
-        bottomPanel.add(statusLabel);
 
         //Add the label and panels to the frame
         frame.add(headerLabel);
@@ -87,19 +82,6 @@ public class AllQuestionsSubScreen {
     private void DisplayList() {
         JPanel p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
-
-        /*
-        LinkedList<String> list = new LinkedList<>(List.of("Button 1", "Button 2", "Button 3",
-                "Button 4", "Button 5", "Button 6", "Button 7", "Button 8", "Button 9"));
-
-        for (String s : list) {
-            JButton button = new JButton(s);
-            button.setActionCommand(s);
-            button.addActionListener(new ButtonClickListener());
-            //button.setPreferredSize(new Dimension(100, 50));
-            p.add(button);
-        }
-         */
 
         LinkedList<Questions> questions = BankFacade.GetInstance().GetQuestions();
         for (Questions q : questions) {
@@ -136,8 +118,6 @@ public class AllQuestionsSubScreen {
         }
 
         private void ListButton(String command) {
-            statusLabel.setText("List button clicked.");
-
             new QuestionSubScreen(command);
             frame.dispose();
         }

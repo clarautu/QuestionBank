@@ -11,7 +11,6 @@ import java.util.LinkedList;
 public class AllTagsSubScreen {
     private JFrame frame;
     private JLabel headerLabel;
-    private JLabel statusLabel;
     private JPanel scrollPanel;
     private JPanel bottomPanel;
 
@@ -38,10 +37,8 @@ public class AllTagsSubScreen {
             }
         });
 
-        //Create labels for the window
+        //Create label for the window
         headerLabel = new JLabel("", JLabel.CENTER);
-        statusLabel = new JLabel("", JLabel.CENTER);
-        statusLabel.setSize(350, 100);
 
         //Create a panel for housing the scrollPanel
         scrollPanel = new JPanel();
@@ -57,8 +54,6 @@ public class AllTagsSubScreen {
         cancelButton.addActionListener(new ButtonClickListener());
         bottomPanel.add(cancelButton);
         bottomPanel.add(Box.createHorizontalGlue());
-        //Add status label to bottom panel - for testing
-        bottomPanel.add(statusLabel);
 
         //Add the labels and panel to the frame
         frame.add(headerLabel);
@@ -87,24 +82,6 @@ public class AllTagsSubScreen {
     private void DisplayList() {
         JPanel p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
-
-        //Test code
-        JButton b = new JButton("TestTag");
-        b.setActionCommand("TestTag");
-        b.addActionListener(new ButtonClickListener());
-        p.add(b);
-        /*
-        LinkedList<String> list = new LinkedList<>(List.of("Button 1", "Button 2", "Button 3",
-                "Button 4", "Button 5", "Button 6", "Button 7", "Button 8", "Button 9"));
-
-        for (String s : list) {
-            JButton button = new JButton(s);
-            button.setActionCommand(s);
-            button.addActionListener(new ButtonClickListener());
-            //button.setPreferredSize(new Dimension(100, 50));
-            p.add(button);
-        }
-         */
 
         LinkedList<Tag> tags = BankFacade.GetInstance().GetTagsList();
         for (Tag t : tags) {

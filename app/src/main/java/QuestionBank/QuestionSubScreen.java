@@ -12,7 +12,6 @@ import static javax.swing.JOptionPane.showMessageDialog;
 public class QuestionSubScreen {
     private JFrame frame;
     private JLabel headerLabel;
-    private JLabel statusLabel;
     private JPanel infoPanel;
     private JPanel panel;
     private JPanel bottomPanel;
@@ -36,10 +35,8 @@ public class QuestionSubScreen {
         frame.setSize(500, 500);
         frame.setLayout(new GridLayout(4, 1));
 
-        //Create labels for the window
+        //Create label for the window
         headerLabel = new JLabel("", JLabel.CENTER);
-        statusLabel = new JLabel("", JLabel.CENTER);
-        statusLabel.setSize(350, 100);
 
         //Unhide the main screen on closing
         frame.addWindowListener(new WindowAdapter() {
@@ -66,8 +63,6 @@ public class QuestionSubScreen {
         cancelButton.addActionListener(new ButtonClickListener());
         bottomPanel.add(cancelButton);
         bottomPanel.add(Box.createHorizontalGlue());
-        //Add status label to bottom panel - for testing
-        bottomPanel.add(statusLabel);
 
         //Add the labels and panel to the frame
         frame.add(headerLabel);
@@ -192,11 +187,9 @@ public class QuestionSubScreen {
             frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
         }
         private void AddTag() {
-            statusLabel.setText("Add tag button clicked");
             //Call AddTag() method - need another screen?
         }
         private void RemoveTag() {
-            statusLabel.setText("Remove tag button clicked");
             //Call RemoveTag() method - need another screen?
         }
         private void Cancel() {
