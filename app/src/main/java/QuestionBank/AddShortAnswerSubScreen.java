@@ -113,6 +113,7 @@ public class AddShortAnswerSubScreen implements FocusListener{
             if (text.length() >= 5 & text.length() <= 350) {
                 if (BankFacade.GetInstance().CreateQuestion(3, text, null, null)) {
                     statusLabel.setText("Short answer question added");
+                    frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
                 } else {
                     statusLabel.setText("Failed to add question");
                 }

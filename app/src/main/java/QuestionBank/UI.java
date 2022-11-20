@@ -7,11 +7,12 @@ import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 
+import static javax.swing.JOptionPane.showMessageDialog;
+
 public class UI {
     private static UI instance = null;
     private JFrame mainFrame;
     private JLabel headerlabel;
-    private JLabel statusLabel;
     private JPanel controlPanel;
     private JFileChooser fileChooser;
     private BankFacade bankFacade = BankFacade.GetInstance();
@@ -38,12 +39,10 @@ public class UI {
     private void PrepareGUI(){
         mainFrame = new JFrame("Question Bank Window");
         mainFrame.setSize(800, 800);
-        mainFrame.setLayout(new GridLayout(3, 1));
+        mainFrame.setLayout(new GridLayout(2, 1));
 
-        //Create labels for the window
+        //Create label for the window
         headerlabel = new JLabel("", JLabel.CENTER);
-        statusLabel = new JLabel("", JLabel.CENTER);
-        statusLabel.setSize(350, 100);
 
         //Shut down the program upon closing the window
         mainFrame.addWindowListener(new WindowAdapter() {
@@ -58,7 +57,6 @@ public class UI {
         //Add the labels and panel to the frame
         mainFrame.add(headerlabel);
         mainFrame.add(controlPanel);
-        mainFrame.add(statusLabel);
 
         mainFrame.setLocationRelativeTo(null);
         mainFrame.setVisible(true);
@@ -69,16 +67,6 @@ public class UI {
      */
     private void ShowWindow(){
         headerlabel.setText("What would you like to do?");
-
-        //Initial screen
-        /*
-        Get a list of questions
-        Make a question
-        Get a list of tags
-        Save the bank
-        Load questions into bank
-        Delete question bank
-         */
 
         //Create buttons
         JButton seeAllQuestionsButton = new JButton("See all questions in bank");
@@ -156,21 +144,17 @@ public class UI {
         }
 
         private void SeeAll() {
-            statusLabel.setText("See all questions button clicked.");
             new AllQuestionsSubScreen();
         }
         private void AddNew() {
-            statusLabel.setText("Add new button clicked.");
             new AddQuestionSubScreen();
         }
         private void SeeTags() {
-            statusLabel.setText("See all tags button clicked");
             new AllTagsSubScreen();
         }
 
         // State related actions //
         private void SaveBank() {
-            statusLabel.setText("Save bank button clicked");
             fileChooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
             int approveVal = fileChooser.showSaveDialog(null);
 
@@ -183,7 +167,6 @@ public class UI {
         }
 
         private void LoadQuestions() throws FileNotFoundException {
-            statusLabel.setText("Load questions button clicked");
             fileChooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
             int approveVal = fileChooser.showOpenDialog(null);
 
@@ -194,8 +177,8 @@ public class UI {
         }
 
         private void DeleteBank() {
-            statusLabel.setText("Delete bank button clicked");
             bankFacade.resetBank();
+            showMessageDialog(null, "Bank has been reset.");
         }
     }
 }
