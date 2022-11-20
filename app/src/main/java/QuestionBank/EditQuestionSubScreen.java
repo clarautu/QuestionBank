@@ -23,6 +23,7 @@ public class EditQuestionSubScreen {
     private JTextArea getPromptBox;
     private JComboBox<String> tagsListBox;
     private JPanel addTagPanel;
+    private JComboBox<String> removeTagSelection;
     private JPanel removeTagPanel;
     protected EditQuestionSubScreen(Questions question) {
         this.question = question;
@@ -144,7 +145,6 @@ public class EditQuestionSubScreen {
         JPanel addTagPanelTemp = new JPanel();
         LinkedList<Tag> tags = BankFacade.GetInstance().GetTagsList();
         tagsListBox.setEditable(true);
-        //tagsListBox.addItem("");//Bug fixing
         for (Tag t : tags) {
             String name = t.GetTagName();
             int maxLength = 20;
@@ -157,19 +157,13 @@ public class EditQuestionSubScreen {
         JButton addTag = new JButton("Add Tag");
         addTagPanelTemp.add(addTag);
         addTagPanel.add(addTagPanelTemp);
-        //CURRENTLY WORKING HERE - NEED TO ADD tagslistbox to frame i think?
-        //make j-panel - add info and box to the j-panel
-        //add panel to frame
-        //add box to the panel
-        //for (String s : question.GetPossibleAnswers()) {
-        //    panel.add(new JLabel(s));
-        //}
+        addTag.setActionCommand("addTag");
+        addTag.addActionListener(new ButtonClickListener());
 
-        //Remove tags Jbox
-        removeTagPanel.add(new JLabel("Removal section"));
+        //Remove tags
+        //removeTagPanel.add(new JLabel("Removal section"));
         JPanel removeTagPanelTemp = new JPanel();
-        JComboBox<String> removeTagSelection = new JComboBox<String>();
-        //removeTagSelection.addItem("");
+        removeTagSelection = new JComboBox<String>();
         for (String name : question.GetTags()) {
             int maxLength = 20;
             if (name.length() > maxLength) {
@@ -181,7 +175,8 @@ public class EditQuestionSubScreen {
         JButton removeTag = new JButton("Remove Tag");
         removeTagPanelTemp.add(removeTag);
         removeTagPanel.add(removeTagPanelTemp);
-
+        removeTag.setActionCommand("removeTag");
+        removeTag.addActionListener((new ButtonClickListener()));
 
         //Add box and label to panel
         panel.add(promptPanel);
@@ -226,6 +221,50 @@ public class EditQuestionSubScreen {
         possibleHolder.add(scroll);
         frame.setVisible(true);
     }
+    private void UpdateTagPanel(){
+        //Update addTag panel
+        //tagsListBox = new JComboBox<String>();
+        tagsListBox.removeAll();
+        //JPanel addTagPanelTemp = new JPanel();
+        LinkedList<Tag> tags = BankFacade.GetInstance().GetTagsList();
+        tagsListBox.setEditable(true);
+        //tagsListBox.addItem("");
+        for (Tag t : tags) {
+            String name = t.GetTagName();
+            int maxLength = 20;
+            if (name.length() > maxLength) {
+                name = name.substring(0, 20);
+            }
+            tagsListBox.addItem(name);
+        }
+        //addTagPanelTemp.add(tagsListBox);
+        //JButton addTag = new JButton("Add Tag");
+        //addTagPanelTemp.add(addTag);
+        //addTagPanel.add(addTagPanelTemp);
+        //addTag.setActionCommand("addTag");
+        //addTag.addActionListener(new ButtonClickListener());
+
+        //update removeTag panel
+        //JPanel removeTagPanelTemp = new JPanel();
+        //removeTagSelection = new JComboBox<String>();
+        removeTagSelection.removeAll();
+        //removeTagSelection.addItem("");
+        for (String name : question.GetTags()) {
+            int maxLength = 20;
+            if (name.length() > maxLength) {
+                name = name.substring(0, 20);
+            }
+            removeTagSelection.addItem(name);
+        }
+        //removeTagPanelTemp.add(removeTagSelection);
+        //JButton removeTag = new JButton("Remove Tag");
+        //removeTagPanelTemp.add(removeTag);
+        //removeTagPanel.add(removeTagPanelTemp);
+        //removeTag.setActionCommand("removeTag");
+        //removeTag.addActionListener((new ButtonClickListener()));
+
+        frame.setVisible(true);
+    }
 
     /**
      * Private, internal class for defining Listeners for each button
@@ -240,6 +279,8 @@ public class EditQuestionSubScreen {
                 case "UpdatePrompt" -> UpdatePrompt();
                 case "AddAnswer" -> AddAnswer();
                 case "AddPossible" -> AddPossible();
+                case "addTag" -> AddTag();
+                case "removeTag" -> RemoveTag();
                 default -> throw new IllegalArgumentException("Command '" + command + "' not found");
             }
         }
@@ -289,6 +330,42 @@ public class EditQuestionSubScreen {
                 question.SetQuestion(getPrompt.getText());
             }
             getPrompt.setText("");
+        }
+        private void AddTag(){
+            BankFacade.GetInstance().AddTagToQuestion(question.GetIdNumber(),(String)tagsListBox.getSelectedItem());
+            /*
+            tagsListBox.removeAll();
+            tagsListBox.addItem("");
+            LinkedList<Tag> tags = BankFacade.GetInstance().GetTagsList();
+            for (Tag t : tags) {
+                String name = t.GetTagName();
+                int maxLength = 20;
+                if (name.length() > maxLength) {
+                    name = name.substring(0, 20);
+                }
+                tagsListBox.addItem(name);
+            }
+            frame.setVisible(true);
+
+             */
+            UpdateTagPanel();
+        }
+        private void RemoveTag(){
+            BankFacade.GetInstance().RemoveTagFromQuestion(question.GetIdNumber(),(String) removeTagSelection.getSelectedItem());
+            /*
+            removeTagSelection.removeAll();
+            removeTagSelection.addItem("");
+            for (String name : question.GetTags()) {
+                int maxLength = 20;
+                if (name.length() > maxLength) {
+                    name = name.substring(0, 20);
+                }
+                removeTagSelection.addItem(name);
+            }
+            frame.setVisible(true);
+
+             */
+            UpdateTagPanel();
         }
     }
 }

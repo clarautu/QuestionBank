@@ -87,6 +87,16 @@ public class BankFacade {
         return QuestionBank.RemoveTag(tagName);
     }
 
+    /**
+     * Method that removes a specified tag from a specified question
+     * @param questionID the ID of the question
+     * @param tagName the name of the tag
+     * @return True if the tag was removed successfully
+     */
+    public boolean RemoveTagFromQuestion(int questionID, String tagName){
+        return QuestionBank.GetQuestion(questionID).RemoveTag(tagName);
+    }
+
     // needed for out-dated save implementation
     private QuestionBank GetQuestionBank() {return QuestionBank;}
 
