@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.LinkedList;
 
 public class EditQuestionSubScreen {
     private JFrame frame;
@@ -20,6 +21,9 @@ public class EditQuestionSubScreen {
     private JPanel possibleHolder;
     private Questions question;
     private JTextArea getPromptBox;
+    private JComboBox<String> tagsListBox;
+    private JPanel addTagPanel;
+    private JPanel removeTagPanel;
     protected EditQuestionSubScreen(Questions question) {
         this.question = question;
         Prepare();
@@ -34,8 +38,8 @@ public class EditQuestionSubScreen {
         UI.GetInstance().Hide();
 
         frame = new JFrame("Edit a question");
-        frame.setSize(500, 500);
-        frame.setLayout(new GridLayout(3, 1));
+        frame.setSize(800, 800);
+        frame.setLayout(new GridLayout(5, 1));
 
         //Unhide the main screen on closing
         frame.addWindowListener(new WindowAdapter() {
@@ -55,6 +59,12 @@ public class EditQuestionSubScreen {
         bottomPanel = new JPanel();
         bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.LINE_AXIS));
 
+        //Create tag panels
+        addTagPanel = new JPanel();
+        addTagPanel.setLayout(new BoxLayout(addTagPanel, BoxLayout.Y_AXIS));
+        removeTagPanel = new JPanel();
+        removeTagPanel.setLayout(new BoxLayout(removeTagPanel, BoxLayout.Y_AXIS));
+
         //Make and add cancel button
         JButton cancelButton = new JButton("Cancel");
         cancelButton.setActionCommand("Cancel");
@@ -71,6 +81,8 @@ public class EditQuestionSubScreen {
         //Add the label and panels to the frame
         frame.add(headerLabel);
         frame.add(panel);
+        frame.add(addTagPanel);
+        frame.add(removeTagPanel);
         frame.add(bottomPanel);
 
         frame.setLocationRelativeTo(null);
@@ -126,6 +138,49 @@ public class EditQuestionSubScreen {
         possiblePanel.add(getPossible);
         possiblePanel.add(possibleButton);
         possiblePanel.add(possibleHolder);
+
+        //Add Tags JComboBox
+        tagsListBox = new JComboBox<String>();
+        JPanel addTagPanelTemp = new JPanel();
+        LinkedList<Tag> tags = BankFacade.GetInstance().GetTagsList();
+        tagsListBox.setEditable(true);
+        //tagsListBox.addItem("");//Bug fixing
+        for (Tag t : tags) {
+            String name = t.GetTagName();
+            int maxLength = 20;
+            if (name.length() > maxLength) {
+                name = name.substring(0, 20);
+            }
+            tagsListBox.addItem(name);
+        }
+        addTagPanelTemp.add(tagsListBox);
+        JButton addTag = new JButton("Add Tag");
+        addTagPanelTemp.add(addTag);
+        addTagPanel.add(addTagPanelTemp);
+        //CURRENTLY WORKING HERE - NEED TO ADD tagslistbox to frame i think?
+        //make j-panel - add info and box to the j-panel
+        //add panel to frame
+        //add box to the panel
+        //for (String s : question.GetPossibleAnswers()) {
+        //    panel.add(new JLabel(s));
+        //}
+
+        //Remove tags Jbox
+        removeTagPanel.add(new JLabel("Removal section"));
+        JPanel removeTagPanelTemp = new JPanel();
+        JComboBox<String> removeTagSelection = new JComboBox<String>();
+        //removeTagSelection.addItem("");
+        for (String name : question.GetTags()) {
+            int maxLength = 20;
+            if (name.length() > maxLength) {
+                name = name.substring(0, 20);
+            }
+            removeTagSelection.addItem(name);
+        }
+        removeTagPanelTemp.add(removeTagSelection);
+        JButton removeTag = new JButton("Remove Tag");
+        removeTagPanelTemp.add(removeTag);
+        removeTagPanel.add(removeTagPanelTemp);
 
 
         //Add box and label to panel
