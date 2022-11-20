@@ -1,8 +1,11 @@
 package QuestionBank;
 
-public class ShortAnswer {
-    //Fields
-    private String Prompt;
+public class ShortAnswer extends Questions{
+
+    //Constructor
+    protected ShortAnswer(int idNumber, String question) {
+        super(idNumber, question, null, null);
+    }
 
     //Methods
     /**
@@ -10,14 +13,14 @@ public class ShortAnswer {
      * @return the current short answer prompt.
      */
     public String getPrompt() {
-        return Prompt;
+        return this.GetQuestion();
     }
 
     /**
      * Method that updates the value of the current short answer question.
-     * @param prompt The current short answer question.
+     * @param Prompt The current short answer question.
      */
-    public void setPrompt(String prompt) {
-        Prompt = prompt;
+    public void setPrompt(String Prompt) {
+        this.SetQuestion(Prompt);
     }
 }

@@ -1,17 +1,21 @@
 # QuestionBank
-*version 0.0.0*
+*version 1.0.0*
 [![Java CI with Gradle](https://github.com/CS3321TeamC/QuestionBank/actions/workflows/gradle.yml/badge.svg)](https://github.com/CS3321TeamC/QuestionBank/actions/workflows/gradle.yml)
 
 ## Description
-This project is currently in conceptual design.
-
+This program serves as a simple bank that holds questions.
+- The bank can hold multiple answer questions, single answer questions, and short answer questions.
+- The bank supports the ability to add tags to questions and to query the bank for all questions with a specified tag. The list of tagged questions can be exported to a file, in JSON format.
+- The bank can be saved and loaded via JSON files.
 
 ### Installation
 -
 
 
 ### Usage
--
+- This program uses a simple Graphical User Interface (GUI), so no command line experience is required.
+- All buttons are clearly labeled and self-explanatory.
+- The program terminates when the main screen is closed - Only when closed by the user. The main screen does close when other screens are launched.
 
 
 ### Contributing

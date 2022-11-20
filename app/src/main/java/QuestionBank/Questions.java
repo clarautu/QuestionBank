@@ -14,7 +14,11 @@ public abstract class Questions {
         this.Question = question;
         this.CorrectAnswers = correctAnswer;
         this.PossibleAnswers = possibleAnswers;
+        this.Tags = new LinkedList<>();
     }
+
+    public Questions() {} // no args constructor for custom gson deserialization builder
+
 
     protected int GetIdNumber(){return this.IdNumber;}
     protected String GetQuestion(){return this.Question;}
