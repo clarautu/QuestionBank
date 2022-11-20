@@ -1,5 +1,5 @@
 # QuestionBank
-*version 0.0.0*
+*version 1.0.0*
 [![Java CI with Gradle](https://github.com/CS3321TeamC/QuestionBank/actions/workflows/gradle.yml/badge.svg)](https://github.com/CS3321TeamC/QuestionBank/actions/workflows/gradle.yml)
 
 ## Description

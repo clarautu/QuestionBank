@@ -9,6 +9,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 -
 
+## [1.0.0] - 11-20-2022
+### Added
+- Ability to add short answer questions
+- Ability to add single answer questions
+- Can see all tags in bank
+- Can see all question with a particular tag
+- Can export to a file questions that have a particular tag
+
+### Changed
+- Layout of the user interface
+
+### Removed
+- Nothing removed 
+
 ## [0.3.0] - 11-15-2022
 ### Added
 - Ability to add a multiple answer question to the bank
