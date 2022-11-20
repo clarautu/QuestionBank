@@ -333,39 +333,18 @@ public class EditQuestionSubScreen {
         }
         private void AddTag(){
             BankFacade.GetInstance().AddTagToQuestion(question.GetIdNumber(),(String)tagsListBox.getSelectedItem());
-            /*
-            tagsListBox.removeAll();
-            tagsListBox.addItem("");
-            LinkedList<Tag> tags = BankFacade.GetInstance().GetTagsList();
-            for (Tag t : tags) {
-                String name = t.GetTagName();
-                int maxLength = 20;
-                if (name.length() > maxLength) {
-                    name = name.substring(0, 20);
-                }
-                tagsListBox.addItem(name);
-            }
-            frame.setVisible(true);
 
-             */
-            UpdateTagPanel();
+            frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+            Prepare();
+            Show();
         }
         private void RemoveTag(){
             BankFacade.GetInstance().RemoveTagFromQuestion(question.GetIdNumber(),(String) removeTagSelection.getSelectedItem());
-            /*
-            removeTagSelection.removeAll();
-            removeTagSelection.addItem("");
-            for (String name : question.GetTags()) {
-                int maxLength = 20;
-                if (name.length() > maxLength) {
-                    name = name.substring(0, 20);
-                }
-                removeTagSelection.addItem(name);
-            }
-            frame.setVisible(true);
 
-             */
-            UpdateTagPanel();
+            //UpdateTagPanel();
+            frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+            Prepare();
+            Show();
         }
     }
 }

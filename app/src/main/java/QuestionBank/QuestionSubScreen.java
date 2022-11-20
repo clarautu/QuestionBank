@@ -80,37 +80,21 @@ public class QuestionSubScreen {
     private void Show() {
         headerLabel.setText("Prompt: " + question.GetQuestion());
 
-        //Sub screen - Click on a question
-        /*
-        Edit a question
-        Delete a question
-        Add a tag to a particular question
-        Remove a tag from a particular question
-         */
-
         //Create buttons
         JButton editQuestionButton = new JButton("Edit Question");
         JButton deleteQuestionButton = new JButton("Delete Question");
-        JButton addTagButton = new JButton("Add Tag");
-        JButton removeTagButton = new JButton("Remove Tag");
 
         //Set button commands
         editQuestionButton.setActionCommand("EditQuestion");
         deleteQuestionButton.setActionCommand("DeleteQuestion");
-        addTagButton.setActionCommand("AddTag");
-        removeTagButton.setActionCommand("RemoveTag");
 
         //Add listeners to buttons
         editQuestionButton.addActionListener(new ButtonClickListener());
         deleteQuestionButton.addActionListener(new ButtonClickListener());
-        addTagButton.addActionListener(new ButtonClickListener());
-        removeTagButton.addActionListener(new ButtonClickListener());
 
         //Add buttons to panel
         panel.add(editQuestionButton);
         panel.add(deleteQuestionButton);
-        panel.add(addTagButton);
-        panel.add(removeTagButton);
 
         //Make and add question info labels
         infoPanel.add(new JLabel("Answers"));
@@ -162,8 +146,6 @@ public class QuestionSubScreen {
             switch (command){
                 case "EditQuestion" -> EditQuestion();
                 case "DeleteQuestion" -> DeleteQuestion();
-                case "AddTag" -> AddTag();
-                case "RemoveTag" -> RemoveTag();
                 case "Cancel" -> Cancel();
                 default -> throw new IllegalArgumentException("Command '" + command + "' not found");
             }
@@ -185,12 +167,6 @@ public class QuestionSubScreen {
             }
             //Close screen
             frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
-        }
-        private void AddTag() {
-            //Call AddTag() method - need another screen?
-        }
-        private void RemoveTag() {
-            //Call RemoveTag() method - need another screen?
         }
         private void Cancel() {
             frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
