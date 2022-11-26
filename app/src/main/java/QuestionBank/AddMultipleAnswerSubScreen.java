@@ -35,7 +35,7 @@ public class AddMultipleAnswerSubScreen {
         UI.GetInstance().Hide();
 
         frame = new JFrame("Add a multiple answer question");
-        frame.setSize(500, 500);
+        frame.setSize(600, 600);
         frame.setLayout(new GridLayout(3, 1));
 
         //Unhide the main screen on closing

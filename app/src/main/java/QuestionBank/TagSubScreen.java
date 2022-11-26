@@ -38,7 +38,7 @@ public class TagSubScreen {
         UI.GetInstance().Hide();
 
         frame = new JFrame("Tag Window for tag: " + tagName);
-        frame.setSize(500, 500);
+        frame.setSize(600, 600);
         frame.setLayout(new GridLayout(4, 1));
 
         //Unhide the main screen on closing
