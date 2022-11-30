@@ -21,9 +21,10 @@ class TagTest extends Specification {
     //GetQuestionsOfTagType
     def "get list of tags"() {
         given:
-        LinkedList<Integer> Questions = [1,2,3,4,5]
+        LinkedList<Integer> QuestionIDs = [1,2,3,4,5]
 
-        def list = new Tag(Questions)
+        def list = new Tag("tagName")
+        list.setQuestionsOfTagType(QuestionIDs)
 
         when:
         def result = list.GetQuestionsOfTagType()

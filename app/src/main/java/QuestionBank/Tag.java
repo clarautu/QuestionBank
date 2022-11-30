@@ -10,12 +10,7 @@ public class Tag {
     private LinkedList<Integer> QuestionsOfTagType;
 
     //Constructor
-
-    public Tag(LinkedList<Integer> questionsOfTagType) {
-        QuestionsOfTagType = questionsOfTagType;
-    }
-
-    public Tag(String tagName) {
+    protected Tag(String tagName) {
         TagName = tagName;
         QuestionsOfTagType = new LinkedList<>();
     }
@@ -25,13 +20,13 @@ public class Tag {
      * Method that returns the current tag name.
      * @return Current tag name.
      */
-    public String GetTagName() { return this.TagName;}
+    protected String GetTagName() { return this.TagName;}
 
     /**
      * Method that returns list with a tag related to an integer
      * @return A list containing a specific tag.
      */
-    public LinkedList<Integer> GetQuestionsOfTagType(){
+    protected LinkedList<Integer> GetQuestionsOfTagType(){
         return this.QuestionsOfTagType;
     }
 
@@ -39,7 +34,7 @@ public class Tag {
      * Method that updates the current tag name.
      * @param tagName The name of the tag being updated.
      */
-    public void setTagName(String tagName) {
+    protected void setTagName(String tagName) {
         TagName = tagName;
     }
 
@@ -47,7 +42,7 @@ public class Tag {
      * Method that will update a specific lists tag, if needed.
      * @param questionsOfTagType list of specific tags.
      */
-    public void setQuestionsOfTagType(LinkedList<Integer> questionsOfTagType) {
+    protected void setQuestionsOfTagType(LinkedList<Integer> questionsOfTagType) {
         QuestionsOfTagType = questionsOfTagType;
     }
 
@@ -56,7 +51,7 @@ public class Tag {
      * @param id The id number of the question being added
      * @return True if the question id was added correctly; False otherwise
      */
-    public boolean AddQuestion(int id) {
+    protected boolean AddQuestion(int id) {
         return this.QuestionsOfTagType.add(id);
     }
 }
