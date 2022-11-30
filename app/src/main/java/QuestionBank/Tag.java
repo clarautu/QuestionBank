@@ -10,12 +10,14 @@ public class Tag {
     private LinkedList<Integer> QuestionsOfTagType;
 
     //Constructor
+
     public Tag(LinkedList<Integer> questionsOfTagType) {
         QuestionsOfTagType = questionsOfTagType;
     }
 
     public Tag(String tagName) {
         TagName = tagName;
+        QuestionsOfTagType = new LinkedList<>();
     }
 
     //Methods
