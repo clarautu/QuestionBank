@@ -61,6 +61,24 @@ public class BankFacade {
     }
 
     /**
+     * Overload to allow adding tags
+     * @param typeChoice
+     * @param questionDescription
+     * @param correctAnswers
+     * @param possibleAnswers
+     * @param tagsList
+     * @return
+     */
+    public Boolean CreateQuestion(int typeChoice, String questionDescription, LinkedList<String> correctAnswers, LinkedList<String> possibleAnswers, LinkedList<String> tagsList) {
+        Boolean success = QuestionBank.CreateQuestion(typeChoice, questionDescription, correctAnswers, possibleAnswers);
+        Questions question = QuestionBank.GetQuestions().peekLast();
+        for (String tag : tagsList){
+            QuestionBank.AddTagToQuestion(question.GetIdNumber(),tag);
+        }
+        return success;
+    }
+
+    /**
      * Method that adds a tag to a specified question
      * @param idNumber The ID number of the question
      * @param tagName The name of the tag to add

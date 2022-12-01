@@ -3,6 +3,7 @@ package QuestionBank;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.LinkedList;
 
 public class AddShortAnswerSubScreen implements FocusListener{
     private JFrame frame;
@@ -12,6 +13,11 @@ public class AddShortAnswerSubScreen implements FocusListener{
     private JPanel bottomPanel;
     private JTextArea getPrompt;
     private String prompt;
+    private JComboBox<String> tagsListBox;
+    private JPanel addTagPanel;
+    private JComboBox<String> removeTagSelection;
+    private JPanel removeTagPanel;
+    private LinkedList<String> tagsAdded = new LinkedList<>();
 
     protected AddShortAnswerSubScreen() {
         Prepare();
@@ -27,7 +33,7 @@ public class AddShortAnswerSubScreen implements FocusListener{
 
         frame = new JFrame("Add a short answer question");
         frame.setSize(600, 600);
-        frame.setLayout(new GridLayout(4, 1));
+        frame.setLayout(new GridLayout(6, 1));
 
         //Unhide the main screen on closing
         frame.addWindowListener(new WindowAdapter() {
@@ -45,6 +51,12 @@ public class AddShortAnswerSubScreen implements FocusListener{
         //Create a panel for housing the buttons
         panel = new JPanel();
         panel.setLayout(new FlowLayout());
+
+        //Create tag panels
+        addTagPanel = new JPanel();
+        addTagPanel.setLayout(new BoxLayout(addTagPanel, BoxLayout.Y_AXIS));
+        removeTagPanel = new JPanel();
+        removeTagPanel.setLayout(new BoxLayout(removeTagPanel, BoxLayout.Y_AXIS));
 
         //Create a panel for housing the cancel button
         bottomPanel = new JPanel();
@@ -68,6 +80,8 @@ public class AddShortAnswerSubScreen implements FocusListener{
         frame.add(panel);
         frame.add(bottomPanel);
         frame.add(statusLabel);
+        frame.add(addTagPanel);
+        frame.add(removeTagPanel);
 
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
@@ -85,6 +99,54 @@ public class AddShortAnswerSubScreen implements FocusListener{
         getPrompt.setWrapStyleWord(true);
         getPrompt.addFocusListener(this);
 
+        //Add Tags JComboBox
+        tagsListBox = new JComboBox<String>();
+        JPanel addTagPanelTemp = new JPanel();
+        LinkedList<Tag> tags = BankFacade.GetInstance().GetTagsList();
+        tagsListBox.setEditable(true);
+        for (Tag t : tags) {
+            String name = t.GetTagName();
+            int maxLength = 20;
+            if (name.length() > maxLength) {
+                name = name.substring(0, 20);
+            }
+            tagsListBox.addItem(name);
+        }
+        addTagPanelTemp.add(tagsListBox);
+        JButton addTag = new JButton("Add Tag");
+        addTagPanelTemp.add(addTag);
+        addTagPanel.add(addTagPanelTemp);
+        addTag.setActionCommand("addTag");
+        addTag.addActionListener(new ButtonClickListener());
+
+        //Remove tags
+        //removeTagPanel.add(new JLabel("Removal section"));
+        JPanel removeTagPanelTemp = new JPanel();
+        removeTagSelection = new JComboBox<String>();
+        /*
+        for (String name : question.GetTags()) {
+            int maxLength = 20;
+            if (name.length() > maxLength) {
+                name = name.substring(0, 20);
+            }
+            removeTagSelection.addItem(name);
+        }
+         */
+        if (tagsAdded != null) {
+            for (String name : tagsAdded) {
+                int maxLength = 20;
+                if (name.length() > maxLength) {
+                    name = name.substring(0, 20);
+                }
+                removeTagSelection.addItem(name);
+            }
+        }
+        removeTagPanelTemp.add(removeTagSelection);
+        JButton removeTag = new JButton("Remove Tag");
+        removeTagPanelTemp.add(removeTag);
+        removeTagPanel.add(removeTagPanelTemp);
+        removeTag.setActionCommand("removeTag");
+        removeTag.addActionListener((new ButtonClickListener()));
 
         //Add button to panel
         panel.add(getPrompt);
@@ -102,6 +164,8 @@ public class AddShortAnswerSubScreen implements FocusListener{
             switch (command) {
                 case "Submit" -> Submit();
                 case "Cancel" -> Cancel();
+                case "addTag" -> AddTag();
+                case "removeTag" -> RemoveTag();
                 default -> throw new IllegalArgumentException("Command '" + command + "' not found");
             }
         }
@@ -137,4 +201,20 @@ public class AddShortAnswerSubScreen implements FocusListener{
         public void focusLost(FocusEvent e) {
 
         }
+    private void AddTag(){
+        //BankFacade.GetInstance().AddTagToQuestion(question.GetIdNumber(),(String)tagsListBox.getSelectedItem());
+        tagsAdded.add((String)tagsListBox.getSelectedItem());
+
+        frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+        Prepare();
+        Show();
+    }
+    private void RemoveTag(){
+        //BankFacade.GetInstance().RemoveTagFromQuestion(question.GetIdNumber(),(String) removeTagSelection.getSelectedItem());
+        tagsAdded.remove((String) removeTagSelection.getSelectedItem());
+        //UpdateTagPanel();
+        frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+        Prepare();
+        Show();
+    }
 }

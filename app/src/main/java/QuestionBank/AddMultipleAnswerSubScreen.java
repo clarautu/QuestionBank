@@ -21,6 +21,11 @@ public class AddMultipleAnswerSubScreen {
     private JPanel possibleHolder;
     private LinkedList<String> answers = new LinkedList<>();
     private LinkedList<String> possibleAnswers = new LinkedList<>();
+    private JComboBox<String> tagsListBox;
+    private JPanel addTagPanel;
+    private JComboBox<String> removeTagSelection;
+    private JPanel removeTagPanel;
+    private LinkedList<String> tagsAdded = new LinkedList<>();
 
     protected AddMultipleAnswerSubScreen() {
         Prepare();
@@ -36,7 +41,7 @@ public class AddMultipleAnswerSubScreen {
 
         frame = new JFrame("Add a multiple answer question");
         frame.setSize(600, 600);
-        frame.setLayout(new GridLayout(3, 1));
+        frame.setLayout(new GridLayout(5, 1));
 
         //Unhide the main screen on closing
         frame.addWindowListener(new WindowAdapter() {
@@ -51,6 +56,12 @@ public class AddMultipleAnswerSubScreen {
         //Create a panel for housing the buttons
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+
+        //Create tag panels
+        addTagPanel = new JPanel();
+        addTagPanel.setLayout(new BoxLayout(addTagPanel, BoxLayout.Y_AXIS));
+        removeTagPanel = new JPanel();
+        removeTagPanel.setLayout(new BoxLayout(removeTagPanel, BoxLayout.Y_AXIS));
 
         //Create a panel for housing the cancel button
         bottomPanel = new JPanel();
@@ -73,6 +84,8 @@ public class AddMultipleAnswerSubScreen {
         frame.add(headerLabel);
         frame.add(panel);
         frame.add(bottomPanel);
+        frame.add(addTagPanel);
+        frame.add(removeTagPanel);
 
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
@@ -127,6 +140,54 @@ public class AddMultipleAnswerSubScreen {
         possiblePanel.add(possibleButton);
         possiblePanel.add(possibleHolder);
 
+        //Add Tags JComboBox
+        tagsListBox = new JComboBox<String>();
+        JPanel addTagPanelTemp = new JPanel();
+        LinkedList<Tag> tags = BankFacade.GetInstance().GetTagsList();
+        tagsListBox.setEditable(true);
+        for (Tag t : tags) {
+            String name = t.GetTagName();
+            int maxLength = 20;
+            if (name.length() > maxLength) {
+                name = name.substring(0, 20);
+            }
+            tagsListBox.addItem(name);
+        }
+        addTagPanelTemp.add(tagsListBox);
+        JButton addTag = new JButton("Add Tag");
+        addTagPanelTemp.add(addTag);
+        addTagPanel.add(addTagPanelTemp);
+        addTag.setActionCommand("addTag");
+        addTag.addActionListener(new ButtonClickListener());
+
+        //Remove tags
+        //removeTagPanel.add(new JLabel("Removal section"));
+        JPanel removeTagPanelTemp = new JPanel();
+        removeTagSelection = new JComboBox<String>();
+        /*
+        for (String name : question.GetTags()) {
+            int maxLength = 20;
+            if (name.length() > maxLength) {
+                name = name.substring(0, 20);
+            }
+            removeTagSelection.addItem(name);
+        }
+         */
+        if (tagsAdded != null) {
+            for (String name : tagsAdded) {
+                int maxLength = 20;
+                if (name.length() > maxLength) {
+                    name = name.substring(0, 20);
+                }
+                removeTagSelection.addItem(name);
+            }
+        }
+        removeTagPanelTemp.add(removeTagSelection);
+        JButton removeTag = new JButton("Remove Tag");
+        removeTagPanelTemp.add(removeTag);
+        removeTagPanel.add(removeTagPanelTemp);
+        removeTag.setActionCommand("removeTag");
+        removeTag.addActionListener((new ButtonClickListener()));
 
         //Add box and label to panel
         panel.add(promptPanel);
@@ -149,13 +210,15 @@ public class AddMultipleAnswerSubScreen {
                 case "UpdatePrompt" -> UpdatePrompt();
                 case "AddAnswer" -> AddAnswer();
                 case "AddPossible" -> AddPossible();
+                case "addTag" -> AddTag();
+                case "removeTag" -> RemoveTag();
                 default -> throw new IllegalArgumentException("Command '" + command + "' not found");
             }
         }
 
         private void Submit() {
             //Make the question
-            BankFacade.GetInstance().CreateQuestion(1, promptHolder.getText(), answers, possibleAnswers);
+            BankFacade.GetInstance().CreateQuestion(1, promptHolder.getText(), answers, possibleAnswers, tagsAdded);
             //Close the screen
             frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
         }
@@ -192,6 +255,22 @@ public class AddMultipleAnswerSubScreen {
         private void UpdatePrompt() {
             promptHolder.setText(getPrompt.getText());
             getPrompt.setText("");
+        }
+        private void AddTag(){
+            //BankFacade.GetInstance().AddTagToQuestion(question.GetIdNumber(),(String)tagsListBox.getSelectedItem());
+            tagsAdded.add((String)tagsListBox.getSelectedItem());
+
+            frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+            Prepare();
+            Show();
+        }
+        private void RemoveTag(){
+            //BankFacade.GetInstance().RemoveTagFromQuestion(question.GetIdNumber(),(String) removeTagSelection.getSelectedItem());
+            tagsAdded.remove((String) removeTagSelection.getSelectedItem());
+            //UpdateTagPanel();
+            frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+            Prepare();
+            Show();
         }
     }
 }
