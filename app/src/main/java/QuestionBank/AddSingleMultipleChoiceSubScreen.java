@@ -220,7 +220,7 @@ public class AddSingleMultipleChoiceSubScreen {
             LinkedList<String> answer = new LinkedList<>();
             answer.add(answerHolder.getText());
             //Make the question
-            BankFacade.GetInstance().CreateQuestion(2, promptHolder.getText(), answer, possibleAnswers);
+            BankFacade.GetInstance().CreateQuestion(2, promptHolder.getText(), answer, possibleAnswers, tagsAdded);
             //Close the screen
             frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
         }
