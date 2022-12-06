@@ -45,7 +45,7 @@ class QuestionBankTest extends Specification{
     }
 
     //CreateQuestion(int typeChoice, String questionDescription, LinkedList<String> correctAnswers, LinkedList<String> possibleAnswers)
-    def "create a multianswer question"() {
+    def "create a multi answer question"() {
         setup:
         def bank = QuestionBank.GetInstance()
         when:
@@ -54,11 +54,28 @@ class QuestionBankTest extends Specification{
         then:
         result ==  true
     }
-    def "create a singleanswer question"() {
+    def "create a single answer question"() {
         setup:
         def bank = QuestionBank.GetInstance()
         when:
         def result = bank.CreateQuestion(2,"Test question",new LinkedList<String>(List.of("answer")),
+                new LinkedList<String>(List.of("possible1","possible2")))
+        then:
+        result ==  true
+    }
+    def "create a short answer question"() {
+        setup:
+        def bank = QuestionBank.GetInstance()
+        when:
+        def result = bank.CreateQuestion(3,"Test question",null,null)
+        then:
+        result ==  true
+    }
+    def "create a short answer question and give it lists of answers"() {
+        setup:
+        def bank = QuestionBank.GetInstance()
+        when:
+        def result = bank.CreateQuestion(3,"Test question",new LinkedList<String>(List.of("answer")),
                 new LinkedList<String>(List.of("possible1","possible2")))
         then:
         result ==  true
