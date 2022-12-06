@@ -39,7 +39,7 @@ public class AddSingleMultipleChoiceSubScreen {
         UI.GetInstance().Hide();
 
         frame = new JFrame("Add a single answer question");
-        frame.setSize(600, 600);
+        frame.setSize(600, 950);
         frame.setLayout(new GridLayout(5, 1));
 
         //Unhide the main screen on closing
