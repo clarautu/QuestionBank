@@ -9,7 +9,9 @@ This program serves as a simple bank that holds questions.
 - The bank can be saved and loaded via JSON files.
 
 ### Installation
--
+- Get file from github https://github.com/CS3321TeamC/QuestionBank/archive/refs/tags/1.0.0.zip
+- Unzip QuestionBank-1.0.0
+- 
 
 
 ### Usage
@@ -26,7 +28,7 @@ This project is not accepting any external contributors.
 - Authors
   - Hunter Chase
     - *Contact info*
-    - Email - hchase333@gmail.com / chashunt@isu.edu
+    - Email - chashunt@isu.edu
   - Autumn Clark
     - *Contact info*
     - Email - clarautu@isu.edu
