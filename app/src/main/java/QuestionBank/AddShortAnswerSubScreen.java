@@ -205,16 +205,37 @@ public class AddShortAnswerSubScreen implements FocusListener{
         //BankFacade.GetInstance().AddTagToQuestion(question.GetIdNumber(),(String)tagsListBox.getSelectedItem());
         tagsAdded.add((String)tagsListBox.getSelectedItem());
 
-        frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
-        Prepare();
-        Show();
+        //reset add tags jbox
+        tagsListBox.removeAllItems();
+        LinkedList<Tag> tags = BankFacade.GetInstance().GetTagsList();
+        tagsListBox.setEditable(true);
+        for (Tag t : tags) {
+            String name = t.GetTagName();
+            int maxLength = 20;
+            if (name.length() > maxLength) {
+                name = name.substring(0, 20);
+            }
+            tagsListBox.addItem(name);
+        }
+        //reset remove tags jbox
+        removeTagSelection.removeAllItems();
+        for (String str : tagsAdded) {
+            removeTagSelection.addItem(str);
+        }
+        //frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+        //Prepare();
+        //Show();
     }
     private void RemoveTag(){
         //BankFacade.GetInstance().RemoveTagFromQuestion(question.GetIdNumber(),(String) removeTagSelection.getSelectedItem());
         tagsAdded.remove((String) removeTagSelection.getSelectedItem());
         //UpdateTagPanel();
-        frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
-        Prepare();
-        Show();
+        //frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+        removeTagSelection.removeAllItems();
+        for (String str : tagsAdded) {
+            removeTagSelection.addItem(str);
+        }
+        //Prepare();
+        //Show();
     }
 }
