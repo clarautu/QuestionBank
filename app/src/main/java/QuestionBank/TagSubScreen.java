@@ -1,7 +1,6 @@
 package QuestionBank;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;
@@ -138,18 +137,35 @@ public class TagSubScreen {
         private void GetQuestions() {
             LinkedList<Questions> taggedQuestions = BankFacade.GetInstance().GetTaggedQuestions(tagName);
             //Export these
-            Gson gson = new GsonBuilder().registerTypeAdapter(Questions.class, new GsonInstanceCreator()).create();
-            String json = gson.toJson(taggedQuestions);
-            try {
-                JFileChooser fileChooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
-                fileChooser.showSaveDialog(null);
-                File fileToSave = fileChooser.getSelectedFile();
-                FileWriter file = new FileWriter(fileToSave.getAbsoluteFile());
-                file.write(json);
-                file.close();
-            } catch (Exception e) {
-                System.out.println("Problem exporting");
+            JFileChooser fileChooser;
+            fileChooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+            int approveVal = fileChooser.showSaveDialog(null);
+
+            if (approveVal == JFileChooser.APPROVE_OPTION) {
+                File file = fileChooser.getSelectedFile();
+
+                try {
+                    FileWriter writer = new FileWriter(file.getAbsolutePath());
+                    writer.write(MakeJSONString(taggedQuestions));
+                    writer.close();
+                } catch (Exception e) {
+                    System.out.println("Problem exporting");
+                }
             }
+        }
+        private String MakeJSONString(LinkedList<Questions> questions) {
+            Gson gson = new Gson();
+            String JSON = "{\"questions\":[";
+            for (Questions q : questions) {
+                String temp = "{\"IdNumber\":" + q.GetIdNumber() + ",\"Question\":\"" + q.GetQuestion() + "\"," +
+                        "\"CorrectAnswers\":" + gson.toJson(q.GetCorrectAnswer()) +
+                        ",\"PossibleAnswers\":" + gson.toJson(q.GetPossibleAnswers()) +
+                        ",\"Tags\":" + gson.toJson(q.GetTags()) + "},";
+                JSON += temp;
+            }
+            JSON = JSON.substring(0, JSON.length()-1);
+            JSON += "]";
+            return JSON;
         }
         private void RemoveTag() {
             Boolean didItWork = BankFacade.GetInstance().RemoveTag(tagName);
