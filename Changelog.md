@@ -9,6 +9,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 -
 
+
+## [1.0.1] - 11-20-2022
+### Added
+- Polished
+
+### Changed
+- Layout of the user interface
+
+### Removed
+- Bugs
+
+
+
 ## [1.0.0] - 11-20-2022
 ### Added
 - Ability to add short answer questions
