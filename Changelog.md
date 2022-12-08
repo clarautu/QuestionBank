@@ -9,6 +9,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 -
 
+## [1.0.2] - 12-08-2022
+### Added
+- Nothing added
+
+### Changed
+- Internal handling of file handling in one location
+
+### Removed
+- Nothing removed
+
+## [1.0.1] - 12-07-2022
+### Added
+- User manual
+
+### Changed
+- General user interface improvements
+
+### Removed
+- Nothing removed
 
 ## [1.0.1] - 11-20-2022
 ### Added
@@ -34,7 +53,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Layout of the user interface
 
 ### Removed
-- Nothing removed 
+- Nothing removed
 
 ## [0.3.0] - 11-15-2022
 ### Added
