@@ -1,5 +1,5 @@
 # QuestionBank
-*version 1.0.0*
+*version 1.0.1*
 [![Java CI with Gradle](https://github.com/CS3321TeamC/QuestionBank/actions/workflows/gradle.yml/badge.svg)](https://github.com/CS3321TeamC/QuestionBank/actions/workflows/gradle.yml)
 
 ## Description
@@ -9,9 +9,9 @@ This program serves as a simple bank that holds questions.
 - The bank can be saved and loaded via JSON files.
 
 ### Installation
-- Get file from github https://github.com/CS3321TeamC/QuestionBank/archive/refs/tags/1.0.0.zip
-- Unzip QuestionBank-1.0.0
-- 
+- Select a release from https://github.com/CS3321TeamC/QuestionBank/releases
+- Ensure that you have an up-to date version of java
+- run the app-all.jar
 
 
 ### Usage
