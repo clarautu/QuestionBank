@@ -21,9 +21,10 @@ class TagTest extends Specification {
     //GetQuestionsOfTagType
     def "get list of tags"() {
         given:
-        LinkedList<Integer> Questions = [1,2,3,4,5]
+        LinkedList<Integer> QuestionIDs = [1,2,3,4,5]
 
-        def list = new Tag(Questions)
+        def list = new Tag("tagName")
+        list.setQuestionsOfTagType(QuestionIDs)
 
         when:
         def result = list.GetQuestionsOfTagType()
@@ -47,31 +48,52 @@ class TagTest extends Specification {
     }
 
     //setQuestionsOfTagType(LinkedList<Integer> questionsOfTagType)
-    def "set list of tags"() {
+    def "set list of questions that have this tags with a short list"() {
         given:
-        LinkedList<Integer> questions = [1,2,3]
-        def Tag = new Tag(questions)
+        def Tag = new Tag("tagName")
 
         when:
-        LinkedList<Integer> questions2 = [3,2,1,0]
-        Tag.setQuestionsOfTagType(questions2)
+        LinkedList<Integer> questionIDs = [3,2,1,0]
+        Tag.setQuestionsOfTagType(questionIDs)
 
         then:
-        Tag.GetQuestionsOfTagType() == questions2
+        Tag.GetQuestionsOfTagType() == questionIDs
+    }
+    def "set list of questions that have this tag with a long list"() {
+        given:
+        def Tag = new Tag("tagName")
+
+        when:
+        LinkedList<Integer> questionIDs = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
+        Tag.setQuestionsOfTagType(questionIDs)
+
+        then:
+        Tag.GetQuestionsOfTagType() == questionIDs
     }
 
     //AddQuestion(int id)
     def "add question id to list of Questions with this tag"() {
         given:
         int id = 1
-        LinkedList<Integer> questions = [2,3,4]
-        def Tag = new Tag(questions)
+        def Tag = new Tag("tagName")
 
         when:
         def result = Tag.AddQuestion(id)
 
         then:
         result
+    }
+    def "add question id to list of Questions with this tag 2"() {
+        given:
+        int id = 1
+        def Tag = new Tag("tagName")
+
+        when:
+        Tag.AddQuestion(id)
+        def questionID = Tag.GetQuestionsOfTagType().pop()
+
+        then:
+        questionID == id
     }
 
 }

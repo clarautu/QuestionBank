@@ -9,7 +9,4 @@ public class MultipleAnswerChoice extends Questions {
     protected MultipleAnswerChoice(int idNumber, String question, LinkedList<String> correctAnswers, LinkedList<String> possibleAnswers) {
         super(idNumber, question, correctAnswers, possibleAnswers);
     }
-
-    //Methods
-
 }

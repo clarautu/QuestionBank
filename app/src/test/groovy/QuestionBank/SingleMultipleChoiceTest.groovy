@@ -11,10 +11,6 @@ class SingleMultipleChoiceTest extends Specification {
 
     def setup() {
         choices = new LinkedList(List.of("wrong1","wrong2","wrong3","Right!"));
-        //choices.add("wrong1");
-        //choices.add("wrong2");
-        //choices.add("wrong3");
-        //choices.add("Right!");
         rightanswer = new LinkedList();
         rightanswer.add("Right!");
         ID = 562;
@@ -26,20 +22,88 @@ class SingleMultipleChoiceTest extends Specification {
         when: true
         then:  question.GetIdNumber() == ID;
     }
+    def "check ID with different number"() {
+        when:
+        def newID = 11
+        question = new SingleMultipleChoice(newID, questionPrompt, rightanswer, choices)
+        then:
+        question.GetIdNumber() == newID
+    }
+    def "check ID with a big number"() {
+        when:
+        def newID = 12345678
+        question = new SingleMultipleChoice(newID, questionPrompt, rightanswer, choices)
+        then:
+        question.GetIdNumber() == newID
+    }
 
     def "check question"(){
         when: true
         then: question.GetQuestion() == questionPrompt
+    }
+    def "check question prompt with short prompt"() {
+        when:
+        def newPrompt = "Short"
+        question.SetQuestion(newPrompt)
+        then:
+        question.GetQuestion() == newPrompt
+    }
+    def "check question prompt with long prompt"() {
+        when:
+        def newPrompt = "This is a very long question description. Really, this description is far" +
+                " too long to really be practical, but we must check methods from all angles. Do you know " +
+                "how long is too long for a question prompt? The answer may surprise you, but may also not." +
+                "The answer is this prompt. It is too long and makes no sense."
+        question.SetQuestion(newPrompt)
+        then:
+        question.GetQuestion() == newPrompt
     }
 
     def "check right answer"(){
         when: true
         then:  question.GetCorrectAnswer()[0] == "Right!";
     }
+    def "check right answer when changed"() {
+        when:
+        question.AddCorrectAnswer("OnlyRight")
+        rightanswer.pop()
+        rightanswer.add("OnlyRight")
+        then:
+        question.GetCorrectAnswer() == rightanswer
+    }
 
     def "check possible answers"(){
         when: true
         then:  question.GetPossibleAnswers() == choices;
+    }
+    def "check possible answers when a new possible answer is added"() {
+        when:
+        question.AddPossibleAnswer("Possible3")
+        choices.add("Possible3")
+        then:
+        question.GetPossibleAnswers() == choices
+    }
+    def "check possible answers when several new possible answers are added"() {
+        when:
+        question.AddPossibleAnswer("Possible3")
+        question.AddPossibleAnswer("Possible4")
+        question.AddPossibleAnswer("Possible5")
+        choices.add("Possible3")
+        choices.add("Possible4")
+        choices.add("Possible5")
+        then:
+        question.GetPossibleAnswers() == choices
+    }
+    def "check possible answers when new possibles answers are added in different orders"() {
+        when:
+        question.AddPossibleAnswer("Possible3")
+        question.AddPossibleAnswer("Possible4")
+        question.AddPossibleAnswer("Possible5")
+        choices.add("Possible3")
+        choices.add("Possible5")
+        choices.add("Possible4")
+        then:
+        question.GetPossibleAnswers() == choices
     }
 
 

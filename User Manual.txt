@@ -1,0 +1,174 @@
+Question Bank User Manual
+----------------------------------------------------------------------------------------------------
+
+Purpose
+--------------------
+This piece of software was created as a group project for the authors' Intro To Software Design
+course. As such, it is fairly simple in its design and uses. This project serves as a digital bank
+that allows the creation, editing, deletion, and tagging of questions, that can be saved and loaded
+to/from a JSON file.
+----------------------------------------------------------------------------------------------------
+
+Recommended Usage
+--------------------
+This question bank can be used as a means of creating and tagging questions, that are then saved to
+a file in JSON format. The saved bank is in a universally standard format, so it can be used for a
+variety of applications, such as loading into a question taking system
+----------------------------------------------------------------------------------------------------
+
+Important Notes About the Question Bank
+--------------------
+As of the current release, this bank does not automatically save its state and must be manually
+saved or all added questions and tags with be lost. There is also no confirmation when deleting
+questions, tags, or the whole bank. Please use caution with these functions. There is no 'undo'
+function, so ensure an action is wanted, before completing said action. There is button labeled
+"Cancel" on all screens that will discard all changes and take you back to the previous screen.
+Pressing 'X' in the top-right corner of any screen will discard all changes and take you back to
+the main screen.
+----------------------------------------------------------------------------------------------------
+
+How to Add a Question with Just One Answer
+--------------------
+Press the button labeled "Add a new question" located in the left column, in the middle. This will
+launch a window that will ask you what kind of question you would like to add. Press the button
+labeled "Single Answer Multiple Choice" and a new window will launch, where you can add the details
+of your question. All fields have a button next to them that will update/add your input to the
+question. Once all information has been entered, hit the button labeled "Submit" and you will be
+taken back to the main screen. NOTE: If you want to add a tag to the question, do so before hitting
+submit. The tag will be added, though it will not be displayed when adding the rest of the question
+information.
+----------------------------------------------------------------------------------------------------
+
+How to Add a Question with Multiple Answers
+--------------------
+Press the button labeled "Add a new question" located in the left column, in the middle. This will
+launch a window that will ask you what kind of question you would like to add. Press the button
+labeled "Multiple Answer Multiple Choice" and a new window will launch, where you can add the
+details of your question. All fields have a button next to them that will update/add your input to
+the question. Once all information has been entered, hit the button labeled "Submit" and you will
+be taken back to the main screen. NOTE: If you want to add a tag to the question, do so before
+hitting submit. The tag will be added, though it will not be displayed when adding the rest of the
+question information.
+----------------------------------------------------------------------------------------------------
+
+How to Add a Question with Just a Prompt for Freeform Answers
+--------------------
+Press the button labeled "Add a new question" located in the left column, in the middle. This will
+launch a window that will ask you what kind of question you would like to add. Press the button
+labeled "Short Answer" and a new window will launch, where you can add the details of your question.
+All fields have a button next to them that will update/add your input to the question. Once all
+information has been entered, hit the button labeled "Submit" and you will be taken back to the main
+screen. NOTE: If you want to add a tag to the question, do so before hitting submit. The tag will be
+added, though it will not be displayed when adding the rest of the question information.
+----------------------------------------------------------------------------------------------------
+
+How to View All Questions in the Bank
+--------------------
+Press the button labeled "See all questions in bank" located in the left column, at the top. This
+will launch a screen that has all questions in the bank in a scrollable box. The questions are
+represented as buttons labeled with the first 20 characters of the question's prompt/description.
+NOTE: These buttons can be clicked to get more information about each question and for further
+actions - see the next two sections.
+----------------------------------------------------------------------------------------------------
+
+How to Edit an Existing Question
+--------------------
+Press the button labeled "See all questions in bank" located in the left column, at the top. This
+will launch a screen that has all questions in the bank in a scrollable box. The questions are
+ represented as buttons labeled with the first 20 characters of the question's prompt/description.
+ Click on the button representing the question you would like to edit and it will launch a window
+ that displays the question's information. Press the button labeled "Edit Question" and it will
+ launch a window where you can edit the question's information and add/remove tags. NOTE: At this
+ time, correct and possible answers can only be added, but existing ones can not be removed.
+----------------------------------------------------------------------------------------------------
+
+How to Delete a Question
+--------------------
+Press the button labeled "See all questions in bank" located in the left column, at the top. This
+will launch a screen that has all questions in the bank in a scrollable box. The questions are
+represented as buttons labeled with the first 20 characters of the question's prompt/description.
+Click on the button representing the question you would like to edit and it will launch a window
+that displays the question's information. Press the button labeled "Delete Question" and a window
+will be displayed that informs that the question has been deleted successfully. The main screen
+will then be displayed. NOTE: There is no confirmation of deletion. The launched window only
+informs you of what has been done.
+----------------------------------------------------------------------------------------------------
+
+How to View All Tags in the Bank
+--------------------
+Press the button labeled "See all tags in bank" located in the left column, at the bottom. This will
+launch a screen that has all tags in the bank in a scrollable box. The tags are represented as
+buttons labeled with the name of the tag. NOTE: These buttons can be clicked to see all questions
+that have this tag, to save them to a file, and to delete the tag - see the next three sections.
+----------------------------------------------------------------------------------------------------
+
+How to View All Questions with a Specified Tag
+--------------------
+Press the button labeled "See all tags in bank" located in the left column, at the bottom. This will
+launch a screen that has all tags in the bank in a scrollable box. The tags are represented as
+buttons labeled with the name of the tag. Click on a tag's button representation and window will be
+launched that displays the prompts/descriptions of all questions that have this tag.
+----------------------------------------------------------------------------------------------------
+
+How to Save All Questions with a Specified Tag to a File
+--------------------
+Press the button labeled "See all tags in bank" located in the left column, at the bottom. This will
+launch a screen that has all tags in the bank in a scrollable box. The tags are represented as
+buttons labeled with the name of the tag. Click on a tag's button representation and window will be
+launched that displays the prompts/descriptions of all questions that have this tag. Press the
+button labeled "Export Questions with Tag" and a file explorer will be launched. Navigate to the
+location you want the bank to be saved to and either select a file to save into or enter the name
+of the file to be created, then hit "Save". NOTE: The file will be saved as a JSON file, with no
+extension.
+----------------------------------------------------------------------------------------------------
+
+How to Delete a Tag from the Bank
+--------------------
+Press the button labeled "See all tags in bank" located in the left column, at the bottom. This will
+launch a screen that has all tags in the bank in a scrollable box. The tags are represented as
+buttons labeled with the name of the tag. Click on a tag's button representation and window will be
+launched that displays the prompts/descriptions of all questions that have this tag. Press the
+button labeled "Remove Tag" and the tag will be removed from the bank and all questions that have
+the tag. The main screen will then be displayed. NOTE: Questions that have this tag will have the
+tag removed from them, but will not be deleted.
+----------------------------------------------------------------------------------------------------
+
+How to Save the Bank to a File
+--------------------
+Press the button labeled "Save Bank" located in the right column, at the top. A file explorer will
+be launched. Navigate to the location you want the bank to be saved to and either select a file to
+save into or enter the name of the file to be created, then hit "Save". NOTE: The file will be saved
+as a JSON file, with no extension.
+----------------------------------------------------------------------------------------------------
+
+How to Load a Previously Saved Bank
+--------------------
+Press the button labeled "Load Questions" located in the right column, in the middle. A file
+explorer will be launched. Navigate to the desired file and hit "Open". NOTE: The file must be in a
+JSON format.
+----------------------------------------------------------------------------------------------------
+
+How to Delete the Bank
+--------------------
+Press the button labeled "Delete Bank" located in the right column, at the bottom. A window will be
+displayed that informs that the bank has been deleted successfully. NOTE: There is no confirmation
+for this action and it is final.
+----------------------------------------------------------------------------------------------------
+
+---------------------------------- MIT License -----------------------------------------------------
+Copyright 2022 Hunter Chase, Autumn Clark, Michael Esquivias, Eric Hill
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+associated documentation files (the "Software"), to deal in the Software without restriction,
+including without limitation the rights to use, copy, modify, merge, publish, distribute,
+sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial
+portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT
+OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

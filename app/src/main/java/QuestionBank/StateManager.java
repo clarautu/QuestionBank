@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.Scanner;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.stream.JsonReader;
+import com.google.common.flogger.FluentLogger;
 
 /**
  * Class to push data in and out of the project
@@ -15,6 +15,7 @@ public class StateManager {
     //Variables
     Gson gson = new GsonBuilder().registerTypeAdapter(Questions.class, new GsonInstanceCreator()).create();
 
+    private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 
 //    Methods
 //    For Saving
@@ -35,16 +36,16 @@ public class StateManager {
                 String json = gson.toJson(state);
                 writer.write(json);
                 writer.write("\n");
-                System.out.println("Wrote to file: " + file);
+                logger.atInfo().log("Wrote to file: %s", file);
                 writer.close();
                 saved = true;
             }
             else {
-                System.out.println("Problem saving.");
+                logger.atWarning().log("Problem saving.");
             }
         }
         catch (IOException e){
-            System.out.println("An error occurred while saving.");
+            logger.atWarning().log("An error occurred while saving.");
             e.printStackTrace();
         }
         return saved;
@@ -59,13 +60,13 @@ public class StateManager {
         File write_file = new File(file);
         try {
             if (write_file.createNewFile()) {
-                System.out.println("File create: " + write_file.getName());
+                logger.atInfo().log("File created at: %s", file);
             }
             else {
-                System.out.println("File may already exist and was not created.");
+                logger.atInfo().log("File exists and will be overwritten at: %s", file);
             }
         } catch (IOException e) {
-            System.out.println("An error occurred creating file.");
+            logger.atWarning().log("An error occurred creating file at: %s", file);
             e.printStackTrace();
         }
         return write_file;
@@ -87,7 +88,7 @@ public class StateManager {
             String json = scanner.nextLine();
             newState = gson.fromJson(json, StateObject.class);
             scanner.close();
-            System.out.println("File read.");
+            logger.atInfo().log("File read at: %s", file);
             newState.setValid(true);
         }
         return newState;

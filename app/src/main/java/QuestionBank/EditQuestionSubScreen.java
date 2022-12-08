@@ -39,7 +39,7 @@ public class EditQuestionSubScreen {
         UI.GetInstance().Hide();
 
         frame = new JFrame("Edit a question");
-        frame.setSize(800, 800);
+        frame.setSize(600, 950);
         frame.setLayout(new GridLayout(5, 1));
 
         //Unhide the main screen on closing

@@ -1,6 +1,7 @@
 package QuestionBank;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileSystemView;
 import java.awt.event.*;
 import java.awt.*;
@@ -38,11 +39,12 @@ public class UI {
      */
     private void PrepareGUI(){
         mainFrame = new JFrame("Question Bank Window");
-        mainFrame.setSize(800, 800);
-        mainFrame.setLayout(new GridLayout(2, 1));
+        mainFrame.setSize(600, 600);
+        //mainFrame.setLayout(new GridLayout(2, 1));
 
         //Create label for the window
         headerlabel = new JLabel("", JLabel.CENTER);
+        headerlabel.setBorder(new EmptyBorder(40, 10, 10, 10));
 
         //Shut down the program upon closing the window
         mainFrame.addWindowListener(new WindowAdapter() {
@@ -52,10 +54,10 @@ public class UI {
         });
         //Create a panel for housing the buttons
         controlPanel = new JPanel();
-        controlPanel.setLayout(new FlowLayout());
+        controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.LINE_AXIS));
 
         //Add the labels and panel to the frame
-        mainFrame.add(headerlabel);
+        mainFrame.add(headerlabel, BorderLayout.NORTH);
         mainFrame.add(controlPanel);
 
         mainFrame.setLocationRelativeTo(null);
@@ -76,6 +78,14 @@ public class UI {
         JButton loadQuestionsButton = new JButton("Load Questions");
         JButton deleteBankButton = new JButton("Delete Bank");
 
+        //Set Button alignments
+        seeAllQuestionsButton.setAlignmentX(Component.LEFT_ALIGNMENT);
+        addQuestionButton.setAlignmentX(Component.LEFT_ALIGNMENT);
+        seeAllTagsButton.setAlignmentX(Component.LEFT_ALIGNMENT);
+        saveBankButton.setAlignmentX(Component.RIGHT_ALIGNMENT);
+        loadQuestionsButton.setAlignmentX(Component.RIGHT_ALIGNMENT);
+        deleteBankButton.setAlignmentX(Component.RIGHT_ALIGNMENT);
+
         //Set button commands
         seeAllQuestionsButton.setActionCommand("SeeAll");
         addQuestionButton.setActionCommand("AddNew");
@@ -92,13 +102,24 @@ public class UI {
         loadQuestionsButton.addActionListener(new ButtonClickListener());
         deleteBankButton.addActionListener(new ButtonClickListener());
 
-        //Add buttons to the panel in the frame
-        controlPanel.add(seeAllQuestionsButton);
-        controlPanel.add(addQuestionButton);
-        controlPanel.add(seeAllTagsButton);
-        controlPanel.add(saveBankButton);
-        controlPanel.add(loadQuestionsButton);
-        controlPanel.add(deleteBankButton);
+        //Make two panels for buttons, based on function
+        JPanel editPanel = new JPanel();
+        editPanel.setLayout(new BoxLayout(editPanel, BoxLayout.Y_AXIS));
+        editPanel.setBorder(new EmptyBorder(10,40,10,10));
+        controlPanel.add(editPanel);
+        controlPanel.add(Box.createHorizontalGlue());
+        JPanel statePanel = new JPanel();
+        statePanel.setLayout(new BoxLayout(statePanel, BoxLayout.Y_AXIS));
+        statePanel.setBorder(new EmptyBorder(10, 10, 10, 40));
+        controlPanel.add(statePanel);
+
+        //Add buttons to the panels in the frame
+        editPanel.add(seeAllQuestionsButton);
+        editPanel.add(addQuestionButton);
+        editPanel.add(seeAllTagsButton);
+        statePanel.add(saveBankButton);
+        statePanel.add(loadQuestionsButton);
+        statePanel.add(deleteBankButton);
 
         mainFrame.setVisible(true);
     }

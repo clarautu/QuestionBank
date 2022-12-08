@@ -55,8 +55,7 @@ public class QuestionBank {
         }
         if (tagNotFound) {
             //If not found, make tag with tagName and add to this.tagsList
-            Tag t = new Tag(new LinkedList<Integer>());
-            t.setTagName(tagName);
+            Tag t = new Tag(tagName);
             t.AddQuestion(id);
             this.TagsLists.add(t);
         }

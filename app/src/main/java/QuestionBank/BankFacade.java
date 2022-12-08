@@ -3,6 +3,8 @@ package QuestionBank;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.LinkedList;
+import com.google.common.flogger.FluentLogger;
+
 
 /**
  * Facade for meshing front-end to back-end with QuestionBank class.
@@ -16,6 +18,9 @@ public class BankFacade {
     private QuestionBank QuestionBank;
 
     private StateObject stateObject = new StateObject();
+
+    private static final FluentLogger logger = FluentLogger.forEnclosingClass();
+
 
     //Constructors
     private BankFacade() {
@@ -58,6 +63,24 @@ public class BankFacade {
      */
     public Boolean CreateQuestion(int typeChoice, String questionDescription, LinkedList<String> correctAnswers, LinkedList<String> possibleAnswers) {
         return QuestionBank.CreateQuestion(typeChoice, questionDescription, correctAnswers, possibleAnswers);
+    }
+
+    /**
+     * Overload to allow adding tags
+     * @param typeChoice
+     * @param questionDescription
+     * @param correctAnswers
+     * @param possibleAnswers
+     * @param tagsList
+     * @return
+     */
+    public Boolean CreateQuestion(int typeChoice, String questionDescription, LinkedList<String> correctAnswers, LinkedList<String> possibleAnswers, LinkedList<String> tagsList) {
+        Boolean success = QuestionBank.CreateQuestion(typeChoice, questionDescription, correctAnswers, possibleAnswers);
+        Questions question = QuestionBank.GetQuestions().peekLast();
+        for (String tag : tagsList){
+            QuestionBank.AddTagToQuestion(question.GetIdNumber(),tag);
+        }
+        return success;
     }
 
     /**
@@ -158,7 +181,7 @@ public class BankFacade {
 
         if (stateObject.isValid()) {
             QuestionBank.setState(stateObject);
-            System.out.println("state valid");
+            logger.atFinest().log("Valid state of file at: %s", file);
             loaded = true;
         }
         return loaded;

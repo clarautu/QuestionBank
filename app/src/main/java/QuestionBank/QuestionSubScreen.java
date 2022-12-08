@@ -32,7 +32,7 @@ public class QuestionSubScreen {
 
         frame = new JFrame("Question Window for question #" + question.GetIdNumber() + " " +
                 question.GetQuestion());
-        frame.setSize(500, 500);
+        frame.setSize(600, 600);
         frame.setLayout(new GridLayout(4, 1));
 
         //Create label for the window
