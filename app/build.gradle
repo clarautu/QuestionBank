@@ -32,7 +32,7 @@ publishing {
     repositories {
         maven {
             name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/Zeremer/Playground")
+            url = uri("https://maven.pkg.github.com/CS3321TeamC/QuestionBank")
             credentials {
                 username = System.getenv("GITHUB_ACTOR")
                 password = System.getenv("GITHUB_TOKEN")
