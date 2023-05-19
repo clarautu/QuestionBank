@@ -6,6 +6,16 @@
  * User Manual available at https://docs.gradle.org/7.3.3/userguide/building_java_projects.html
  */
 
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'org.owasp:dependency-check-gradle:8.2.1'
+    }
+}
+
+
 plugins {
     // Apply the groovy plugin to also add support for Groovy (needed for Spock)
     id 'groovy'
@@ -16,6 +26,8 @@ plugins {
     id 'maven-publish'
     id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
+
+apply plugin: 'org.owasp.dependencycheck'
 
 repositories {
     // Use Maven Central for resolving dependencies.
