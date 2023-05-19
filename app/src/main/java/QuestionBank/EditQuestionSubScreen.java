@@ -237,16 +237,6 @@ public class EditQuestionSubScreen {
             }
             tagsListBox.addItem(name);
         }
-        //addTagPanelTemp.add(tagsListBox);
-        //JButton addTag = new JButton("Add Tag");
-        //addTagPanelTemp.add(addTag);
-        //addTagPanel.add(addTagPanelTemp);
-        //addTag.setActionCommand("addTag");
-        //addTag.addActionListener(new ButtonClickListener());
-
-        //update removeTag panel
-        //JPanel removeTagPanelTemp = new JPanel();
-        //removeTagSelection = new JComboBox<String>();
         removeTagSelection.removeAll();
         //removeTagSelection.addItem("");
         for (String name : question.GetTags()) {
@@ -256,12 +246,6 @@ public class EditQuestionSubScreen {
             }
             removeTagSelection.addItem(name);
         }
-        //removeTagPanelTemp.add(removeTagSelection);
-        //JButton removeTag = new JButton("Remove Tag");
-        //removeTagPanelTemp.add(removeTag);
-        //removeTagPanel.add(removeTagPanelTemp);
-        //removeTag.setActionCommand("removeTag");
-        //removeTag.addActionListener((new ButtonClickListener()));
 
         frame.setVisible(true);
     }

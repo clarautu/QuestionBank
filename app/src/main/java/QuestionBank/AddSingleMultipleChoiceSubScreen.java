@@ -163,15 +163,7 @@ public class AddSingleMultipleChoiceSubScreen {
         //removeTagPanel.add(new JLabel("Removal section"));
         JPanel removeTagPanelTemp = new JPanel();
         removeTagSelection = new JComboBox<String>();
-        /*
-        for (String name : question.GetTags()) {
-            int maxLength = 20;
-            if (name.length() > maxLength) {
-                name = name.substring(0, 20);
-            }
-            removeTagSelection.addItem(name);
-        }
-         */
+
         if (tagsAdded != null) {
             for (String name : tagsAdded) {
                 int maxLength = 20;
